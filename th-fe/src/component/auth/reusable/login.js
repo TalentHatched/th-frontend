@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core';
 const LoginForm = (props) => {
   return (
     <div className='login-form'>
+      <h4 hidden={props.warning}>Username and Password are required.</h4>
       <form>
         <div>
           <label>Username</label>
@@ -14,7 +15,7 @@ const LoginForm = (props) => {
             type='text'
             title='userName'
             placeholder='Username'
-            onChange={props.onChange}></input>
+            onChange={props.onUserNameChange}></input>
         </div>
         <div>
           <label>Password</label>
@@ -22,13 +23,14 @@ const LoginForm = (props) => {
             type='password'
             title='userPassword'
             placeholder='Password'
-            onChange={props.onChange}></input>
+            onChange={props.onPasswordChange}
+            value={props.password}></input>
         </div>
         <Button
           variant='contained'
           color='primary'
           size='large'
-          onClick={() => props.onClick()}>
+          onClick={() => props.onClick(props.userName, props.password)}>
           Login
         </Button>
       </form>
