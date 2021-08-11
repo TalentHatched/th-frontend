@@ -8,6 +8,8 @@ import AdminLogin from './component/auth/adminLogin';
 import ApplicantLogin from './component/auth/applicantLogin';
 import CompanyLogin from './component/auth/companyLogin';
 
+import CompanyDashboard from './component/dashboard/companyDashboard';
+
 function App() {
   return (
     <Router>
@@ -18,6 +20,10 @@ function App() {
             <Route path='/adminlogin' component={AdminLogin}></Route>
             <Route path='/applicantlogin' component={ApplicantLogin}></Route>
             <Route path='/companylogin' component={CompanyLogin}></Route>
+            <Route
+              exact
+              path='/dashboard2'
+              component={CompanyDashboard}></Route>
           </Switch>
         </div>
       </div>

@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 const LoginForm = (props) => {
   return (
     <div className='login-form'>
-      <h4 hidden={props.warning}>Username and Password are required.</h4>
+      <h4 hidden={props.warning}>{props.warningMessage}</h4>
       <form>
         <div>
           <label>Username</label>
