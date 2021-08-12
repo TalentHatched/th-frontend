@@ -3,11 +3,12 @@ import axios from 'axios';
 
 import LoginForm from './reusable/login';
 
-const CompanyLogin = ({history, ...props}) => {
+const CompanyLogin = ({ history, ...props }) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [hideWarning, setHideWarning] = useState(true);
   const [warningMessage, setWarningMessage] = useState('');
+  const userTypeId = 2;
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -30,25 +31,29 @@ const CompanyLogin = ({history, ...props}) => {
       const credential = {
         userEmail: userName,
         userPassword: password,
-        userTypeId: 2,
+        userTypeId: userTypeId,
       };
       axios
         .post('http://localhost:8081/api/user/login', credential)
         .then((res) => {
-         
           if (res.data) {
             console.log('Success');
-            history.push('/dashboard2')
+            history.push('/dashboard2');
           }
         })
         .catch((err) => {
           console.log('err', err);
-          if (err) {
+          console.log(typeof err);
+          console.log(err.response);
+          if (!err.response) {
+            setWarningMessage('Server error. Please try again.');
+            setHideWarning(false);
+          } else {
             if (err.response.status === 400 || err.response.status === 404) {
               setWarningMessage('Invalid credentials.');
               setHideWarning(false);
             } else {
-              setWarningMessage('Server error. Please try again.');
+              setWarningMessage('Login Unsuccessful. Please try again.');
               setHideWarning(false);
             }
           }
