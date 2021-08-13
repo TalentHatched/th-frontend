@@ -1,0 +1,19 @@
+.registration-form {
+  width: 50%;
+}
+
+input {
+  width: 80%;
+  font-size: 20px;
+}
+
+
+
+label {
+  display: block;
+  text-align: left;
+}
+
+.warning {
+    color:red;
+}
