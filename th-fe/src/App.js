@@ -11,6 +11,8 @@ import CompanyLogin from './component/auth/companyLogin';
 import ApplicantDashboard from './component/dashboard/applicantDashboard';
 import CompanyDashboard from './component/dashboard/companyDashboard';
 import AdminDashboard from './component/dashboard/adminDashboard';
+import CompanyRegistration from './component/auth/companyRegistration';
+import AdminRegistration from './component/auth/adminRegistration';
 
 function App() {
   return (
@@ -22,6 +24,10 @@ function App() {
             <Route path='/adminlogin' component={AdminLogin}></Route>
             <Route path='/applicantlogin' component={ApplicantLogin}></Route>
             <Route path='/companylogin' component={CompanyLogin}></Route>
+            <Route path='/adminregister' component={AdminRegistration}></Route>
+            <Route
+              path='/companyregister'
+              component={CompanyRegistration}></Route>
             <Route exact path='dashboard1' component={ApplicantDashboard} />
             <Route
               exact
