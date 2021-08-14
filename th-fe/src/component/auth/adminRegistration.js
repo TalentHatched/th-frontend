@@ -3,7 +3,7 @@ import axios from 'axios';
 import RegistrationForm from './reusable/registration';
 import './adminRegistration.css';
 
-const AdminRegistration = (props) => {
+const AdminRegistration = ({ history, ...props }) => {
   const [name, setName] = useState('');
   const [contactPerson, setContactPerson] = useState('');
   const [email, setEmail] = useState('');
@@ -15,6 +15,9 @@ const AdminRegistration = (props) => {
   const [emailWarning, setEmailWarning] = useState('');
   const [passwordWarning, setPasswordWarning] = useState('');
   const [confirmPasswordWarning, setConfirmPasswordWarning] = useState('');
+  const [submitWarning, setSubmitWarning] = useState('');
+
+  //const [snackBarOpen, setSnackBarOpen]=useState(false)
   const nameLabel = 'Name of school or organization';
   const userTypeId = 3;
 
@@ -41,13 +44,38 @@ const AdminRegistration = (props) => {
   const handleSubmit = (event) => {
     if (validate()) {
       console.log('CREATE ACCOUNT');
+      const credentials = {
+        userName: email,
+        userEmail: email,
+        userPassword: password,
+        userTypeId: userTypeId,
+        userFullName: name,
+      };
+      axios
+        .post('http://localhost:8081/api/user/register', credentials)
+        .then((res) => {
+          console.log('What is res.data', res.data);
+         // setSnackBarOpen(true)
+          history.push('/adminlogin');
+        })
+        .catch((err) => {
+          console.log('There is an error', err);
+          if (err.response) {
+            console.log('What is the error', err.response)
+            if (err.response.status === 400) {
+              setSubmitWarning(err.response.data.message)
+            } else {
+              setSubmitWarning('Registration unsuccessful. Please try again.')
+            }
+          }
+        });
     } else {
       console.log('NOT READY');
     }
   };
 
   const validate = () => {
-    let readyToSubmit = false;
+    let readyToSubmit = true;
     setNameWarning('');
     setContactPersonWarning('');
     setEmailWarning('');
@@ -63,6 +91,7 @@ const AdminRegistration = (props) => {
       confirmPassword
     );
     if (!name || !contactPerson || !email || !password || !confirmPassword) {
+      readyToSubmit = false;
       if (!name) {
         setNameWarning('Name of school or organization required');
       }
@@ -84,25 +113,31 @@ const AdminRegistration = (props) => {
       }
     } else {
       console.log('password.length', password.length);
+      if (!email.includes('@')) {
+        setEmailWarning('Please provide a valid email');
+        readyToSubmit = false;
+      }
+
       if (password.length < 6) {
         setPasswordWarning('Password must have at least 6 characters');
-      } else if (password !== confirmPassword) {
+        readyToSubmit = false;
+      }
+      if (password !== confirmPassword) {
         setConfirmPasswordWarning('Password does not match');
-      } else {
-        let letterNumOnly = /^[A-Za-z0-9]+$/.test(password);
-        let letterOnly = /^[A-Za-z]+$/.test(password);
-        let numOnly = /^\d+$/.test(password);
+        readyToSubmit = false;
+      }
+      let letterNumOnly = /^[A-Za-z0-9]+$/.test(password);
+      let letterOnly = /^[A-Za-z]+$/.test(password);
+      let numOnly = /^\d+$/.test(password);
 
-        if (numOnly || letterOnly) {
-          setPasswordWarning(
-            'Password must contain at least 1 number and 1 character'
-          );
-        } else if (!letterNumOnly) {
-          setPasswordWarning('Password can contain letters and numbers only');
-        } else {
-          console.log('READY TO SUBMIT');
-          readyToSubmit = true;
-        }
+      if (numOnly || letterOnly) {
+        setPasswordWarning(
+          'Password must contain at least 1 number and 1 character'
+        );
+        readyToSubmit = false;
+      } else if (!letterNumOnly) {
+        setPasswordWarning('Password can contain letters and numbers only');
+        readyToSubmit = false;
       }
     }
     return readyToSubmit;
@@ -128,7 +163,14 @@ const AdminRegistration = (props) => {
         emailWarning={emailWarning}
         passwordWarning={passwordWarning}
         confirmPasswordWarning={confirmPasswordWarning}
+        submitWarning={submitWarning}
+        // snackBarOpen={snackBarOpen}
       />
+       {/* <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={props.snackBarOpen}
+        autoHideDuration={6000}
+        message='Registration successful'></Snackbar> */}
     </div>
   );
 };
