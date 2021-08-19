@@ -50,7 +50,10 @@ const AdminRegistration = ({ history, ...props }) => {
         userPassword: password,
         userTypeId: userTypeId,
         userFullName: name,
+        registrationDate: Date.now(),
+        isActive: true,
       };
+      console.log('CREDS', credentials)
       axios
         .post('http://localhost:8081/api/user/register', credentials)
         .then((res) => {
