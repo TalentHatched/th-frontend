@@ -37,6 +37,9 @@ const AdminLogin = ({ history, ...props }) => {
         .then((res) => {
           if (res.data) {
             console.log('Success');
+            localStorage.setItem('token', res.data.userToken);
+            localStorage.setItem('userId', res.data.userInfo.id);
+            localStorage.setItem('userTypeId', res.data.userInfo.userTypeId);
             history.push('/dashboard3');
           }
         })

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import axiosWithAuth from "../../util/axiosWithAuth"
 
 import {
   Table,
@@ -15,7 +16,7 @@ const User = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios
+    axiosWithAuth()
       .get('http://localhost:8081/api/user')
       .then((res) => {
         console.log('res.data', res.data);
