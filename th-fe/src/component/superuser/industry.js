@@ -18,6 +18,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
+import ManageFieldForm from './reusable/manageFieldForm';
+
 //import { Delete as DeleteIcon } from '@material-ui-icons';
 
 const Industry = () => {
@@ -25,6 +27,8 @@ const Industry = () => {
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [changingIndustry, setChangingIndustry] = useState('');
+  const [changingIndustryId, setChangingIndustryId] = useState();
 
   useEffect(() => {
     axios
@@ -36,53 +40,110 @@ const Industry = () => {
       .catch((err) => {
         console.log('what is the err, ', err.response);
       });
-  }, []);
+  }, [industries]);
 
-  function handleAddIndustryOpen() {
-    console.log('Clicked');
+  function handleAddModalOpen() {
     setOpenAdd(true);
   }
 
-  function handleAddIndustryClose() {
+  function handleAddModalClose() {
     setOpenAdd(false);
+    setChangingIndustry('');
   }
 
-  function handleEditIndustryOpen() {
+  function handleEditModalOpen(item) {
+    setChangingIndustry(item.industryName);
+    setChangingIndustryId(item.id);
     setOpenEdit(true);
   }
 
-  function handleEditIndustryClose() {
+  function handleEditModalClose() {
     setOpenEdit(false);
+    setChangingIndustry('');
+    setChangingIndustryId();
   }
 
-  function handleDeleteIndustryOpen() {
+  function handleDeleteModalOpen(item) {
+    setChangingIndustry(item.industryName);
+    setChangingIndustryId(item.id);
     setOpenDelete(true);
   }
 
-  function handleDeleteIndustryClose() {
+  function handleDeleteModalClose() {
     setOpenDelete(false);
+    setChangingIndustry('');
+    setChangingIndustryId();
+  }
+
+  function handleIndustryChange(event) {
+    setChangingIndustry(event.target.value);
+  }
+
+  function handleAddModalSubmit() {
+    if (changingIndustry) {
+      let data = {industryName: changingIndustry}
+      axios
+        .post('http://localhost:8081/api/industry/', data)
+        .then((res) => {
+          if (res.data) {
+            setOpenAdd(false);
+            setChangingIndustry('')
+          }
+        })
+        .catch((error) => {
+          console.log('Error adding new industry', error.response);
+        });
+    }
+  }
+
+  function handleEditModalSubmit() {
+    if (changingIndustry && changingIndustryId) {
+      let data = {industryName: changingIndustry, id:changingIndustryId}
+      axios.put(`http://localhost:8081/api/industry/${data.id}`, data)
+      .then(res => {
+        if (res.data) {
+          setOpenEdit(false)
+          setChangingIndustry('')
+          setChangingIndustryId()
+        }
+      })
+      .catch (error => {
+        console.log('Error editing industry')
+      })
+    }
+  }
+
+  function handleDeleteModalSubmit() {
+    if (changingIndustryId) {
+      
+      axios.delete(`http://localhost:8081/api/industry/${changingIndustryId}`) 
+      .then (res => {
+        if (res.data) {
+          setOpenDelete(false)
+          setChangingIndustry('')
+          setChangingIndustryId()
+        }
+      })
+      .catch (error => {
+        console.log('Error deleting industry')
+      })
+    }
   }
 
   return (
     <div>
       <h2>Industry</h2>
       <h3>Current Industry Count: {industries.length}</h3>
-
       <Button
         variant='outlined'
         color='primary'
         startIcon={<AddIcon />}
         onClick={() => {
-          handleAddIndustryOpen();
+          handleAddModalOpen();
         }}>
         Add Industry
       </Button>
-      <Modal open={openAdd} onClose={handleAddIndustryClose}>
-        <div>
-          <h1>Add Industry Modal</h1>
-          <button onClick={() => handleAddIndustryClose()}>Close</button>
-        </div>
-      </Modal>
+
       <TableContainer>
         <Table stickyHeader>
           <TableHead>
@@ -106,41 +167,64 @@ const Industry = () => {
                     variant='outlined'
                     color='primary'
                     startIcon={<EditIcon />}
-                    onClick={() => handleEditIndustryOpen()}>
+                    onClick={() => handleEditModalOpen(industry)}>
                     Edit
                   </Button>
-                  <Modal open={openEdit} onClose={handleEditIndustryClose}>
-                    <div>
-                      <h1>Add Industry Modal</h1>
-                      <button onClick={() => handleEditIndustryClose()}>
-                        Close
-                      </button>
-                    </div>
-                  </Modal>
+
                   <Button
                     variant='outlined'
                     color='secondary'
                     startIcon={<DeleteIcon />}
                     onClick={() => {
-                      handleDeleteIndustryOpen();
+                      handleDeleteModalOpen(industry);
                     }}>
                     Delete
                   </Button>
-
-                  <Modal open={openDelete} onClose={handleDeleteIndustryClose}>
-                    <div>
-                      <h1>Add Industry Modal</h1>
-                      <button onClick={() => handleDeleteIndustryClose()}>
-                        Close
-                      </button>
-                    </div>
-                  </Modal>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Modal open={openAdd} onClose={handleAddModalClose}>
+        <ManageFieldForm
+          type='Add'
+          placeholder='New Industry'
+          itemLabel='Industry'
+          itemTitle='Industry'
+          item={changingIndustry}
+          closeModal={handleAddModalClose}
+          onItemChange={handleIndustryChange}
+          onClick={handleAddModalSubmit}
+        />
+      </Modal>
+
+      <Modal open={openEdit} onClose={handleEditModalClose}>
+        <ManageFieldForm
+          type='Edit'
+          placeholder='Industry'
+          itemLabel='Industry'
+          itemTitle='Industry'
+          item={changingIndustry}
+          closeModal={handleEditModalClose}
+          onItemChange={handleIndustryChange}
+          onClick={handleEditModalSubmit}
+        />
+      </Modal>
+
+      <Modal open={openDelete} onClose={handleDeleteModalClose}>
+        <ManageFieldForm
+          type='Delete'
+          placeholder='Industry'
+          itemLabel='Industry'
+          itemTitle='Industry'
+          item={changingIndustry}
+          closeModal={handleDeleteModalClose}
+          onItemChange={handleIndustryChange}
+          onClick={handleDeleteModalSubmit}
+        />
+      </Modal>
     </div>
   );
 };
