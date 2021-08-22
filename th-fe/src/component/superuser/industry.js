@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./industry.css"
 
 import {
   Table,
@@ -131,7 +132,7 @@ const Industry = () => {
   }
 
   return (
-    <div>
+    <div className="industry-table">
       <h2>Industry</h2>
       <h3>Current Industry Count: {industries.length}</h3>
       <Button
