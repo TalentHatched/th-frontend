@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./skill.css"
+
 import {
   Table,
   TableBody,
@@ -17,13 +19,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
+import ManageFieldForm from './reusable/manageFieldForm';
 
 const Skill = () => {
-
   const [skills, setSkills] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [changingSkill, setChangingSkill] = useState('');
+  const [changingSkillId, setChangingSkillId] = useState();
 
   useEffect(() => {
     axios
@@ -35,58 +39,113 @@ const Skill = () => {
       .catch((err) => {
         console.log('what is the err, ', err.response);
       });
-  }, []);
+  }, [skills]);
 
-  function handleAddSkillOpen() {
+  function handleAddModalOpen() {
     console.log('Clicked');
     setOpenAdd(true);
   }
 
-  function handleAddSkillClose() {
+  function handleAddModalClose() {
     setOpenAdd(false);
+    setChangingSkill('');
   }
 
-  function handleEditSkillOpen() {
+  function handleEditModalOpen(item) {
     setOpenEdit(true);
+    setChangingSkill(item.skillName);
+    setChangingSkillId(item.id);
   }
 
-  function handleEditSkillClose() {
+  function handleEditModalClose() {
     setOpenEdit(false);
+    setChangingSkill('');
+    setChangingSkillId();
   }
 
-  function handleDeleteSkillOpen() {
+  function handleDeleteModalOpen(item) {
     setOpenDelete(true);
+    setChangingSkill(item.skillName);
+    setChangingSkillId(item.id);
   }
 
-  function handleDeleteSkillClose() {
+  function handleDeleteModalClose() {
     setOpenDelete(false);
+    setChangingSkill('');
+    setChangingSkillId();
+  }
+
+  function handleSkillChange(event) {
+    setChangingSkill(event.target.value);
+  }
+
+  function handleAddModalSubmit() {
+    if (changingSkill) {
+      let data = { SkillName: changingSkill };
+      axios
+        .post('http://localhost:8081/api/skill/', data)
+        .then((res) => {
+          if (res.data) {
+            setOpenAdd(false);
+            setChangingSkill('');
+          }
+        })
+        .catch((error) => {
+          console.log('Error adding new Ssill', error.response);
+        });
+    }
+  }
+
+  function handleEditModalSubmit() {
+    if (changingSkill && changingSkillId) {
+      let data = { skillName: changingSkill, id: changingSkillId };
+      axios
+        .put(`http://localhost:8081/api/skill/${data.id}`, data)
+        .then((res) => {
+          if (res.data) {
+            setOpenEdit(false);
+            setChangingSkill('');
+            setChangingSkillId();
+          }
+        })
+        .catch((error) => {
+          console.log('Error editing skill', error.response);
+        });
+    }
+  }
+
+  function handleDeleteModalSubmit() {
+    if (changingSkillId) {
+      axios
+        .delete(`http://localhost:8081/api/Skill/${changingSkillId}`)
+        .then((res) => {
+          if (res.data) {
+            setOpenDelete(false);
+            setChangingSkill('');
+            setChangingSkillId();
+          }
+        })
+        .catch((error) => {
+          console.log('Error deleting Skill');
+        });
+    }
   }
 
   return (
-
-
-
-
-    <div>
+    <div className='skill-table'>
       <h2>Skill</h2>
       <h3>Current Skill Count: {skills.length}</h3>
-
 
       <Button
         variant='outlined'
         color='primary'
         startIcon={<AddIcon />}
         onClick={() => {
-          handleAddSkillOpen();
+          handleAddModalOpen();
         }}>
         Add Skill
       </Button>
-      <Modal open={openAdd} onClose={handleAddSkillClose}>
-        <div>
-          <h1>Add Skill Modal</h1>
-          <button onClick={() => handleAddSkillClose()}>Close</button>
-        </div>
-      </Modal>
+
       <TableContainer>
         <Table stickyHeader>
           <TableHead>
@@ -110,41 +169,64 @@ const Skill = () => {
                     variant='outlined'
                     color='primary'
                     startIcon={<EditIcon />}
-                    onClick={() => handleEditSkillOpen()}>
+                    onClick={() => handleEditModalOpen(skill)}>
                     Edit
                   </Button>
-                  <Modal open={openEdit} onClose={handleEditSkillClose}>
-                    <div>
-                      <h1>Add Skill Modal</h1>
-                      <button onClick={() => handleEditSkillClose()}>
-                        Close
-                      </button>
-                    </div>
-                  </Modal>
+
                   <Button
                     variant='outlined'
                     color='secondary'
                     startIcon={<DeleteIcon />}
                     onClick={() => {
-                      handleDeleteSkillOpen();
+                      handleDeleteModalOpen(skill);
                     }}>
                     Delete
                   </Button>
-
-                  <Modal open={openDelete} onClose={handleDeleteSkillClose}>
-                    <div>
-                      <h1>Add Skill Modal</h1>
-                      <button onClick={() => handleDeleteSkillClose()}>
-                        Close
-                      </button>
-                    </div>
-                  </Modal>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Modal open={openAdd} onClose={handleAddModalClose}>
+        <ManageFieldForm
+          type='Add'
+          placeholder='New Skill'
+          itemLabel='Skill'
+          itemTitle='Skill'
+          item={changingSkill}
+          closeModal={handleAddModalClose}
+          onItemChange={handleSkillChange}
+          onClick={handleAddModalSubmit}
+        />
+      </Modal>
+
+      <Modal open={openEdit} onClose={handleEditModalClose}>
+        <ManageFieldForm
+          type='Edit'
+          placeholder='Skill'
+          itemLabel='Skill'
+          itemTitle='Skill'
+          item={changingSkill}
+          closeModal={handleEditModalClose}
+          onItemChange={handleSkillChange}
+          onClick={handleEditModalSubmit}
+        />
+      </Modal>
+
+      <Modal open={openDelete} onClose={handleDeleteModalClose}>
+        <ManageFieldForm
+          type='Delete'
+          placeholder='Skill'
+          itemLabel='Skill'
+          itemTitle='Skill'
+          item={changingSkill}
+          closeModal={handleDeleteModalClose}
+          onItemChange={handleSkillChange}
+          onClick={handleDeleteModalSubmit}
+        />
+      </Modal>
     </div>
   );
 };
