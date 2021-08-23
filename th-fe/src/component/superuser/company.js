@@ -18,6 +18,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
+import MergeTypeIcon from '@material-ui/icons/MergeType';
 
 const Company = () => {
   const [companies, setCompanies] = useState([]);
@@ -96,6 +97,12 @@ const Company = () => {
                       startIcon={<ThumbUpIcon />}
                       onClick={() => handleApproveClick(company)}>
                       Approve
+                    </Button>
+                    <Button
+                      variant='outlined'
+                      color='secondary'
+                      startIcon={<MergeTypeIcon />}>
+                      Merge
                     </Button>
                   </TableCell>
                 </TableRow>
