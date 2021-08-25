@@ -50,25 +50,25 @@ const CompanyRegistration = ({ history, ...props }) => {
         userPassword: password,
         userTypeId: userTypeId,
         userFullName: contactPerson,
-        companyName:name,
+        companyName: name,
         isActive: true,
       };
-      console.log('CREDS', credentials)
+      console.log('CREDS', credentials);
       axios
         .post('http://localhost:8081/api/user/register', credentials)
         .then((res) => {
           console.log('What is res.data', res.data);
-         // setSnackBarOpen(true)
+          // setSnackBarOpen(true)
           history.push('/companylogin');
         })
         .catch((err) => {
           console.log('There is an error', err);
           if (err.response) {
-            console.log('What is the error', err.response)
+            console.log('What is the error', err.response);
             if (err.response.status === 400) {
-              setSubmitWarning(err.response.data.message)
+              setSubmitWarning(err.response.data.message);
             } else {
-              setSubmitWarning('Registration unsuccessful. Please try again.')
+              setSubmitWarning('Registration unsuccessful. Please try again.');
             }
           }
         });
@@ -169,7 +169,7 @@ const CompanyRegistration = ({ history, ...props }) => {
         submitWarning={submitWarning}
         // snackBarOpen={snackBarOpen}
       />
-       {/* <Snackbar
+      {/* <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={props.snackBarOpen}
         autoHideDuration={6000}
