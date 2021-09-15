@@ -49,7 +49,7 @@ const AdminRegistration = ({ history, ...props }) => {
         userEmail: email,
         userPassword: password,
         userTypeId: userTypeId,
-        userFullName: name,
+        companyName: name,
         registrationDate: Date.now(),
         isActive: true,
       };

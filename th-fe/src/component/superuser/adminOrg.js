@@ -34,7 +34,7 @@ const AdminOrg = () => {
       .catch((err) => {
         console.log('what is the err fetching AdminOrgs', err.response);
       });
-  }, [adminOrgs]);
+  }, []);
 
   function getNewAdminOrgs(data) {
     return data.filter((data) => !data.reviewed);
