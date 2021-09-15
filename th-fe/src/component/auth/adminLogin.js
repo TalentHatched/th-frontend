@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import LoginForm from './reusable/login';
+import "./adminLogin.css"
 
 const AdminLogin = ({ history, ...props }) => {
   const [userName, setUserName] = useState('');
