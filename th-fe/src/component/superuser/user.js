@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import axiosWithAuth from "../../util/axiosWithAuth"
+import axiosWithAuth from '../../util/axiosWithAuth';
+import "./user.css"
 
 import {
   Table,
@@ -27,8 +28,10 @@ const User = () => {
       });
   }, []);
 
+  
+
   return (
-    <div>
+    <div className='user-table'>
       <h2>User Info</h2>
       <h3>Current User Count: {users.length}</h3>
       <TableContainer>
@@ -51,12 +54,13 @@ const User = () => {
                 </TableCell>
                 <TableCell align='left'>{user.userFullName}</TableCell>
                 <TableCell align='left'>{user.userEmail}</TableCell>
-                <TableCell align='left'>{user.registrationDate}</TableCell>
+                <TableCell align='left'>
+                  {user.registrationDate}
+                </TableCell>
                 <TableCell align='left'>{user.userTypeId}</TableCell>
                 <TableCell align='left'>
                   {user.isActive ? 'Yes' : 'No'}
                 </TableCell>
-                <TableCell align='left'>{}</TableCell>
               </TableRow>
             ))}
           </TableBody>
