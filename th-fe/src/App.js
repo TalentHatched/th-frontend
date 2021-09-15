@@ -11,7 +11,7 @@ import SuperUserLogin from './component/auth/superUserLogin';
 
 import ApplicantDashboard from './component/dashboard/applicantDashboard';
 import CompanyDashboard from './component/dashboard/companyDashboard';
-import AdminDashboard from './component/dashboard/adminDashboard';
+import AdminDashboard from './component/admin/adminDashboard';
 import SuperUserDashboard from './component/dashboard/superuserDashboard';
 
 import CompanyRegistration from './component/auth/companyRegistration';
