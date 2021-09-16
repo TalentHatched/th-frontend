@@ -1,5 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, HashRouter as Router, Route } from 'react-router-dom';
+
+//import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './App.css';
 
@@ -40,7 +42,6 @@ function App() {
             <Route exact path='/dashboard3' component={AdminDashboard} />
             <Route exact path='/dashboard4' component={SuperUserDashboard} />
           </Switch>
-          
         </div>
       </div>
     </Router>
