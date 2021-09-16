@@ -20,11 +20,6 @@ const ApplicantRegistrationForm = (props) => {
   const [userEmailWarning, setUserEmailWarning] = useState('');
   const [userPasswordWarning, setUserPasswordWarning] = useState('');
   const [userIdWarning, setUserIdWarning] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    setIsAdmin(props.isAdmin);
-  },[]);
 
   const handleFullNameChange = (event) => {
     setUserFullName(event.target.value);
@@ -55,9 +50,7 @@ const ApplicantRegistrationForm = (props) => {
   };
 
   const handleSubmissionClick = (event) => {
-    if (isAdmin) {
-      setUserId(localStorage.getItem('userId'));
-    }
+    userId = localStorage.getItem('userId');
     if (validate()) {
       let newApplicantInfo = {
         userName: userName,
@@ -215,12 +208,7 @@ const ApplicantRegistrationForm = (props) => {
         ) : (
           ''
         )}
-        {!isAdmin ? <div></div> : ''}
-        {props.applicantRegistrationWarning ? (
-          <h4 className='warning'>{props.applicantRegistrationWarning}</h4>
-        ) : (
-          ''
-        )}
+      
 
         {userIdWarning ? <h4 className='warning'>{userIdWarning}</h4> : ''}
         <Button
