@@ -9,14 +9,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Button,
 } from '@material-ui/core';
 
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import MergeTypeIcon from '@material-ui/icons/MergeType';
 
@@ -64,8 +62,7 @@ const AdminOrg = () => {
       <h3>Current Admin Organization Count: {adminOrgs.length}</h3>
 
       <div
-        className='new-company-table'
-        className={newAdminOrgs.length ? 'display-table' : 'hide-table'}>
+        className={newAdminOrgs.length ? 'new-company table display-table' : 'new-company-table hide-table'}>
         <h4>New AdminOrgs</h4>
 
         <TableContainer>

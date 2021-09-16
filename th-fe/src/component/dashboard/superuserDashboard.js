@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Tabs, Tab, Box, Typography } from '@material-ui/core';
+import { Tabs, Tab } from '@material-ui/core';
 
 import User from '../superuser/user';
 import AdminOrg from '../superuser/adminOrg';

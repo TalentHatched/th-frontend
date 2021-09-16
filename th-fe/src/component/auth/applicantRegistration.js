@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Button } from '@material-ui/core';
 
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
@@ -25,7 +24,7 @@ const ApplicantRegistrationForm = (props) => {
 
   useEffect(() => {
     setIsAdmin(props.isAdmin);
-  });
+  },[]);
 
   const handleFullNameChange = (event) => {
     setUserFullName(event.target.value);
@@ -70,9 +69,9 @@ const ApplicantRegistrationForm = (props) => {
         userFullName: userFullName,
         adminId: userId,
         isActive: true,
-        userTypeId:1
+        userTypeId: 1,
       };
-      
+
       props.handleAddStudentSubmission(newApplicantInfo);
     } else {
       //
@@ -156,6 +155,11 @@ const ApplicantRegistrationForm = (props) => {
             value={dateOfBirth}
             onChange={handleDateOfBirthChange}></input>
         </div>
+        {dateOfBirthWarning ? (
+          <h4 className='warning'>{dateOfBirthWarning}</h4>
+        ) : (
+          ''
+        )}
 
         <div>
           <label>Grade</label>
@@ -217,6 +221,8 @@ const ApplicantRegistrationForm = (props) => {
         ) : (
           ''
         )}
+
+        {userIdWarning ? <h4 className='warning'>{userIdWarning}</h4> : ''}
         <Button
           variant='contained'
           color='primary'

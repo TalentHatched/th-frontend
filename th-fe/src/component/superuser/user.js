@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import axiosWithAuth from '../../util/axiosWithAuth';
 import "./user.css"
 
@@ -10,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
 } from '@material-ui/core';
 
 const User = () => {

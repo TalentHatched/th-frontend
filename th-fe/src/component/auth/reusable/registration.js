@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './registration.css';
-import { Button, Snackbar } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 const RegistrationForm = (props) => {
   return (

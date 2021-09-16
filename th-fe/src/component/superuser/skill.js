@@ -9,9 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Button,
-  IconButton,
   Modal,
 } from '@material-ui/core';
 
