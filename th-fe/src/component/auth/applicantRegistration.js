@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
@@ -13,13 +13,14 @@ const ApplicantRegistrationForm = (props) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [userId, setUserId] = useState('');
   const [fullNameWarning, setFullNameWarning] = useState('');
   const [dateOfBirthWarning, setDateOfBirthWarning] = useState('');
   const [userNameWarning, setUserNameWarning] = useState('');
   const [userEmailWarning, setUserEmailWarning] = useState('');
   const [userPasswordWarning, setUserPasswordWarning] = useState('');
   const [userIdWarning, setUserIdWarning] = useState('');
+
+  let userId = localStorage.getItem('userId');
 
   const handleFullNameChange = (event) => {
     setUserFullName(event.target.value);
@@ -50,7 +51,6 @@ const ApplicantRegistrationForm = (props) => {
   };
 
   const handleSubmissionClick = (event) => {
-    userId = localStorage.getItem('userId');
     if (validate()) {
       let newApplicantInfo = {
         userName: userName,
