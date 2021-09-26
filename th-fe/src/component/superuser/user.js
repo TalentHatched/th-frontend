@@ -16,7 +16,7 @@ const User = () => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get('http://localhost:8081/api/user')
+      .get('api/user')
       .then((res) => {
         console.log('res.data', res.data);
         setUsers(res.data.user);

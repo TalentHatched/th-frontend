@@ -31,7 +31,7 @@ const Industry = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8081/api/industry')
+      .get('api/industry')
       .then((res) => {
         setIndustries(res.data.data);
       })
@@ -82,7 +82,7 @@ const Industry = () => {
     if (changingIndustry) {
       let data = {industryName: changingIndustry}
       axios
-        .post('http://localhost:8081/api/industry/', data)
+        .post('api/industry/', data)
         .then((res) => {
           if (res.data) {
             setOpenAdd(false);
@@ -98,7 +98,7 @@ const Industry = () => {
   function handleEditModalSubmit() {
     if (changingIndustry && changingIndustryId) {
       let data = {industryName: changingIndustry, id:changingIndustryId}
-      axios.put(`http://localhost:8081/api/industry/${data.id}`, data)
+      axios.put(`api/industry/${data.id}`, data)
       .then(res => {
         if (res.data) {
           setOpenEdit(false)
@@ -115,7 +115,7 @@ const Industry = () => {
   function handleDeleteModalSubmit() {
     if (changingIndustryId) {
       
-      axios.delete(`http://localhost:8081/api/industry/${changingIndustryId}`) 
+      axios.delete(`api/industry/${changingIndustryId}`) 
       .then (res => {
         if (res.data) {
           setOpenDelete(false)

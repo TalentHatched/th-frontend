@@ -23,7 +23,7 @@ const Company = () => {
   const [newCompanies, setNewCompanies] = useState([]);
   useEffect(() => {
     axios
-      .get('http://localhost:8081/api/company')
+      .get('api/company')
       .then((res) => {
         setCompanies(res.data.data);
         setNewCompanies(getNewCompanies(res.data.data));
@@ -42,7 +42,7 @@ const Company = () => {
     let targetId = company.id;
     let data = { reviewed: true };
     axios
-      .put(`http://localhost:8081/api/company/${targetId}`, data)
+      .put(`api/company/${targetId}`, data)
       .then((res) => {
         console.log('success', res.data);
         let updatedNewCompany = companies.filter(

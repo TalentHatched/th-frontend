@@ -22,7 +22,7 @@ const AdminDashboard = () => {
     setApplicantRegistrationWarning('')
     console.log('What is info', info);
     axios
-      .post('http://localhost:8081/api/user/studentRegister', info)
+      .post('api/user/studentRegister', info)
       .then((res) => {
         setShowAddApplicantButton(true);
       })

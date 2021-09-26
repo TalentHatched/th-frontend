@@ -29,7 +29,7 @@ const Skill = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8081/api/skill')
+      .get('api/skill')
       .then((res) => {
         setSkills(res.data.data);
       })
@@ -81,7 +81,7 @@ const Skill = () => {
     if (changingSkill) {
       let data = { SkillName: changingSkill };
       axios
-        .post('http://localhost:8081/api/skill/', data)
+        .post('api/skill/', data)
         .then((res) => {
           if (res.data) {
             setOpenAdd(false);
@@ -98,7 +98,7 @@ const Skill = () => {
     if (changingSkill && changingSkillId) {
       let data = { skillName: changingSkill, id: changingSkillId };
       axios
-        .put(`http://localhost:8081/api/skill/${data.id}`, data)
+        .put(`api/skill/${data.id}`, data)
         .then((res) => {
           if (res.data) {
             setOpenEdit(false);
@@ -115,7 +115,7 @@ const Skill = () => {
   function handleDeleteModalSubmit() {
     if (changingSkillId) {
       axios
-        .delete(`http://localhost:8081/api/Skill/${changingSkillId}`)
+        .delete(`api/Skill/${changingSkillId}`)
         .then((res) => {
           if (res.data) {
             setOpenDelete(false);

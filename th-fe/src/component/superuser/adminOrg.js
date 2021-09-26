@@ -23,7 +23,7 @@ const AdminOrg = () => {
   const [newAdminOrgs, setNewAdminOrgs] = useState([]);
   useEffect(() => {
     axios
-      .get('http://localhost:8081/api/adminOrg')
+      .get('api/adminOrg')
       .then((res) => {
         setAdminOrgs(res.data.data);
         setNewAdminOrgs(getNewAdminOrgs(res.data.data));
@@ -42,7 +42,7 @@ const AdminOrg = () => {
     let targetId = adminOrg.id;
     let data = { reviewed: true };
     axios
-      .put(`http://localhost:8081/api/adminOrg/${targetId}`, data)
+      .put(`api/adminOrg/${targetId}`, data)
       .then((res) => {
         console.log('success', res.data);
         let updatedNewAdminOrg = adminOrgs.filter(

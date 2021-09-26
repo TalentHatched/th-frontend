@@ -55,7 +55,7 @@ const AdminRegistration = ({ history, ...props }) => {
       };
       console.log('CREDS', credentials)
       axios
-        .post('http://localhost:8081/api/user/register', credentials)
+        .post('api/user/register', credentials)
         .then((res) => {
           console.log('What is res.data', res.data);
          // setSnackBarOpen(true)
