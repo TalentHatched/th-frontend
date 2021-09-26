@@ -60,7 +60,7 @@ const ApplicantRegistrationForm = (props) => {
         grade: grade,
         specialization: specialization,
         userFullName: userFullName,
-        adminId: userId,
+        adminId: 3,
         isActive: true,
         userTypeId: 1,
       };
