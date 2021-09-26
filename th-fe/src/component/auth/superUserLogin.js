@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import LoginForm from './reusable/login';
 
+
+
 const SuperUserLogin = ({ history, ...props }) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +19,7 @@ const SuperUserLogin = ({ history, ...props }) => {
     setPassword(event.target.value);
   };
   const handleSubmit = () => {
-    console.log('Company Login Form Submit Clicked');
+ 
     if (!userName || !password) {
       setWarningMessage('Username and Password are required.');
       setHideWarning(false);
@@ -34,7 +36,7 @@ const SuperUserLogin = ({ history, ...props }) => {
         userTypeId: userTypeId,
       };
       axios
-        .post('https://testing-th.herokuapp.com/api/user/login', credential)
+        .post("api/user/login", credential)
         .then((res) => {
           if (res.data) {
             console.log('Success');
