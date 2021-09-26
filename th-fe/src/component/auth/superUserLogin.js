@@ -34,7 +34,7 @@ const SuperUserLogin = ({ history, ...props }) => {
         userTypeId: userTypeId,
       };
       axios
-        .post('http://localhost:8081/api/user/login', credential)
+        .post('https://testing-th.herokuapp.com/api/user/login', credential)
         .then((res) => {
           if (res.data) {
             console.log('Success');
