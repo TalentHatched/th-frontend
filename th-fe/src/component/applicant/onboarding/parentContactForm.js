@@ -3,10 +3,16 @@ import React from "react";
 import { Button } from "@material-ui/core";
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
-const WelcomeScreen = () => {
+const ParentContactScreen = (props) => {
   return (
     <div>
+      <div>
+        <Button
+          startIcon={<KeyboardBackspaceIcon />}
+          onClick={() => props.handleReturnClick("WELCOME")}></Button>
+      </div>
       <h2>
         Our data shows that you are under 18. Please provide the name and email
         of a parent or guardian who can provide parental consent to use Talent
@@ -17,7 +23,10 @@ const WelcomeScreen = () => {
       <label>Parent or guardian email</label>
       <input type='text'></input>
       <div>
-        <Button variant='contained' color='primary'>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => props.handleParentContactClick()}>
           Enter name and email
         </Button>
       </div>
@@ -25,4 +34,4 @@ const WelcomeScreen = () => {
   );
 };
 
-export default WelcomeScreen;
+export default ParentContactScreen;

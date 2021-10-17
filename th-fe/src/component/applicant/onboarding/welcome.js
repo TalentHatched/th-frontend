@@ -7,6 +7,8 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 const WelcomeScreen = (props) => {
   return (
     <div>
+      <h1>Hello, {props.fullName}!</h1>
+
       <h1>Welcome!</h1>
       <h4>Image here</h4>
       <section>
