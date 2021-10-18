@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Button } from '@material-ui/core';
 
@@ -10,6 +10,9 @@ const AdminDashboard = () => {
   const [applicantRegistrationWarning, setApplicantRegistrationWarning] =
     useState('');
 
+
+
+    
   const handleAddApplicantClick = (event) => {
     setShowAddApplicantButton(false);
   };
@@ -27,9 +30,9 @@ const AdminDashboard = () => {
         setShowAddApplicantButton(true);
       })
       .catch((error) => {
-        console.log('what is error', error);
+        console.log('what is error', error.response);
         setApplicantRegistrationWarning(
-          'Unable to add new applicant. Please try again later.'
+          error.response.data.clientMessage
         );
       });
   };
