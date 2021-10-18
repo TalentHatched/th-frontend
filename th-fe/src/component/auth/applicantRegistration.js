@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import React, { useState } from "react";
+import { Button } from "@material-ui/core";
 
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
-import './applicantRegistration.css';
+import "./applicantRegistration.css";
 
 const ApplicantRegistrationForm = (props) => {
-  const [userFullName, setUserFullName] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [grade, setGrade] = useState('');
-  const [specialization, setSpecialization] = useState('');
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [fullNameWarning, setFullNameWarning] = useState('');
-  const [dateOfBirthWarning, setDateOfBirthWarning] = useState('');
-  const [userNameWarning, setUserNameWarning] = useState('');
-  const [userEmailWarning, setUserEmailWarning] = useState('');
-  const [userPasswordWarning, setUserPasswordWarning] = useState('');
-  const [userIdWarning, setUserIdWarning] = useState('');
+  const [userFullName, setUserFullName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [grade, setGrade] = useState("");
+  const [specialization, setSpecialization] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [fullNameWarning, setFullNameWarning] = useState("");
+  const [dateOfBirthWarning, setDateOfBirthWarning] = useState("");
+  const [userNameWarning, setUserNameWarning] = useState("");
+  const [userEmailWarning, setUserEmailWarning] = useState("");
+  const [userPasswordWarning, setUserPasswordWarning] = useState("");
+  const [userIdWarning, setUserIdWarning] = useState("");
 
-  let userId = localStorage.getItem('userId');
+  let userId = localStorage.getItem("userId");
 
   const handleFullNameChange = (event) => {
     setUserFullName(event.target.value);
@@ -68,50 +68,50 @@ const ApplicantRegistrationForm = (props) => {
       props.handleAddStudentSubmission(newApplicantInfo);
     } else {
       //
-      console.log('NOT READY');
+      console.log("NOT READY");
     }
   };
 
   const validate = () => {
     let readyToSubmit = true;
-    setFullNameWarning('');
-    setUserNameWarning('');
-    setUserEmailWarning('');
-    setUserPasswordWarning('');
-    setDateOfBirthWarning('');
+    setFullNameWarning("");
+    setUserNameWarning("");
+    setUserEmailWarning("");
+    setUserPasswordWarning("");
+    setDateOfBirthWarning("");
 
     if (!userFullName || !userName || !userEmail || !userPassword || !userId) {
       readyToSubmit = false;
 
       if (!userFullName) {
-        setFullNameWarning('Applicant Name required');
+        setFullNameWarning("Applicant Name required");
       }
 
       if (!userName) {
-        setUserNameWarning('Username required');
+        setUserNameWarning("Username required");
       }
 
       if (!userEmail) {
-        setUserEmailWarning('Email required');
+        setUserEmailWarning("Email required");
       }
 
       if (!userPassword) {
-        setUserPasswordWarning('Password required');
+        setUserPasswordWarning("Password required");
       }
 
       if (!userId) {
         setUserIdWarning(
-          'There is an error with your current session. Please login and try again'
+          "There is an error with your current session. Please login and try again"
         );
       }
     } else {
-      if (!userEmail.includes('@')) {
-        setUserEmailWarning('Please provide a valid email');
+      if (!userEmail.includes("@")) {
+        setUserEmailWarning("Please provide a valid email");
         readyToSubmit = false;
       }
 
       if (userPassword.length < 6) {
-        setUserPasswordWarning('Password must have at least 6 characters');
+        setUserPasswordWarning("Password must have at least 6 characters");
         readyToSubmit = false;
       }
     }
@@ -138,7 +138,7 @@ const ApplicantRegistrationForm = (props) => {
             value={userFullName}
             onChange={handleFullNameChange}></input>
         </div>
-        {fullNameWarning ? <h4 className='warning'>{fullNameWarning}</h4> : ''}
+        {fullNameWarning ? <h4 className='warning'>{fullNameWarning}</h4> : ""}
 
         <div>
           <label>Date of Birth</label>
@@ -151,7 +151,7 @@ const ApplicantRegistrationForm = (props) => {
         {dateOfBirthWarning ? (
           <h4 className='warning'>{dateOfBirthWarning}</h4>
         ) : (
-          ''
+          ""
         )}
 
         <div>
@@ -180,7 +180,7 @@ const ApplicantRegistrationForm = (props) => {
             value={userName}
             onChange={handleUserNameChange}></input>
         </div>
-        {userNameWarning ? <h4 className='warning'>{userNameWarning}</h4> : ''}
+        {userNameWarning ? <h4 className='warning'>{userNameWarning}</h4> : ""}
 
         <div>
           <label>User Email</label>
@@ -194,7 +194,7 @@ const ApplicantRegistrationForm = (props) => {
         {userEmailWarning ? (
           <h4 className='warning'>{userEmailWarning}</h4>
         ) : (
-          ''
+          ""
         )}
         <div>
           <label>Password</label>
@@ -206,11 +206,15 @@ const ApplicantRegistrationForm = (props) => {
         {userPasswordWarning ? (
           <h4 className='warning'>{userPasswordWarning}</h4>
         ) : (
-          ''
+          ""
         )}
-      
 
-        {userIdWarning ? <h4 className='warning'>{userIdWarning}</h4> : ''}
+        {userIdWarning ? <h4 className='warning'>{userIdWarning}</h4> : ""}
+        {props.applicantRegistrationWarning ? (
+          <h4 className='warning'>{props.applicantRegistrationWarning}</h4>
+        ) : (
+          ""
+        )}
         <Button
           variant='contained'
           color='primary'
