@@ -2,12 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import {
   Button,
-  CssBaseline,
-  RadioGroup,
-  FormLabel,
   MenuItem,
   FormGroup,
-  FormControl,
   FormControlLabel,
   Checkbox,
 } from "@material-ui/core";
@@ -17,6 +13,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+
 const employmentTypeOptions = [
   {
     value: "Part-time",
@@ -72,6 +69,18 @@ const WorkExperienceForm = (props) => {
     }
   };
 
+  const handleStartDateChange = (value) => {
+    setJobStartDate(value);
+    let dateStr = value.toString();
+    setWorkExperience({ ...workExperience, ["startDate"]: dateStr });
+  };
+
+  const handleEndDateChange = (value) => {
+    setJobEndDate(value);
+    let dateStr = value.toString();
+    setWorkExperience({ ...workExperience, ["endDate"]: dateStr });
+  };
+
   const addExperienceClick = () => {
     if (validateForm()) {
       let startDateStr = jobStartDate.toString();
@@ -84,12 +93,13 @@ const WorkExperienceForm = (props) => {
       setWorkExperience({
         ...workExperience,
         ["currentJob"]: isCurrentJob,
-        ["startDate"]: startDateStr,
+        ["startDate"]: jobStartDate.toString(),
         ["endDate"]: endDateStr,
       });
-      props.addWorkExperience(workExperience)
+      //props.addWorkExperience(workExperience);
     }
-    console.log("What is work exp", workExperience);
+
+    props.addWorkExperience(workExperience);
   };
 
   const validateForm = () => {
@@ -109,19 +119,13 @@ const WorkExperienceForm = (props) => {
     if (!location) {
       invalidItems.push("Location");
     }
-    let startDateString = jobStartDate.toString();
-    if (startDateString === "") {
+    if (startDate === "") {
       invalidItems.push("Start Date");
-    } else {
-      setWorkExperience({ ...workExperience, ["startDate"]: startDateString });
     }
 
     if (!isCurrentJob) {
-      let endDateString = jobEndDate.toString();
-      if (endDateString === "") {
+      if (endDate=== "") {
         invalidItems.push("End Date");
-      } else {
-        setWorkExperience({ ...workExperience, ["endDate"]: endDateString });
       }
     }
     if (!jobDescription) {
@@ -165,8 +169,8 @@ const WorkExperienceForm = (props) => {
           value={employmentType}
           onChange={handleChange}
           required>
-          {employmentTypeOptions.map((option) => (
-            <MenuItem key={option.idx} value={option.value}>
+          {employmentTypeOptions.map((option, index) => (
+            <MenuItem key={index} value={option.value}>
               {option.value}
             </MenuItem>
           ))}
@@ -207,7 +211,7 @@ const WorkExperienceForm = (props) => {
             maxDate={new Date()}
             name='startDate'
             value={jobStartDate}
-            onChange={(newValue) => setJobStartDate(newValue)}
+            onChange={(newValue) => handleStartDateChange(newValue)}
             renderInput={(params) => (
               <TextField {...params} helperText={null} />
             )}
@@ -220,7 +224,7 @@ const WorkExperienceForm = (props) => {
               maxDate={new Date()}
               name='endDate'
               value={jobEndDate}
-              onChange={(newValue) => setJobEndDate(newValue)}
+              onChange={(newValue) => handleEndDateChange(newValue)}
               renderInput={(params) => (
                 <TextField {...params} helperText={null} />
               )}
