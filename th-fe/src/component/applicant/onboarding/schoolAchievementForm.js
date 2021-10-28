@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button, FormGroup, FormControlLabel } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
@@ -18,6 +18,17 @@ const SchoolAchievementForm = (props) => {
   });
   const [warning, setWarning] = useState("");
 
+  useEffect(() => {
+    if (props.schoolAchievementIdx !== "") {
+      console.log("What is data", props.achievementData);
+      console.log(props.schoolAchievementIdx);
+      setSchoolAchievement(props.achievementData[props.schoolAchievementIdx]);
+      setAchievementDate(
+        props.achievementData[props.schoolAchievementIdx].date
+      );
+    }
+  }, []);
+
   const { title, schoolName, location, date, description } = schoolAchievement;
 
   const handleChange = (event) => {
@@ -35,9 +46,16 @@ const SchoolAchievementForm = (props) => {
     }
   };
 
-  const addSchoolAchievementClick = () => {
+  const addSchoolAchievementClick = (type) => {
     if (validateForm()) {
-      props.addSchoolAchievement(schoolAchievement);
+      console.log("form now", schoolAchievement);
+      if (type === "add") {
+        props.addSchoolAchievement(schoolAchievement);
+      } else if (type === "edit") {
+        props.updateSchoolAchievement(schoolAchievement, props.schoolAchievementIdx);
+      }
+
+      //sprops.addSchoolAchievement(schoolAchievement);
     }
   };
 
@@ -133,12 +151,23 @@ const SchoolAchievementForm = (props) => {
           required
         />
       </FormGroup>
-      <Button
+     
+
+      {props.schoolAchievementIdx === "" ? (
+        <Button
         variant='contained'
         color='primary'
-        onClick={() => addSchoolAchievementClick()}>
+        onClick={() => addSchoolAchievementClick("add")}>
         Add school achievement
       </Button>
+      ) : (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => addSchoolAchievementClick("edit")}>
+          Update school achievement
+        </Button>
+      )}
     </div>
   );
 };

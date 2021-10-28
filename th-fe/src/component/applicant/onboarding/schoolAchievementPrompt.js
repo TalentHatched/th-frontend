@@ -28,13 +28,13 @@ const SchooAchievementPrompt = (props) => {
         <Button
           variant='contained'
           color='primary'
-          onClick={() => props.handleSchoolAchievementClick(true)}>
+          onClick={() => props.handleSchoolAchievementPromptClick(true)}>
           Yes
         </Button>
         <Button
           variant='outlined'
           color='primary'
-          onClick={() => props.handleSchoolAchievementClick(false)}>
+          onClick={() => props.handleSchoolAchievementPromptClick(false)}>
           No
         </Button>
       </div>

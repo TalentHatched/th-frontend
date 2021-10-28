@@ -9,7 +9,7 @@ const SchoolAchievementList = (props) => {
 
   useEffect(() => {
     setData(props.schoolAchievementData);
-  }, []);
+  }, [data]);
 
   const convertDate = (date) => {
     if (date) {
@@ -20,6 +20,14 @@ const SchoolAchievementList = (props) => {
     }
   };
 
+  const deleteAchievement = (idx) => {
+    let newData = data.filter((data, index) => {
+      return idx !== index;
+    });
+    setData(newData);
+    props.deleteAchievement(idx);
+  };
+
   return (
     <div>
       <h1>My school achievements</h1>
@@ -27,6 +35,13 @@ const SchoolAchievementList = (props) => {
         return (
           <Card key={index} variant='outlined' className='work-experience-card'>
             <CardContent>
+            <Button
+                onClick={() => {
+                  props.editAchievement(data, index);
+                }}>
+                Edit
+              </Button>
+              <Button onClick={() => deleteAchievement(index)}>Delete</Button>
               <Typography>{data.title}</Typography>
               <Typography>{data.schoolName}</Typography>
               <Typography>{data.location}</Typography>
@@ -41,7 +56,7 @@ const SchoolAchievementList = (props) => {
         <Button
           variant='outlined'
           startIcon={<AddCircleIcon />}
-          onClick={() => props.handleNextPageClick("SCHOOL_ACHIEVEMENT_FORM")}>
+          onClick={() => props.handleNextPageClick(true)}>
           Add school achievement
         </Button>
       </div>
