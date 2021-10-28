@@ -48,6 +48,7 @@ const ApplicantDashboard = () => {
   const [courseCertificate, setCourseCertificate] = useState([]);
   const [schoolAchievement, setSchoolAchievement] = useState([]);
 
+  const [currentWorkExpIdx, setCurrentWorkExpIdx] = useState("");
   useEffect(() => {
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
       console.log("What is res", res.data);
@@ -67,7 +68,7 @@ const ApplicantDashboard = () => {
   };
 
   const handleNextPageClick = (page) => {
-    console.log('What is page', page)
+    console.log("What is page", page);
     setCurrentPage(page);
   };
 
@@ -94,6 +95,7 @@ const ApplicantDashboard = () => {
 
   const handleWorkExperiencePromptClick = (haveExperience) => {
     if (haveExperience) {
+      setCurrentWorkExpIdx("")
       setCurrentPage("WORK_EXP_FORM");
     } else {
       setCurrentPage("COURSE_CERTIFICATE_PROMPT");
@@ -127,6 +129,21 @@ const ApplicantDashboard = () => {
     setCurrentPage("WORK_EXP_LIST");
   };
 
+  const updateWorkExperience = (data, index) => {
+    let updateWorkExperience = [...workExperience];
+    updateWorkExperience[index] = data;
+    setWorkExperience(updateWorkExperience);
+    setCurrentPage("WORK_EXP_LIST");
+  };
+
+  const deleteWorkExperience = (index) => {
+    let updateWorkExperience = workExperience.filter((item, idx) => {
+      return idx !== index
+    })
+    setWorkExperience(updateWorkExperience)
+    console.log('What is exp now', updateWorkExperience)
+  }
+
   const addCourseCertificate = (data) => {
     console.log("It is clicked");
     const updateCourseCertificate = [...courseCertificate, data];
@@ -138,6 +155,11 @@ const ApplicantDashboard = () => {
     const updateSchoolAchievement = [...schoolAchievement, data];
     setSchoolAchievement(updateSchoolAchievement);
     setCurrentPage("SCHOOL_ACHIEVEMENT_LIST");
+  };
+
+  const editWorkExperience = (data, idx) => {
+    setCurrentWorkExpIdx(idx);
+    setCurrentPage("WORK_EXP_FORM");
   };
 
   return (
@@ -216,6 +238,9 @@ const ApplicantDashboard = () => {
         <WorkExperienceForm
           handleReturnClick={handleReturnClick}
           addWorkExperience={addWorkExperience}
+          updateWorkExperience={updateWorkExperience}
+          workExperienceIdx={currentWorkExpIdx}
+          workData={workExperience}
         />
       ) : (
         ""
@@ -226,7 +251,9 @@ const ApplicantDashboard = () => {
           handleReturnClick={handleReturnClick}
           workData={workExperience}
           handleWorkExperienceContinueClick={handleNextPageClick}
-          handleNextPageClick={handleNextPageClick}
+          handleNextPageClick={handleWorkExperiencePromptClick}
+          editWorkExperience={editWorkExperience}
+          deleteWorkExperience={deleteWorkExperience}
         />
       ) : (
         ""

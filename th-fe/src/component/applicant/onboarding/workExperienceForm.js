@@ -45,6 +45,19 @@ const WorkExperienceForm = (props) => {
   });
   const [warning, setWarning] = useState("");
 
+  useEffect(() => {
+    console.log("Form Props", props);
+    if (props.workExperienceIdx !== "") {
+      setWorkExperience(props.workData[props.workExperienceIdx]);
+      setJobStartDate(props.workData[props.workExperienceIdx].startDate);
+      setIsCurrentJob(props.workData[props.workExperienceIdx].currentJob);
+      if (!props.workData[props.workExperienceIdx].currentJob) {
+        setJobEndDate(props.workData[props.workExperienceIdx].endDate);
+      }
+    }
+   
+  }, []);
+
   const {
     jobTitle,
     employmentType,
@@ -56,32 +69,49 @@ const WorkExperienceForm = (props) => {
     jobDescription,
   } = workExperience;
 
-  useEffect(() => {}, [workExperience]);
-
   const handleChange = (event) => {
+    console.log("EVENT", event);
+    console.log("Work Exp", workExperience);
     if (event.target.name === "currentJob") {
       setIsCurrentJob(event.target.checked);
+      setWorkExperience({
+        ...workExperience,
+        ["currentJob"]: event.target.checked,
+      });
+      if (event.target.checked) {
+        setWorkExperience({ ...workExperience, ["endDate"]: "" });
+        setJobEndDate("");
+      }
     } else {
       setWorkExperience({
         ...workExperience,
         [event.target.name]: event.target.value,
+        ["currentJob"]: isCurrentJob,
       });
     }
   };
 
   const handleStartDateChange = (value) => {
     setJobStartDate(value);
-    let dateStr = value.toString();
-    setWorkExperience({ ...workExperience, ["startDate"]: dateStr });
+    if (value) {
+      let dateStr = value.toString();
+      setWorkExperience({ ...workExperience, ["startDate"]: dateStr });
+    }
+    // let dateStr = value.toString();
+    // setWorkExperience({ ...workExperience, ["startDate"]: dateStr });
   };
 
   const handleEndDateChange = (value) => {
     setJobEndDate(value);
-    let dateStr = value.toString();
-    setWorkExperience({ ...workExperience, ["endDate"]: dateStr });
+    if (value) {
+      let dateStr = value.toString();
+      setWorkExperience({ ...workExperience, ["endDate"]: dateStr });
+    }
+    // let dateStr = value.toString();
+    // setWorkExperience({ ...workExperience, ["endDate"]: dateStr });
   };
 
-  const addExperienceClick = () => {
+  const addExperienceClick = (type) => {
     if (validateForm()) {
       let startDateStr = jobStartDate.toString();
       let endDateStr = "";
@@ -90,19 +120,31 @@ const WorkExperienceForm = (props) => {
       }
       console.log("start", startDateStr);
       console.log("end", endDateStr);
+      console.log("isCurrentJob", isCurrentJob);
       setWorkExperience({
         ...workExperience,
         ["currentJob"]: isCurrentJob,
         ["startDate"]: jobStartDate.toString(),
         ["endDate"]: endDateStr,
       });
+     
+      workExperience.currentJob = isCurrentJob
+      if (type === "add") {
+        props.addWorkExperience(workExperience);
+      } else if (type==='edit') {
+        console.log('HERE')
+        props.updateWorkExperience(workExperience, props.workExperienceIdx);
+      }
       //props.addWorkExperience(workExperience);
     }
 
-    props.addWorkExperience(workExperience);
+    //props.addWorkExperience(workExperience);
   };
 
   const validateForm = () => {
+    // if (isCurrentJob !== currentJob) {
+    //   currentJob = isCurrentJob;
+    // }
     setWarning("");
     let invalidItems = [];
     if (!jobTitle) {
@@ -124,7 +166,7 @@ const WorkExperienceForm = (props) => {
     }
 
     if (!isCurrentJob) {
-      if (endDate=== "") {
+      if (endDate === "") {
         invalidItems.push("End Date");
       }
     }
@@ -245,12 +287,21 @@ const WorkExperienceForm = (props) => {
         />
       </FormGroup>
       {warning ? <h4>{warning} required</h4> : ""}
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={() => addExperienceClick()}>
-        Add experience
-      </Button>
+      {props.workExperienceIdx === "" ? (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => addExperienceClick("add")}>
+          Add experience
+        </Button>
+      ) : (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => addExperienceClick("edit")}>
+          Update experience
+        </Button>
+      )}
     </div>
   );
 };
