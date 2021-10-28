@@ -34,6 +34,7 @@ const SoftSkillScreen = (props) => {
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => props.handleReturnClick("INDUSTRY")}></Button>
       </div>
+      <h2>What are your top 3 soft skills?</h2>
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>

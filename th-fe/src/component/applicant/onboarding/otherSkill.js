@@ -30,18 +30,18 @@ const OtherSkillScreen = (props) => {
     console.log("skillLsit", skillList);
   };
 
-  const removeSkill = (item, idx) => {
-    console.log("Remove this", item, idx);
+  const removeSkill = (item) => {
+    setSkillList(skillList.filter((skill) => skill !== item));
   };
 
   const listSkills = skillList.map((skill, idx) => {
     return (
-      <ListItem>
+      <ListItem key={idx}>
         <ListItemText primary={skill} />
         <IconButton
           edge='end'
           aria-label='delete'
-          onClick={() => removeSkill(skill, idx)}>
+          onClick={() => removeSkill(skill)}>
           <DeleteIcon />
         </IconButton>
       </ListItem>
@@ -59,7 +59,13 @@ const OtherSkillScreen = (props) => {
         <div>
           <h2>Your Skills</h2>
           <List>{listSkills}</List>
-          <Button color="primary" variant="contained" endIcon={<ArrowForwardIcon />}>Continue</Button>
+          <Button
+            color='primary'
+            variant='contained'
+            endIcon={<ArrowForwardIcon />}
+            onClick={() => props.handleOtherSkillClick()}>
+            Continue
+          </Button>
         </div>
       ) : (
         <div>
