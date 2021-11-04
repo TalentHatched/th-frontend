@@ -18,10 +18,24 @@ const CourseCertificateForm = (props) => {
   });
   const [warning, setWarning] = useState("");
 
+  useEffect(() => {
+    if (props.courseCertificateIdx !== "") {
+      setCourseCertificate(
+        props.courseCertificateData[props.courseCertificateIdx]
+      );
+      console.log(
+        "What is course cert",
+        props.courseCertificateData,
+        props.courseCertificateIdx
+      );
+      setDate(
+        props.courseCertificateData[props.courseCertificateIdx].issueDate
+      );
+    }
+  }, []);
+
   const { title, issuingOrganization, issueDate, description } =
     courseCertificate;
-
-  useEffect(() => {}, [courseCertificate]);
 
   const handleChange = (event) => {
     setCourseCertificate({

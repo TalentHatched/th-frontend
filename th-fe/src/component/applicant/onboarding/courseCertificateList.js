@@ -23,6 +23,13 @@ const CourseCertificateList = (props) => {
         return (
           <Card key={index} variant='outlined' className='work-experience-card'>
             <CardContent>
+            <Button
+                onClick={() => {
+                  props.editCourseCertificate(data, index);
+                }}>
+                Edit
+              </Button>
+              <Button onClick={() => props.deleteCourseCertificate(index)}>Delete</Button>
               <Typography>{data.title}</Typography>
               <Typography>{data.issuingOrganization}</Typography>
               <Typography>{convertDate(data.issueDate)}</Typography>

@@ -49,6 +49,9 @@ const ApplicantDashboard = () => {
   const [schoolAchievement, setSchoolAchievement] = useState([]);
 
   const [currentWorkExpIdx, setCurrentWorkExpIdx] = useState("");
+  const [currentAchievementIdx, setCurrentAchievementIdx] = useState("");
+  const [currentCourseCertificateIdx, setCurrentCourseCertificateIdx] = useState("")
+
   useEffect(() => {
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
       console.log("What is res", res.data);
@@ -95,7 +98,7 @@ const ApplicantDashboard = () => {
 
   const handleWorkExperiencePromptClick = (haveExperience) => {
     if (haveExperience) {
-      setCurrentWorkExpIdx("")
+      setCurrentWorkExpIdx("");
       setCurrentPage("WORK_EXP_FORM");
     } else {
       setCurrentPage("COURSE_CERTIFICATE_PROMPT");
@@ -106,14 +109,16 @@ const ApplicantDashboard = () => {
     console.log("clicked");
     console.log(haveCertificate);
     if (haveCertificate) {
+      setCurrentCourseCertificateIdx("")
       setCurrentPage("COURSE_CERTIFICATE_FORM");
     } else {
       setCurrentPage("SCHOOL_ACHIEVEMENT_PROMPT");
     }
   };
 
-  const handleSchoolAchievementClick = (haveSchoolAchievement) => {
+  const handleSchoolAchievementPromptClick = (haveSchoolAchievement) => {
     if (haveSchoolAchievement) {
+      setCurrentAchievementIdx("")
       setCurrentPage("SCHOOL_ACHIEVEMENT_FORM");
     } else {
       setCurrentPage("ADDITIONAL_QUESTION");
@@ -136,12 +141,34 @@ const ApplicantDashboard = () => {
     setCurrentPage("WORK_EXP_LIST");
   };
 
+  const updateAchievement = (data, index) => {
+    let updateAchievement = [...schoolAchievement];
+    updateAchievement[index] = data;
+    setSchoolAchievement(updateAchievement);
+    setCurrentPage("SCHOOL_ACHIEVEMENT_LIST");
+  };
+
   const deleteWorkExperience = (index) => {
     let updateWorkExperience = workExperience.filter((item, idx) => {
+      return idx !== index;
+    });
+    setWorkExperience(updateWorkExperience);
+    console.log("What is exp now", updateWorkExperience);
+  };
+
+  const deleteAchievement = (index) => {
+    let updateAchievement = schoolAchievement.filter((item, idx) => {
+      return idx !== index;
+    });
+    setSchoolAchievement(updateAchievement);
+  };
+
+  const deleteCourseCertificate = (index) => {
+    let updateCourseCertificate = courseCertificate.filter((item, idx) => {
       return idx !== index
     })
-    setWorkExperience(updateWorkExperience)
-    console.log('What is exp now', updateWorkExperience)
+    setCourseCertificate(updateCourseCertificate)
+    setCurrentPage("COURSE_CERTIFICATE_LIST")
   }
 
   const addCourseCertificate = (data) => {
@@ -161,6 +188,17 @@ const ApplicantDashboard = () => {
     setCurrentWorkExpIdx(idx);
     setCurrentPage("WORK_EXP_FORM");
   };
+
+  const editAchievement = (data, idx) => {
+    setCurrentAchievementIdx(idx);
+    setCurrentPage("SCHOOL_ACHIEVEMENT_FORM");
+  };
+
+  const editCourseCertificate=(data, idx) => {
+    console.log('What is idx', idx)
+    setCurrentCourseCertificateIdx(idx)
+    setCurrentPage("COURSE_CERTIFICATE_FORM")
+  }
 
   return (
     <div className='applicant-dashboard'>
@@ -228,7 +266,7 @@ const ApplicantDashboard = () => {
         <SchoolAchievementPrompt
           handleReturnClick={handleReturnClick}
           haveCertificate={courseCertificate.length}
-          handleSchoolAchievementClick={handleSchoolAchievementClick}
+          handleSchoolAchievementPromptClick={handleSchoolAchievementPromptClick}
         />
       ) : (
         ""
@@ -264,6 +302,8 @@ const ApplicantDashboard = () => {
           handleReturnClick={handleReturnClick}
           addCourseCertificate={addCourseCertificate}
           handleNextPageClick={handleNextPageClick}
+          courseCertificateIdx={currentCourseCertificateIdx}
+          courseCertificateData={courseCertificate}
         />
       ) : (
         ""
@@ -275,6 +315,8 @@ const ApplicantDashboard = () => {
           courseCertificateData={courseCertificate}
           handleCourseCertificateContinueClick={handleNextPageClick}
           handleNextPageClick={handleNextPageClick}
+          editCourseCertificate={editCourseCertificate}
+          deleteCourseCertificate={deleteCourseCertificate}
         />
       ) : (
         ""
@@ -284,6 +326,9 @@ const ApplicantDashboard = () => {
         <SchoolAchievementForm
           handleReturnClick={handleReturnClick}
           addSchoolAchievement={addSchoolAchievement}
+          updateSchoolAchievement={updateAchievement}
+          schoolAchievementIdx={currentAchievementIdx}
+          achievementData={schoolAchievement}
         />
       ) : (
         ""
@@ -293,8 +338,10 @@ const ApplicantDashboard = () => {
         <SchoolAchievementList
           handleReturnClick={handleReturnClick}
           schoolAchievementData={schoolAchievement}
-          handleNextPageClick={handleNextPageClick}
+          handleNextPageClick={handleSchoolAchievementPromptClick}
           handleSchoolAchievementContinueClick={handleNextPageClick}
+          editAchievement={editAchievement}
+          deleteAchievement={deleteAchievement}
         />
       ) : (
         ""
