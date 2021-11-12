@@ -32,7 +32,7 @@ const SoftSkillScreen = (props) => {
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
-          onClick={() => props.handleReturnClick("INDUSTRY")}></Button>
+          onClick={() => props.handleReturnClick("GENERAL_TECH_SKILL")}></Button>
       </div>
       <h2>What are your top 3 soft skills?</h2>
       <Box sx={{ minWidth: 120 }}>

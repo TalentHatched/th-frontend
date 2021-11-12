@@ -6,6 +6,8 @@ import Welcome from "./onboarding/welcome";
 import ApplicantProfile from "./applicantProfile";
 import ParentContact from "./onboarding/parentContactForm";
 import Industry from "./onboarding/industry";
+import ProgrammingLanguages from "./onboarding/programmingLanguages";
+import GeneralTechSkill from "./onboarding/generalTechSkills";
 import SoftSkill from "./onboarding/softSkill";
 import OtherSkill from "./onboarding/otherSkill";
 import WorkExperiencePrompt from "./onboarding/workExperiencePrompt";
@@ -18,6 +20,8 @@ import CourseCertificateList from "./onboarding/courseCertificateList";
 import SchoolAchievementForm from "./onboarding/schoolAchievementForm";
 import SchoolAchievementList from "./onboarding/schoolAchievementList";
 import AdditionalQuestion from "./onboarding/additionalQuestion";
+import LastQuestion from "./onboarding/lastQuestion";
+import ProfileComplete from "./onboarding/profileComplete";
 
 const ApplicantDashboard = () => {
   const initialData = {
@@ -44,13 +48,19 @@ const ApplicantDashboard = () => {
   const [userBirthDate, setUserBirthDate] = useState("");
   const [currentPage, setCurrentPage] = useState("PROFILE");
   const [applicantData, setApplicantData] = useState([]);
+  const [techTrack, setTechTrack] = useState(false)
+  const [industry, setIndustry] = useState({});
+
+  const [programmingLanguage, setProgrammingLanguage] = useState({});
+  const [generalTech, setGeneralTech] = useState({});
   const [workExperience, setWorkExperience] = useState([]);
   const [courseCertificate, setCourseCertificate] = useState([]);
   const [schoolAchievement, setSchoolAchievement] = useState([]);
 
   const [currentWorkExpIdx, setCurrentWorkExpIdx] = useState("");
   const [currentAchievementIdx, setCurrentAchievementIdx] = useState("");
-  const [currentCourseCertificateIdx, setCurrentCourseCertificateIdx] = useState("")
+  const [currentCourseCertificateIdx, setCurrentCourseCertificateIdx] =
+    useState("");
 
   useEffect(() => {
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
@@ -83,7 +93,26 @@ const ApplicantDashboard = () => {
     setCurrentPage("INDUSTRY");
   };
 
-  const handleIndustryClick = () => {
+  const handleIndustryClick = (data) => {
+    setIndustry(data);
+    console.log("What is data", data);
+    if (data.technology) {
+      console.log("got here");
+      setTechTrack(true)
+      setCurrentPage("PROGRAMMING_LANGUAGES");
+    } else {
+      setCurrentPage("GENERAL_TECH_SKILL");
+    }
+  };
+
+  const handleProgrammingLanguageClick = (data) => {
+    setProgrammingLanguage(data);
+    console.log("What is here");
+    setCurrentPage("GENERAL_TECH_SKILL");
+  };
+
+  const handleGeneralTechClick = (data) => {
+    setGeneralTech(data);
     setCurrentPage("SOFT_SKILL");
   };
 
@@ -109,7 +138,7 @@ const ApplicantDashboard = () => {
     console.log("clicked");
     console.log(haveCertificate);
     if (haveCertificate) {
-      setCurrentCourseCertificateIdx("")
+      setCurrentCourseCertificateIdx("");
       setCurrentPage("COURSE_CERTIFICATE_FORM");
     } else {
       setCurrentPage("SCHOOL_ACHIEVEMENT_PROMPT");
@@ -118,7 +147,7 @@ const ApplicantDashboard = () => {
 
   const handleSchoolAchievementPromptClick = (haveSchoolAchievement) => {
     if (haveSchoolAchievement) {
-      setCurrentAchievementIdx("")
+      setCurrentAchievementIdx("");
       setCurrentPage("SCHOOL_ACHIEVEMENT_FORM");
     } else {
       setCurrentPage("ADDITIONAL_QUESTION");
@@ -148,6 +177,13 @@ const ApplicantDashboard = () => {
     setCurrentPage("SCHOOL_ACHIEVEMENT_LIST");
   };
 
+  const updateCourseCertificate = (data, index) => {
+    let updateCourseCertificate = [...courseCertificate];
+    updateCourseCertificate[index] = data;
+    setCourseCertificate(updateCourseCertificate);
+    setCurrentPage("COURSE_CERTIFICATE_LIST");
+  };
+
   const deleteWorkExperience = (index) => {
     let updateWorkExperience = workExperience.filter((item, idx) => {
       return idx !== index;
@@ -164,16 +200,18 @@ const ApplicantDashboard = () => {
   };
 
   const deleteCourseCertificate = (index) => {
+    console.log("Clicked");
     let updateCourseCertificate = courseCertificate.filter((item, idx) => {
-      return idx !== index
-    })
-    setCourseCertificate(updateCourseCertificate)
-    setCurrentPage("COURSE_CERTIFICATE_LIST")
-  }
+      return idx !== index;
+    });
+    console.log("updateCourseCertificate", updateCourseCertificate);
+    setCourseCertificate(updateCourseCertificate);
+  };
 
   const addCourseCertificate = (data) => {
     console.log("It is clicked");
     const updateCourseCertificate = [...courseCertificate, data];
+    console.log("What is course cert", updateCourseCertificate);
     setCourseCertificate(updateCourseCertificate);
     setCurrentPage("COURSE_CERTIFICATE_LIST");
   };
@@ -194,16 +232,28 @@ const ApplicantDashboard = () => {
     setCurrentPage("SCHOOL_ACHIEVEMENT_FORM");
   };
 
-  const editCourseCertificate=(data, idx) => {
-    console.log('What is idx', idx)
-    setCurrentCourseCertificateIdx(idx)
-    setCurrentPage("COURSE_CERTIFICATE_FORM")
-  }
+  const editCourseCertificate = (data, idx) => {
+    console.log("What is idx", idx);
+    setCurrentCourseCertificateIdx(idx);
+    setCurrentPage("COURSE_CERTIFICATE_FORM");
+  };
+
+  const additionalQuestionContinueClick = () => {
+    setCurrentPage("LAST_QUESTION");
+  };
+
+  const lastQuestionContinueClick = () => {
+    setCurrentPage("PROFILE_COMPLETE");
+  };
+
+  const viewProfileClick = () => {
+    setCurrentPage("PROFILE");
+  };
 
   return (
     <div className='applicant-dashboard'>
       {currentPage === "PROFILE" ? (
-        <ApplicantProfile data={applicantData} />
+        <ApplicantProfile data={applicantData} fullName={fullName} />
       ) : (
         ""
       )}
@@ -224,14 +274,38 @@ const ApplicantDashboard = () => {
         <Industry
           handleReturnClick={handleReturnClick}
           handleIndustryClick={handleIndustryClick}
+          industryData={industry}
         />
       ) : (
         ""
       )}
+
+      {currentPage === "PROGRAMMING_LANGUAGES" ? (
+        <ProgrammingLanguages
+          handleReturnClick={handleReturnClick}
+          handleProgrammingLanguageClick={handleProgrammingLanguageClick}
+          programmingLanguageData={programmingLanguage}
+        />
+      ) : (
+        ""
+      )}
+
+      {currentPage === "GENERAL_TECH_SKILL" ? (
+        <GeneralTechSkill
+          handleReturnClick={handleReturnClick}
+          handleGeneralTechClick={handleGeneralTechClick}
+          techTrack={techTrack}
+          generalTechData={generalTech}
+        />
+      ) : (
+        " "
+      )}
+
       {currentPage === "SOFT_SKILL" ? (
         <SoftSkill
           handleReturnClick={handleReturnClick}
           handleSoftSkillClick={handleSoftSkillClick}
+          techTrack={techTrack}
         />
       ) : (
         ""
@@ -266,7 +340,9 @@ const ApplicantDashboard = () => {
         <SchoolAchievementPrompt
           handleReturnClick={handleReturnClick}
           haveCertificate={courseCertificate.length}
-          handleSchoolAchievementPromptClick={handleSchoolAchievementPromptClick}
+          handleSchoolAchievementPromptClick={
+            handleSchoolAchievementPromptClick
+          }
         />
       ) : (
         ""
@@ -301,6 +377,7 @@ const ApplicantDashboard = () => {
         <CourseCertificateForm
           handleReturnClick={handleReturnClick}
           addCourseCertificate={addCourseCertificate}
+          updateCourseCertificate={updateCourseCertificate}
           handleNextPageClick={handleNextPageClick}
           courseCertificateIdx={currentCourseCertificateIdx}
           courseCertificateData={courseCertificate}
@@ -347,7 +424,24 @@ const ApplicantDashboard = () => {
         ""
       )}
 
-      {currentPage === "ADDITIONAL_QUESTION" ? <AdditionalQuestion /> : ""}
+      {currentPage === "ADDITIONAL_QUESTION" ? (
+        <AdditionalQuestion
+          additionalQuestionContinueClick={additionalQuestionContinueClick}
+        />
+      ) : (
+        ""
+      )}
+
+      {currentPage === "LAST_QUESTION" ? (
+        <LastQuestion lastQuestionContinueClick={lastQuestionContinueClick} />
+      ) : (
+        ""
+      )}
+      {currentPage === "PROFILE_COMPLETE" ? (
+        <ProfileComplete viewProfileClick={viewProfileClick} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

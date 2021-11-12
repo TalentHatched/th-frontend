@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Button,
@@ -20,6 +20,16 @@ const IndustryScreen = (props) => {
     retail: false,
     other: false,
   });
+  const [warning, setWarning] = useState("");
+
+  useEffect(() => {
+    // if (props.industryData.length) {
+    console.log("industryData", props.industryData);
+   
+    if (Object.values(props.industryData).length) {
+      setIndustryState(props.industryData);
+    }
+  }, []);
 
   const { technology, business, medical, retail, other } = industryState;
 
@@ -28,6 +38,23 @@ const IndustryScreen = (props) => {
       ...industryState,
       [event.target.name]: event.target.checked,
     });
+    console.log("What is industryState", industryState);
+  };
+
+  const handleChooseIndustryClick = () => {
+    setWarning("");
+    if (!technology && !business && !medical && !retail && !other) {
+      setWarning("Please select at least one industry");
+    } else {
+      // let applicantIndustry = [];
+      // for (const industry in industryState) {
+      //   if (industryState[industry]) {
+      //     applicantIndustry.push(industry);
+      //   }
+      // }
+      // console.log("what is industry state on click", industryState);
+      props.handleIndustryClick(industryState);
+    }
   };
 
   return (
@@ -53,7 +80,6 @@ const IndustryScreen = (props) => {
                 checked={technology}
                 onChange={handleChange}
                 name='technology'
-                defaultChecked
               />
             }
             label='Technology (CS, Development, Design)'
@@ -92,11 +118,7 @@ const IndustryScreen = (props) => {
 
           <FormControlLabel
             control={
-              <Checkbox
-                checked={other}
-                onChange={handleChange}
-                name='other'
-              />
+              <Checkbox checked={other} onChange={handleChange} name='other' />
             }
             label='Other'
           />
@@ -104,11 +126,12 @@ const IndustryScreen = (props) => {
 
         {/* <FormHelperText>You can display an error</FormHelperText> */}
       </FormControl>
+      {warning ? <h4>{warning}</h4> : ""}
       <div>
         <Button
           variant='contained'
           color='primary'
-          onClick={() => props.handleIndustryClick()}>
+          onClick={() => handleChooseIndustryClick()}>
           Choose Industry
         </Button>
       </div>
