@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Button,
@@ -18,8 +18,13 @@ import DeleteIcon from "@material-ui/icons/Delete";
 const OtherSkillScreen = (props) => {
   const [currentSkill, setCurrentSkill] = useState("");
   const [skillList, setSkillList] = useState([]);
+  const [warning, setWarning] = useState([]);
 
-  var skills = [];
+  useEffect(() => {
+    if (props.otherSkillData.length) {
+      setSkillList(props.otherSkillData);
+    }
+  },[]);
   const onInputFieldChange = (event) => {
     setCurrentSkill(event.target.value);
   };
@@ -30,8 +35,30 @@ const OtherSkillScreen = (props) => {
     console.log("skillLsit", skillList);
   };
 
-  const removeSkill = (item) => {
-    setSkillList(skillList.filter((skill) => skill !== item));
+  const removeSkill = (index) => {
+    setSkillList(skillList.filter((skill, idx) => idx !== index));
+  };
+
+  const onSubmitSkill = () => {
+    if (validate()) {
+      props.handleOtherSkillClick(skillList);
+    }
+  };
+
+  const validate = () => {
+    let skillSet = new Set();
+
+    skillList.forEach((skill) => {
+      let lowerCaseSkill = skill.toLowerCase();
+      skillSet.add(lowerCaseSkill);
+    });
+
+    if (skillSet.size !== skillList.length) {
+      setWarning("Duplicate skills detected - please provide unique skills");
+      return false;
+    } else {
+      return true;
+    }
   };
 
   const listSkills = skillList.map((skill, idx) => {
@@ -41,7 +68,7 @@ const OtherSkillScreen = (props) => {
         <IconButton
           edge='end'
           aria-label='delete'
-          onClick={() => removeSkill(skill)}>
+          onClick={() => removeSkill(idx)}>
           <DeleteIcon />
         </IconButton>
       </ListItem>
@@ -59,13 +86,15 @@ const OtherSkillScreen = (props) => {
         <div>
           <h2>Your Skills</h2>
           <List>{listSkills}</List>
+          {warning ? <h4>{warning}</h4> : ""}
           <Button
             color='primary'
             variant='contained'
             endIcon={<ArrowForwardIcon />}
-            onClick={() => props.handleOtherSkillClick()}>
+            onClick={() => onSubmitSkill()}>
             Continue
           </Button>
+          <h2>Add another skill</h2>
         </div>
       ) : (
         <div>

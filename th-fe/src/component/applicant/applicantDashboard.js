@@ -48,11 +48,13 @@ const ApplicantDashboard = () => {
   const [userBirthDate, setUserBirthDate] = useState("");
   const [currentPage, setCurrentPage] = useState("PROFILE");
   const [applicantData, setApplicantData] = useState([]);
-  const [techTrack, setTechTrack] = useState(false)
+  const [techTrack, setTechTrack] = useState(false);
   const [industry, setIndustry] = useState({});
 
   const [programmingLanguage, setProgrammingLanguage] = useState({});
   const [generalTech, setGeneralTech] = useState({});
+  const [softSkill, setSoftSkill] = useState({});
+  const [otherSkill, setOtherSkill] =useState([])
   const [workExperience, setWorkExperience] = useState([]);
   const [courseCertificate, setCourseCertificate] = useState([]);
   const [schoolAchievement, setSchoolAchievement] = useState([]);
@@ -98,7 +100,7 @@ const ApplicantDashboard = () => {
     console.log("What is data", data);
     if (data.technology) {
       console.log("got here");
-      setTechTrack(true)
+      setTechTrack(true);
       setCurrentPage("PROGRAMMING_LANGUAGES");
     } else {
       setCurrentPage("GENERAL_TECH_SKILL");
@@ -113,15 +115,18 @@ const ApplicantDashboard = () => {
 
   const handleGeneralTechClick = (data) => {
     setGeneralTech(data);
+
     setCurrentPage("SOFT_SKILL");
   };
 
-  const handleSoftSkillClick = () => {
+  const handleSoftSkillClick = (data) => {
+    setSoftSkill(data);
     setCurrentPage("OTHER_SKILL");
   };
 
-  const handleOtherSkillClick = () => {
+  const handleOtherSkillClick = (data) => {
     // Map data to list
+    setOtherSkill(data)
     setCurrentPage("WORK_EXP_PROMPT");
   };
 
@@ -305,6 +310,7 @@ const ApplicantDashboard = () => {
         <SoftSkill
           handleReturnClick={handleReturnClick}
           handleSoftSkillClick={handleSoftSkillClick}
+          skillData={softSkill}
           techTrack={techTrack}
         />
       ) : (
@@ -314,6 +320,7 @@ const ApplicantDashboard = () => {
         <OtherSkill
           handleReturnClick={handleReturnClick}
           handleOtherSkillClick={handleOtherSkillClick}
+          otherSkillData={otherSkill}
         />
       ) : (
         ""
