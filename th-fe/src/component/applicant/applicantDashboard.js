@@ -54,10 +54,11 @@ const ApplicantDashboard = () => {
   const [programmingLanguage, setProgrammingLanguage] = useState({});
   const [generalTech, setGeneralTech] = useState({});
   const [softSkill, setSoftSkill] = useState({});
-  const [otherSkill, setOtherSkill] =useState([])
+  const [otherSkill, setOtherSkill] = useState([]);
   const [workExperience, setWorkExperience] = useState([]);
   const [courseCertificate, setCourseCertificate] = useState([]);
   const [schoolAchievement, setSchoolAchievement] = useState([]);
+  const [additionalQuestion, setAdditionalQuestion] = useState({});
 
   const [currentWorkExpIdx, setCurrentWorkExpIdx] = useState("");
   const [currentAchievementIdx, setCurrentAchievementIdx] = useState("");
@@ -126,7 +127,7 @@ const ApplicantDashboard = () => {
 
   const handleOtherSkillClick = (data) => {
     // Map data to list
-    setOtherSkill(data)
+    setOtherSkill(data);
     setCurrentPage("WORK_EXP_PROMPT");
   };
 
@@ -243,7 +244,8 @@ const ApplicantDashboard = () => {
     setCurrentPage("COURSE_CERTIFICATE_FORM");
   };
 
-  const additionalQuestionContinueClick = () => {
+  const additionalQuestionContinueClick = (data) => {
+    setAdditionalQuestion(data)
     setCurrentPage("LAST_QUESTION");
   };
 
@@ -434,13 +436,19 @@ const ApplicantDashboard = () => {
       {currentPage === "ADDITIONAL_QUESTION" ? (
         <AdditionalQuestion
           additionalQuestionContinueClick={additionalQuestionContinueClick}
+          questionData={additionalQuestion}
+          achievementData={schoolAchievement}
+          handleReturnClick={handleReturnClick}
         />
       ) : (
         ""
       )}
 
       {currentPage === "LAST_QUESTION" ? (
-        <LastQuestion lastQuestionContinueClick={lastQuestionContinueClick} />
+        <LastQuestion
+          lastQuestionContinueClick={lastQuestionContinueClick}
+          handleReturnClick={handleReturnClick}
+        />
       ) : (
         ""
       )}
