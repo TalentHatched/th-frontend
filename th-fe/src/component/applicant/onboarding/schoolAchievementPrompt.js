@@ -22,7 +22,7 @@ const SchooAchievementPrompt = (props) => {
       </div>
       <h2>
         Do you have any<br></br>
-        school achievements you want to share?
+        school achievements/accomplishments you want to share?
       </h2>
       <div>
         <Button

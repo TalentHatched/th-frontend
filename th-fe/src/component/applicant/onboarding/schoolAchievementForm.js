@@ -52,7 +52,10 @@ const SchoolAchievementForm = (props) => {
       if (type === "add") {
         props.addSchoolAchievement(schoolAchievement);
       } else if (type === "edit") {
-        props.updateSchoolAchievement(schoolAchievement, props.schoolAchievementIdx);
+        props.updateSchoolAchievement(
+          schoolAchievement,
+          props.schoolAchievementIdx
+        );
       }
 
       //sprops.addSchoolAchievement(schoolAchievement);
@@ -93,11 +96,13 @@ const SchoolAchievementForm = (props) => {
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
-          onClick={() =>
-            props.handleReturnClick("SCHOOL_ACHIEVEMENT_PROMPT")
-          }></Button>
+          onClick={() => {
+            props.achievementData.length
+              ? props.handleReturnClick("SCHOOL_ACHIEVEMENT_LIST")
+              : props.handleReturnClick("SCHOOL_ACHIEVEMENT_PROMPT");
+          }}></Button>
       </div>
-      <h1>Add school achievements</h1>
+      <h1>Add school achievements/accomplishments</h1>
       <FormGroup>
         <TextField
           id='title'
@@ -151,15 +156,14 @@ const SchoolAchievementForm = (props) => {
           required
         />
       </FormGroup>
-     
 
       {props.schoolAchievementIdx === "" ? (
         <Button
-        variant='contained'
-        color='primary'
-        onClick={() => addSchoolAchievementClick("add")}>
-        Add school achievement
-      </Button>
+          variant='contained'
+          color='primary'
+          onClick={() => addSchoolAchievementClick("add")}>
+          Add school achievement
+        </Button>
       ) : (
         <Button
           variant='contained'
