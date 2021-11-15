@@ -55,7 +55,6 @@ const WorkExperienceForm = (props) => {
         setJobEndDate(props.workData[props.workExperienceIdx].endDate);
       }
     }
-   
   }, []);
 
   const {
@@ -127,12 +126,12 @@ const WorkExperienceForm = (props) => {
         ["startDate"]: jobStartDate.toString(),
         ["endDate"]: endDateStr,
       });
-     
-      workExperience.currentJob = isCurrentJob
+
+      workExperience.currentJob = isCurrentJob;
       if (type === "add") {
         props.addWorkExperience(workExperience);
-      } else if (type==='edit') {
-        console.log('HERE')
+      } else if (type === "edit") {
+        console.log("HERE");
         props.updateWorkExperience(workExperience, props.workExperienceIdx);
       }
       //props.addWorkExperience(workExperience);
@@ -188,7 +187,11 @@ const WorkExperienceForm = (props) => {
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
-          onClick={() => props.handleReturnClick("WORK_EXP_PROMPT")}></Button>
+          onClick={() => {
+            props.workData.length
+              ? props.handleReturnClick("WORK_EXP_LIST")
+              : props.handleReturnClick("WORK_EXP_PROMPT");
+          }}></Button>
       </div>
       <h1>Add work experience</h1>
       <FormGroup>
