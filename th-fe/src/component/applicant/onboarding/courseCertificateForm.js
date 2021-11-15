@@ -23,14 +23,12 @@ const CourseCertificateForm = (props) => {
       setCourseCertificate(
         props.courseCertificateData[props.courseCertificateIdx]
       );
-      console.log(
-        "What is course cert",
-        props.courseCertificateData,
-        props.courseCertificateIdx
-      );
-      setDate(
-        props.courseCertificateData[props.courseCertificateIdx].issueDate
-      );
+      if (props.courseCertificateData[props.courseCertificateIdx]) {
+        setDate(
+          props.courseCertificateData[props.courseCertificateIdx].issueDate
+        );
+      }
+      
     }
   }, []);
 
@@ -52,7 +50,7 @@ const CourseCertificateForm = (props) => {
     }
   };
 
-  const addCourseCertificateClick = () => {
+  const addCourseCertificateClick = type => {
     if (validateForm()) {
       let issueDateStr = date.toString();
       console.log("What is str", issueDateStr);
@@ -61,7 +59,13 @@ const CourseCertificateForm = (props) => {
         ["issueDate"]: issueDateStr,
       });
       console.log("What is final course", courseCertificate);
-      props.addCourseCertificate(courseCertificate);
+
+      if (type === 'add') {
+        props.addCourseCertificate(courseCertificate);
+
+      } else if (type==='edit') {
+        props.updateCourseCertificate(courseCertificate, props.courseCertificateIdx)
+      }
     }
     console.log("clicked");
   };
@@ -102,9 +106,11 @@ const CourseCertificateForm = (props) => {
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
-          onClick={() =>
-            props.handleReturnClick("COURSE_CERTIFICATE_PROMPT")
-          }></Button>
+          onClick={() => {
+            props.courseCertificateData.length
+              ? props.handleReturnClick("COURSE_CERTIFICATE_LIST")
+              : props.handleReturnClick("COURSE_CERTIFICATE_PROMPT");
+          }}></Button>
       </div>
       <h1>Add courses/certificates</h1>
       <FormGroup>
@@ -151,13 +157,18 @@ const CourseCertificateForm = (props) => {
           required
         />
       </FormGroup>
-
+ {props.courseCertificateIdx === ''? 
       <Button
         variant='contained'
         color='primary'
-        onClick={() => addCourseCertificateClick()}>
+        onClick={() => addCourseCertificateClick('add')}>
         Add course or certificate
-      </Button>
+      </Button>:   <Button
+        variant='contained'
+        color='primary'
+        onClick={() => addCourseCertificateClick('edit')}>
+        Edit course or certificate
+      </Button>}
     </div>
   );
 };

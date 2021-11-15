@@ -8,12 +8,27 @@ const CourseCertificateList = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    console.log("updating");
     setData(props.courseCertificateData);
-  }, []);
+    console.log("data now", data);
+  }, [data]);
 
   const convertDate = (date) => {
-    let dateStr = date.split(" ");
-    return dateStr[1] + " " + dateStr[3];
+    if (date) {
+      let dateStr = date.split(" ");
+      return dateStr[1] + " " + dateStr[3];
+    } else {
+      return "none";
+    }
+  };
+
+  const deleteCourseCertificate = (idx) => {
+    let newData = data.filter((data, index) => {
+      return idx !== index;
+    });
+
+    setData(newData);
+    props.deleteCourseCertificate(idx);
   };
 
   return (
@@ -23,13 +38,15 @@ const CourseCertificateList = (props) => {
         return (
           <Card key={index} variant='outlined' className='work-experience-card'>
             <CardContent>
-            <Button
+              <Button
                 onClick={() => {
                   props.editCourseCertificate(data, index);
                 }}>
                 Edit
               </Button>
-              <Button onClick={() => props.deleteCourseCertificate(index)}>Delete</Button>
+              <Button onClick={() => deleteCourseCertificate(index)}>
+                Delete
+              </Button>
               <Typography>{data.title}</Typography>
               <Typography>{data.issuingOrganization}</Typography>
               <Typography>{convertDate(data.issueDate)}</Typography>
