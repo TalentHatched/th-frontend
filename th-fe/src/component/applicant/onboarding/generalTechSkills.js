@@ -131,7 +131,6 @@ const GeneralTechSkill = (props) => {
           variant='contained'
           color='primary'
           onClick={() => handleGeneralTechClick()}>
-          {" "}
           Choose Skills
         </Button>
       </div>
