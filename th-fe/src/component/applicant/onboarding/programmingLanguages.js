@@ -18,8 +18,8 @@ const ProgrammingLanguage = (props) => {
     CSS: false,
     JavaScript: false,
     Python: false,
-    noneOfThese: false,
   });
+  const [noneOfThese, setNoneOfThese] = useState(false)
   const [warning, setWarning] = useState("");
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const ProgrammingLanguage = (props) => {
     }
   },[]);
 
-  const { HTML, CSS, JavaScript, Python, noneOfThese } = programmingLanguageState;
+  const { HTML, CSS, JavaScript, Python } = programmingLanguageState;
 
   const handleChange = (event) => {
     if (event.target.name === "none" && event.target.checked) {
@@ -37,9 +37,10 @@ const ProgrammingLanguage = (props) => {
         CSS: false,
         JavaScript: false,
         Python: false,
-        none: true,
       });
+      setNoneOfThese(true)
     } else {
+      setNoneOfThese(false)
       setProgrammingLanguageState({
         ...programmingLanguageState,
         [event.target.name]: event.target.checked,
