@@ -24,7 +24,7 @@ const OtherSkillScreen = (props) => {
     if (props.otherSkillData.length) {
       setSkillList(props.otherSkillData);
     }
-  },[]);
+  }, []);
   const onInputFieldChange = (event) => {
     setCurrentSkill(event.target.value);
   };
@@ -39,9 +39,9 @@ const OtherSkillScreen = (props) => {
     setSkillList(skillList.filter((skill, idx) => idx !== index));
   };
 
-  const onSubmitSkill = () => {
+  const onSubmitSkill = (type) => {
     if (validate()) {
-      props.handleOtherSkillClick(skillList);
+      props.handleOtherSkillClick(skillList, type);
     }
   };
 
@@ -80,20 +80,34 @@ const OtherSkillScreen = (props) => {
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
-          onClick={() => props.handleReturnClick("SOFT_SKILL")}></Button>
+          onClick={() =>
+            props.isUpdate
+              ? props.handleReturnClick("PROFILE")
+              : props.handleReturnClick("SOFT_SKILL")
+          }></Button>
       </div>
       {skillList.length ? (
         <div>
           <h2>Your Skills</h2>
           <List>{listSkills}</List>
           {warning ? <h4>{warning}</h4> : ""}
-          <Button
-            color='primary'
-            variant='contained'
-            endIcon={<ArrowForwardIcon />}
-            onClick={() => onSubmitSkill()}>
-            Continue
-          </Button>
+          {props.isUpdate ? (
+            <Button
+              color='primary'
+              variant='contained'
+              onClick={() => onSubmitSkill("update")}>
+              Update Other Skill
+            </Button>
+          ) : (
+            <Button
+              color='primary'
+              variant='contained'
+              endIcon={<ArrowForwardIcon />}
+              onClick={() => onSubmitSkill("onboard")}>
+              Continue
+            </Button>
+          )}
+
           <h2>Add another skill</h2>
         </div>
       ) : (

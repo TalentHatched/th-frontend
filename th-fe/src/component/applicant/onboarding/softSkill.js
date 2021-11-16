@@ -46,9 +46,9 @@ const SoftSkillScreen = (props) => {
     setSoftSkill({ ...softSkill, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (type) => {
     if (validate()) {
-      props.handleSoftSkillClick(softSkill);
+      props.handleSoftSkillClick(softSkill, type);
     } else {
       setWarning("Please select a unique skill for each dropdown");
     }
@@ -72,9 +72,11 @@ const SoftSkillScreen = (props) => {
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
-          onClick={() =>
-            props.handleReturnClick("GENERAL_TECH_SKILL")
-          }></Button>
+          onClick={() => {
+            props.isUpdate
+              ? props.handleReturnClick("PROFILE")
+              : props.handleReturnClick("GENERAL_TECH_SKILL");
+          }}></Button>
       </div>
       <h2>What are your top 5 soft skills?</h2>
       <Box sx={{ minWidth: 120 }}>
@@ -194,12 +196,21 @@ const SoftSkillScreen = (props) => {
       {warning ? <h4>{warning}</h4> : ""}
 
       <div>
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => handleSubmit()}>
-          Choose Your Skills
-        </Button>
+        {props.isUpdate ? (
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => handleSubmit("update")}>
+            Update Your Skills
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => handleSubmit("onboard")}>
+            Choose Your Skills
+          </Button>
+        )}
       </div>
     </div>
   );

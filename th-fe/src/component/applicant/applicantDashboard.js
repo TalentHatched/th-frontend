@@ -47,7 +47,7 @@ const ApplicantDashboard = () => {
   const [profileData, setProfileData] = useState({});
   const [userBirthDate, setUserBirthDate] = useState("");
   const [currentPage, setCurrentPage] = useState("PROFILE");
-  const [applicantData, setApplicantData] = useState([]);
+
   const [techTrack, setTechTrack] = useState(false);
   const [industry, setIndustry] = useState({});
 
@@ -59,19 +59,25 @@ const ApplicantDashboard = () => {
   const [courseCertificate, setCourseCertificate] = useState([]);
   const [schoolAchievement, setSchoolAchievement] = useState([]);
   const [additionalQuestion, setAdditionalQuestion] = useState({});
+  const [tagline, setTagline] = useState("");
 
   const [currentWorkExpIdx, setCurrentWorkExpIdx] = useState("");
   const [currentAchievementIdx, setCurrentAchievementIdx] = useState("");
   const [currentCourseCertificateIdx, setCurrentCourseCertificateIdx] =
     useState("");
 
+  const [isUpdate, setIsUpdate] = useState(false);
+
   useEffect(() => {
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
       console.log("What is res", res.data);
-      setFullName(res.data.applicantData[0].userFullName);
-      setProfileData(res.data.applicantData);
-      setUserBirthDate(res.data.applicantData[0].dateOfBirth);
-      if (Object.keys(res.data.applicantData[0].data.length === 0)) {
+      //setFullName(res.data.applicantData[0].userFullName);
+      setFullName(res.data.userData.userFullName);
+      // res.data.applicantData[0].dateOfBirth
+      //   ? setUserBirthDate(res.data.applicantData[0].dateOfBirth)
+      //   : setUserBirthDate("");
+
+      if (Object.keys(res.data.userData.data).length === 0) {
         setCurrentPage("WELCOME");
       } else {
         setCurrentPage("PROFILE");
@@ -88,6 +94,7 @@ const ApplicantDashboard = () => {
     setCurrentPage(page);
   };
 
+  // Functions for Onboarding Process
   const handleStartClick = () => {
     setCurrentPage("PARENT_CONTACT");
   };
@@ -120,15 +127,32 @@ const ApplicantDashboard = () => {
     setCurrentPage("SOFT_SKILL");
   };
 
-  const handleSoftSkillClick = (data) => {
+  const handleSoftSkillClick = (data, type) => {
     setSoftSkill(data);
-    setCurrentPage("OTHER_SKILL");
+    if (type === "onboard") {
+      setCurrentPage("OTHER_SKILL");
+    } else if (type === "update") {
+      let convertData = convertDataForSave(data, "softSkill");
+      let updatedData = profileData;
+      updatedData.softSkill = convertData;
+      setProfileData(updatedData);
+      updateData();
+    }
   };
 
-  const handleOtherSkillClick = (data) => {
+  const handleOtherSkillClick = (data, type) => {
     // Map data to list
     setOtherSkill(data);
-    setCurrentPage("WORK_EXP_PROMPT");
+    if (type==='onboard') {
+      setCurrentPage("WORK_EXP_PROMPT");
+
+    } else if (type==='update') {
+      console.log('What is data here', data)
+      let updatedData = profileData
+      updatedData.otherSkill = data
+      setProfileData(updatedData)
+      updateData()
+    }
   };
 
   const handleWorkExperiencePromptClick = (haveExperience) => {
@@ -245,22 +269,159 @@ const ApplicantDashboard = () => {
   };
 
   const additionalQuestionContinueClick = (data) => {
-    setAdditionalQuestion(data)
+    setAdditionalQuestion(data);
     setCurrentPage("LAST_QUESTION");
   };
 
-  const lastQuestionContinueClick = () => {
-    setCurrentPage("PROFILE_COMPLETE");
+  const lastQuestionContinueClick = (data) => {
+    setTagline(data);
+    // POST CALL HERE
+    saveData();
   };
 
   const viewProfileClick = () => {
     setCurrentPage("PROFILE");
   };
 
+  // Functions for Applicant Profile
+  const updateSoftSkills = (data) => {
+    setProfileData(data);
+    console.log("DATA?", data);
+    setIsUpdate(true);
+    let skillRanking = {
+      firstSkill: "",
+      secondSkill: "",
+      thirdSkill: "",
+      forthSkill: "",
+      fifthSkill: "",
+    };
+    let index = 0;
+    for (const ranking in skillRanking) {
+      skillRanking[ranking] = data.softSkill[index];
+      index++;
+    }
+    console.log("Skill Ranking Now", skillRanking);
+    console.log("what data here", softSkill);
+    setSoftSkill(skillRanking);
+    setCurrentPage("SOFT_SKILL");
+  };
+
+  const updateOtherSkills = (data) => {
+    setProfileData(data);
+    setIsUpdate(true);
+    setOtherSkill(data.otherSkill);
+    setCurrentPage("OTHER_SKILL");
+  };
+
+  const convertDataForSave = (data, type) => {
+    switch (type) {
+      case "generalTech":
+        let techArray = [];
+        techArray = Object.keys(data).filter((skill) => {
+          if (data[skill]) {
+            return skill;
+          }
+        });
+        return techArray;
+      case "additionalQuestion":
+        let questionArray = [];
+        for (const item in data) {
+          console.log("what is item", item);
+          questionArray.push(data[item]);
+        }
+        return questionArray;
+      case "industry":
+        let industryArray = [];
+        industryArray = Object.keys(data).filter((skill) => {
+          if (data[skill]) {
+            return skill;
+          }
+        });
+        return industryArray;
+      case "programmingLanguage":
+        console.log(data);
+        let languageArray = [];
+        languageArray = Object.keys(data).filter((language) => {
+          if (data[language]) {
+            return language;
+          }
+        });
+        return languageArray;
+      case "softSkill":
+        console.log("soft skill data", data);
+        let softSkillArray = Object.values(data).map((skill) => {
+          return skill;
+        });
+        return softSkillArray;
+      default:
+        return data;
+    }
+  };
+
+  const saveData = () => {
+    let applicantData = {
+      applicantId: localStorage.getItem("userId"),
+      data: {
+        industry: convertDataForSave(industry, "industry"),
+        programmingLanguage: convertDataForSave(
+          programmingLanguage,
+          "programmingLanguage"
+        ),
+        generalTech: convertDataForSave(generalTech, "generalTech"),
+        softSkill: convertDataForSave(softSkill, "softSkill"),
+        otherSkill: otherSkill,
+        workExperience: workExperience,
+        courseCertificate: courseCertificate,
+        schoolAchievement: schoolAchievement,
+        additionalQuestion: convertDataForSave(
+          additionalQuestion,
+          "additionalQuestion"
+        ),
+        tagline: tagline,
+      },
+    };
+    console.log(applicantData);
+    console.log("ID", userId);
+    applicantData.data = JSON.stringify(applicantData.data);
+    axios
+      .put(`api/applicantInfo/${userId}`, applicantData)
+      .then((res) => {
+        if (res) {
+          console.log("What is res in put request", res);
+          setCurrentPage("PROFILE_COMPLETE");
+        }
+      })
+      .catch((error) => {
+        console.log("Could not save");
+      });
+  };
+
+  const updateData = () => {
+    let applicantData = {
+      applicantId: localStorage.getItem("userId"),
+      data: JSON.stringify(profileData),
+    };
+    axios
+      .put(`api/applicantInfo/${userId}`, applicantData)
+      .then((res) => {
+        if (res) {
+          console.log("What is res in put request", res);
+          setCurrentPage("PROFILE");
+        }
+      })
+      .catch((error) => {
+        console.log("Could not save");
+      });
+  };
+
   return (
     <div className='applicant-dashboard'>
       {currentPage === "PROFILE" ? (
-        <ApplicantProfile data={applicantData} fullName={fullName} />
+        <ApplicantProfile
+          fullName={fullName}
+          updateSoftSkills={updateSoftSkills}
+          updateOtherSkills={updateOtherSkills}
+        />
       ) : (
         ""
       )}
@@ -314,6 +475,7 @@ const ApplicantDashboard = () => {
           handleSoftSkillClick={handleSoftSkillClick}
           skillData={softSkill}
           techTrack={techTrack}
+          isUpdate={isUpdate}
         />
       ) : (
         ""
@@ -323,6 +485,7 @@ const ApplicantDashboard = () => {
           handleReturnClick={handleReturnClick}
           handleOtherSkillClick={handleOtherSkillClick}
           otherSkillData={otherSkill}
+          isUpdate={isUpdate}
         />
       ) : (
         ""
