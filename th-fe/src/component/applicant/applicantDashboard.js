@@ -115,16 +115,34 @@ const ApplicantDashboard = () => {
     }
   };
 
-  const handleProgrammingLanguageClick = (data) => {
+  const handleProgrammingLanguageClick = (data, type) => {
     setProgrammingLanguage(data);
     console.log("What is here");
-    setCurrentPage("GENERAL_TECH_SKILL");
+
+    if (type === "onboard") {
+      setCurrentPage("GENERAL_TECH_SKILL");
+    } else if ((type = "update")) {
+      console.log(data);
+      let convertData = convertDataForSave(data, "programmingLanguage");
+      let updatedData = profileData;
+      updatedData.programmingLanguage = convertData;
+      setProfileData(updatedData);
+      updateData();
+    }
   };
 
-  const handleGeneralTechClick = (data) => {
+  const handleGeneralTechClick = (data, type) => {
     setGeneralTech(data);
 
-    setCurrentPage("SOFT_SKILL");
+    if (type === "onboard") {
+      setCurrentPage("SOFT_SKILL");
+    } else if (type === "update") {
+      let convertData = convertDataForSave(data, "generalTech");
+      let updatedData = profileData;
+      updatedData.generalTech = convertData;
+      setProfileData(updatedData);
+      updateData();
+    }
   };
 
   const handleSoftSkillClick = (data, type) => {
@@ -143,15 +161,14 @@ const ApplicantDashboard = () => {
   const handleOtherSkillClick = (data, type) => {
     // Map data to list
     setOtherSkill(data);
-    if (type==='onboard') {
+    if (type === "onboard") {
       setCurrentPage("WORK_EXP_PROMPT");
-
-    } else if (type==='update') {
-      console.log('What is data here', data)
-      let updatedData = profileData
-      updatedData.otherSkill = data
-      setProfileData(updatedData)
-      updateData()
+    } else if (type === "update") {
+      console.log("What is data here", data);
+      let updatedData = profileData;
+      updatedData.otherSkill = data;
+      setProfileData(updatedData);
+      updateData();
     }
   };
 
@@ -306,11 +323,47 @@ const ApplicantDashboard = () => {
     setCurrentPage("SOFT_SKILL");
   };
 
+  const updateProgrammingSkills = (data) => {
+    setProfileData(data);
+    setIsUpdate(true);
+    let programmingSkill = {
+      HTML: false,
+      CSS: false,
+      JavaScript: false,
+      Python: false,
+    };
+    data.programmingLanguage.forEach((skill) => {
+      programmingSkill[skill] = true;
+    });
+    console.log("what now,", programmingSkill);
+    setProgrammingLanguage(programmingSkill);
+    setCurrentPage("PROGRAMMING_LANGUAGES");
+  };
+
   const updateOtherSkills = (data) => {
     setProfileData(data);
     setIsUpdate(true);
     setOtherSkill(data.otherSkill);
     setCurrentPage("OTHER_SKILL");
+  };
+
+  const updateGeneralTechSkills = (data) => {
+    setProfileData(data);
+    setIsUpdate(true);
+    let generalTechSkills = {
+      Figma: false,
+      AdobeXD: false,
+      Photoshop: false,
+      GoogleSuite: false,
+      MicrosoftOffice: false,
+      Slack: false,
+    };
+    data.generalTech.forEach((skill) => {
+      generalTechSkills[skill] = true;
+    });
+    console.log(generalTechSkills);
+    setGeneralTech(generalTechSkills);
+    setCurrentPage("GENERAL_TECH_SKILL");
   };
 
   const convertDataForSave = (data, type) => {
@@ -421,6 +474,8 @@ const ApplicantDashboard = () => {
           fullName={fullName}
           updateSoftSkills={updateSoftSkills}
           updateOtherSkills={updateOtherSkills}
+          updateProgrammingSkills={updateProgrammingSkills}
+          updateGeneralTech={updateGeneralTechSkills}
         />
       ) : (
         ""
@@ -453,6 +508,7 @@ const ApplicantDashboard = () => {
           handleReturnClick={handleReturnClick}
           handleProgrammingLanguageClick={handleProgrammingLanguageClick}
           programmingLanguageData={programmingLanguage}
+          isUpdate={isUpdate}
         />
       ) : (
         ""
@@ -464,6 +520,7 @@ const ApplicantDashboard = () => {
           handleGeneralTechClick={handleGeneralTechClick}
           techTrack={techTrack}
           generalTechData={generalTech}
+          isUpdate={isUpdate}
         />
       ) : (
         " "

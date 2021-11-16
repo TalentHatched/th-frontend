@@ -27,7 +27,7 @@ const GeneralTechSkill = (props) => {
     if (Object.values(props.generalTechData).length) {
       setGeneralTech(props.generalTechData);
     }
-  },[]);
+  }, []);
 
   const { Figma, AdobeXD, Photoshop, GoogleSuite, MicrosoftOffice, Slack } =
     generalTech;
@@ -39,22 +39,30 @@ const GeneralTechSkill = (props) => {
     });
   };
 
-  const handleGeneralTechClick = () => {
-    props.handleGeneralTechClick(generalTech);
+  const handleGeneralTechClick = (type) => {
+    props.handleGeneralTechClick(generalTech, type);
   };
 
   return (
     <div>
       <div>
-        <Button
-          startIcon={<KeyboardBackspaceIcon />}
-          onClick={() => {
-            if (props.techTrack) {
-              props.handleReturnClick("PROGRAMMING_LANGUAGES");
-            } else {
-              props.handleReturnClick("INDUSTRY");
-            }
-          }}></Button>
+        {props.isUpdate ? (
+          <Button
+            startIcon={<KeyboardBackspaceIcon />}
+            onClick={() => {
+              props.handleReturnClick("PROFILE");
+            }}></Button>
+        ) : (
+          <Button
+            startIcon={<KeyboardBackspaceIcon />}
+            onClick={() => {
+              if (props.techTrack) {
+                props.handleReturnClick("PROGRAMMING_LANGUAGES");
+              } else {
+                props.handleReturnClick("INDUSTRY");
+              }
+            }}></Button>
+        )}
       </div>
       <h2>Do you have experience with any of these programming languages?</h2>
       <h3>Check all that apply. </h3>
@@ -127,12 +135,18 @@ const GeneralTechSkill = (props) => {
       </FormControl>
       {warning ? <h4>{warning}</h4> : ""}
       <div>
-        <Button
+        {props.isUpdate? <Button
           variant='contained'
           color='primary'
-          onClick={() => handleGeneralTechClick()}>
+          onClick={() => handleGeneralTechClick('update')}>
           Choose Skills
-        </Button>
+        </Button>: <Button
+          variant='contained'
+          color='primary'
+          onClick={() => handleGeneralTechClick('onboard')}>
+          Choose Skills
+        </Button>}
+        
       </div>
     </div>
   );
