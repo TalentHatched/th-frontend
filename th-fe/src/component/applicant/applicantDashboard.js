@@ -67,6 +67,7 @@ const ApplicantDashboard = () => {
     useState("");
 
   const [isUpdate, setIsUpdate] = useState(false);
+  const [addNew, setAddNew] = useState(false);
 
   useEffect(() => {
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
@@ -210,11 +211,37 @@ const ApplicantDashboard = () => {
     setCurrentPage("WORK_EXP_LIST");
   };
 
-  const updateWorkExperience = (data, index) => {
-    let updateWorkExperience = [...workExperience];
-    updateWorkExperience[index] = data;
-    setWorkExperience(updateWorkExperience);
-    setCurrentPage("WORK_EXP_LIST");
+  const updateWorkExperience = (data, index, type) => {
+    if (type === "edit") {
+      let updateWorkExperience = [...workExperience];
+      updateWorkExperience[index] = data;
+      setWorkExperience(updateWorkExperience);
+      setCurrentPage("WORK_EXP_LIST");
+    } else if (type === "update") {
+      console.log("What is data", profileData);
+      console.log(workExperience);
+      console.log("index?", index);
+      let updatedData = profileData;
+
+      if (index === "newItem") {
+        if (!workExperience) {
+          updatedData.workExperience = [];
+          updatedData.workExperience.push(data);
+        } else {
+          updatedData.workExperience = workExperience;
+          updatedData.workExperience.push(data);
+        }
+      } else {
+        let updatedExperience = workExperience;
+        updatedExperience[index] = data;
+        updatedData.workExperience = updatedExperience;
+      }
+      // let updatedData = profileData;
+
+      // setProfileData(updatedData);
+      // updateData();
+      console.log("What is UPDATED DATA", updatedData);
+    }
   };
 
   const updateAchievement = (data, index) => {
@@ -366,6 +393,35 @@ const ApplicantDashboard = () => {
     setCurrentPage("GENERAL_TECH_SKILL");
   };
 
+  const updateWorkExperienceFromProfile = (data, index, type) => {
+    if (type === "edit") {
+      console.log("What is data at initial", data);
+      setProfileData(data)
+      setWorkExperience(data.workExperience);
+      setCurrentWorkExpIdx(index);
+      setIsUpdate(true);
+      setCurrentPage("WORK_EXP_FORM");
+    } else if (type === "delete") {
+      let updatedData = data;
+      console.log(data);
+      updatedData.workExperience = data.workExperience.filter((exp, idx) => {
+        return idx !== index;
+      });
+
+      setProfileData(updatedData);
+      updateData();
+      console.log("updated Data", updatedData);
+    }
+  };
+
+  const addNewWorkExperience = (data) => {
+    setIsUpdate(true);
+    setAddNew(true);
+    setProfileData(data);
+    setCurrentWorkExpIdx("")
+    setCurrentPage("WORK_EXP_FORM");
+  };
+
   const convertDataForSave = (data, type) => {
     switch (type) {
       case "generalTech":
@@ -476,6 +532,8 @@ const ApplicantDashboard = () => {
           updateOtherSkills={updateOtherSkills}
           updateProgrammingSkills={updateProgrammingSkills}
           updateGeneralTech={updateGeneralTechSkills}
+          updateWorkExperience={updateWorkExperienceFromProfile}
+          addNewWorkExperience={addNewWorkExperience}
         />
       ) : (
         ""
@@ -584,6 +642,8 @@ const ApplicantDashboard = () => {
           updateWorkExperience={updateWorkExperience}
           workExperienceIdx={currentWorkExpIdx}
           workData={workExperience}
+          isUpdate={isUpdate}
+          addNew={addNew}
         />
       ) : (
         ""

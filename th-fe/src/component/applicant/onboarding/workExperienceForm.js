@@ -132,7 +132,25 @@ const WorkExperienceForm = (props) => {
         props.addWorkExperience(workExperience);
       } else if (type === "edit") {
         console.log("HERE");
-        props.updateWorkExperience(workExperience, props.workExperienceIdx);
+        props.updateWorkExperience(
+          workExperience,
+          props.workExperienceIdx,
+          "edit"
+        );
+      } else if (type === "update") {
+        console.log("props add new", props.addNew);
+        console.log("idx", props.workExperienceIdx);
+        console.log(props.workData);
+
+        if (props.addNew) {
+          props.updateWorkExperience(workExperience, "newItem", "update");
+        } else {
+          props.updateWorkExperience(
+            workExperience,
+            props.workExperienceIdx,
+            "update"
+          );
+        }
       }
       //props.addWorkExperience(workExperience);
     }
@@ -185,13 +203,21 @@ const WorkExperienceForm = (props) => {
   return (
     <div>
       <div>
-        <Button
-          startIcon={<KeyboardBackspaceIcon />}
-          onClick={() => {
-            props.workData.length
-              ? props.handleReturnClick("WORK_EXP_LIST")
-              : props.handleReturnClick("WORK_EXP_PROMPT");
-          }}></Button>
+        {props.isUpdate ? (
+          <Button
+            startIcon={<KeyboardBackspaceIcon />}
+            onClick={() => {
+              props.handleReturnClick("PROFILE");
+            }}></Button>
+        ) : (
+          <Button
+            startIcon={<KeyboardBackspaceIcon />}
+            onClick={() => {
+              props.workData.length
+                ? props.handleReturnClick("WORK_EXP_LIST")
+                : props.handleReturnClick("WORK_EXP_PROMPT");
+            }}></Button>
+        )}
       </div>
       <h1>Add work experience</h1>
       <FormGroup>
@@ -290,7 +316,15 @@ const WorkExperienceForm = (props) => {
         />
       </FormGroup>
       {warning ? <h4>{warning} required</h4> : ""}
-      {props.workExperienceIdx === "" ? (
+
+      {props.isUpdate ? (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => addExperienceClick("update")}>
+          {props.addNew ? "Add experience" : "Update experience"}
+        </Button>
+      ) : props.workExperienceIdx === "" ? (
         <Button
           variant='contained'
           color='primary'
