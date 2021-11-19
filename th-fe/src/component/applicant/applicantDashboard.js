@@ -128,7 +128,7 @@ const ApplicantDashboard = () => {
       let updatedData = profileData;
       updatedData.programmingLanguage = convertData;
       setProfileData(updatedData);
-      updateData();
+      updateData(updatedData);
     }
   };
 
@@ -142,7 +142,7 @@ const ApplicantDashboard = () => {
       let updatedData = profileData;
       updatedData.generalTech = convertData;
       setProfileData(updatedData);
-      updateData();
+      updateData(updatedData);
     }
   };
 
@@ -155,7 +155,7 @@ const ApplicantDashboard = () => {
       let updatedData = profileData;
       updatedData.softSkill = convertData;
       setProfileData(updatedData);
-      updateData();
+      updateData(updatedData);
     }
   };
 
@@ -215,9 +215,11 @@ const ApplicantDashboard = () => {
     if (type === "edit") {
       let updateWorkExperience = [...workExperience];
       updateWorkExperience[index] = data;
+      setAddNew(false);
       setWorkExperience(updateWorkExperience);
       setCurrentPage("WORK_EXP_LIST");
     } else if (type === "update") {
+      //updateWorkExperienceForProfile(data, index, type)
       console.log("What is data", profileData);
       console.log(workExperience);
       console.log("index?", index);
@@ -228,7 +230,6 @@ const ApplicantDashboard = () => {
           updatedData.workExperience = [];
           updatedData.workExperience.push(data);
         } else {
-          updatedData.workExperience = workExperience;
           updatedData.workExperience.push(data);
         }
       } else {
@@ -238,24 +239,60 @@ const ApplicantDashboard = () => {
       }
       // let updatedData = profileData;
 
-      // setProfileData(updatedData);
-      // updateData();
+      setProfileData(updatedData);
+      updateData(updatedData);
       console.log("What is UPDATED DATA", updatedData);
     }
   };
 
-  const updateAchievement = (data, index) => {
-    let updateAchievement = [...schoolAchievement];
-    updateAchievement[index] = data;
-    setSchoolAchievement(updateAchievement);
-    setCurrentPage("SCHOOL_ACHIEVEMENT_LIST");
+  const updateAchievement = (data, index, type) => {
+    if (type === "edit") {
+      let updateAchievement = [...schoolAchievement];
+      updateAchievement[index] = data;
+      setSchoolAchievement(updateAchievement);
+      setCurrentPage("SCHOOL_ACHIEVEMENT_LIST");
+    } else if (type === "update") {
+      let updatedData = profileData;
+      if (index === "newItem") {
+        if (!schoolAchievement) {
+          updatedData.schoolAchievement = [];
+          updatedData.schoolAchievement.push(data);
+        } else {
+          updatedData.schoolAchievement.push(data);
+        }
+      } else {
+        let updatedExperience = schoolAchievement;
+        updatedExperience[index] = data;
+        updatedData.schoolAchievement = updatedExperience;
+      }
+      setProfileData(updatedData);
+      updateData(updatedData);
+    }
   };
 
-  const updateCourseCertificate = (data, index) => {
-    let updateCourseCertificate = [...courseCertificate];
-    updateCourseCertificate[index] = data;
-    setCourseCertificate(updateCourseCertificate);
-    setCurrentPage("COURSE_CERTIFICATE_LIST");
+  const updateCourseCertificate = (data, index, type) => {
+    if (type === "edit") {
+      let updateCourseCertificate = [...courseCertificate];
+      updateCourseCertificate[index] = data;
+      setCourseCertificate(updateCourseCertificate);
+      setCurrentPage("COURSE_CERTIFICATE_LIST");
+    } else if (type === "update") {
+      let updatedData = profileData;
+      if (index === "newItem") {
+        if (!courseCertificate) {
+          updatedData.courseCertificate = [];
+          updatedData.courseCertificate.push(data);
+        } else {
+          updatedData.courseCertificate.push(data);
+        }
+      } else {
+        let updatedExperience = courseCertificate;
+        updatedExperience[index] = data;
+        updatedData.courseCertificate = updatedExperience;
+      }
+      setProfileData(updatedData);
+      updateData(updatedData);
+    }
   };
 
   const deleteWorkExperience = (index) => {
@@ -393,33 +430,104 @@ const ApplicantDashboard = () => {
     setCurrentPage("GENERAL_TECH_SKILL");
   };
 
-  const updateWorkExperienceFromProfile = (data, index, type) => {
-    if (type === "edit") {
-      console.log("What is data at initial", data);
-      setProfileData(data)
-      setWorkExperience(data.workExperience);
-      setCurrentWorkExpIdx(index);
-      setIsUpdate(true);
-      setCurrentPage("WORK_EXP_FORM");
-    } else if (type === "delete") {
+  const updateQuestionsFromProfile = (data) => {
+    setProfileData(data)
+    setIsUpdate(true)
+    setAdditionalQuestion(data.additionalQuestion)
+    setCurrentPage('ADDITIONAL_QUESTION')
+  }
+
+  const updateItemFromProfile = (data, index, action, type) => {
+    if (action === "edit") {
+      switch (type) {
+        case "workExperience":
+          // if (type === "workExperience") {
+          console.log("What is data at initial", data);
+          setAddNew(false);
+          setProfileData(data);
+          setWorkExperience(data.workExperience);
+          setCurrentWorkExpIdx(index);
+          setIsUpdate(true);
+          setCurrentPage("WORK_EXP_FORM");
+          break;
+        case "course":
+          console.log("What is data here", data);
+          setAddNew(false);
+          setProfileData(data);
+          setCourseCertificate(data.courseCertificate);
+          setCurrentCourseCertificateIdx(index);
+          setIsUpdate(true);
+          setCurrentPage("COURSE_CERTIFICATE_FORM");
+          break;
+
+        case "accomplishment":
+          setAddNew(false);
+          setProfileData(data);
+          setSchoolAchievement(data.schoolAchievement);
+          setCurrentAchievementIdx(index);
+          setIsUpdate(true);
+          setCurrentPage("SCHOOL_ACHIEVEMENT_FORM");
+          break;
+        default:
+          console.log("WRONG ACTION ON EDIT");
+      }
+    } else if (action === "delete") {
       let updatedData = data;
-      console.log(data);
-      updatedData.workExperience = data.workExperience.filter((exp, idx) => {
-        return idx !== index;
-      });
+      console.log("WHAT IS DATA IN DELETE", data);
+      switch (type) {
+        case "workExperience":
+          updatedData.workExperience = data.workExperience.filter(
+            (exp, idx) => {
+              return idx !== index;
+            }
+          );
+          break;
+        case "course":
+          updatedData.courseCertificate = data.courseCertificate.filter(
+            (exp, idx) => {
+              return idx !== index;
+            }
+          );
+          break;
+        case "accomplishment":
+          updatedData.schoolAchievement = data.schoolAchievement.filter(
+            (exp, idx) => {
+              return idx !== index;
+            }
+          );
+          break;
+        default:
+          console.log("WRONG TYPE ON DELETION");
+      }
 
       setProfileData(updatedData);
-      updateData();
+      updateData(updatedData);
+      // setCurrentPage("PROFILE")
       console.log("updated Data", updatedData);
     }
   };
 
-  const addNewWorkExperience = (data) => {
+  const updateAdditionalQuestion = (data) => {
+    let updatedData = profileData
+    updatedData.additionalQuestion = data
+    setProfileData(updatedData)
+    updateData(updatedData)
+  }
+
+  const addNewItem = (data, type) => {
     setIsUpdate(true);
     setAddNew(true);
     setProfileData(data);
-    setCurrentWorkExpIdx("")
-    setCurrentPage("WORK_EXP_FORM");
+    if (type === "workExperience") {
+      setCurrentWorkExpIdx("");
+      setCurrentPage("WORK_EXP_FORM");
+    } else if (type === "course") {
+      setCurrentCourseCertificateIdx("");
+      setCurrentPage("COURSE_CERTIFICATE_FORM");
+    } else if (type === "accomplishment") {
+      setCurrentAchievementIdx("");
+      setCurrentPage("SCHOOL_ACHIEVEMENT_FORM");
+    }
   };
 
   const convertDataForSave = (data, type) => {
@@ -505,11 +613,14 @@ const ApplicantDashboard = () => {
       });
   };
 
-  const updateData = () => {
+  const updateData = (data) => {
+    console.log('PROFILE DATA BEFORE SAVE', profileData)
     let applicantData = {
       applicantId: localStorage.getItem("userId"),
-      data: JSON.stringify(profileData),
+      data: JSON.stringify(data),
     };
+
+    
     axios
       .put(`api/applicantInfo/${userId}`, applicantData)
       .then((res) => {
@@ -532,8 +643,9 @@ const ApplicantDashboard = () => {
           updateOtherSkills={updateOtherSkills}
           updateProgrammingSkills={updateProgrammingSkills}
           updateGeneralTech={updateGeneralTechSkills}
-          updateWorkExperience={updateWorkExperienceFromProfile}
-          addNewWorkExperience={addNewWorkExperience}
+          updateItem={updateItemFromProfile}
+          addNewItem={addNewItem}
+          updateAdditionalQuestion={updateQuestionsFromProfile}
         />
       ) : (
         ""
@@ -670,6 +782,8 @@ const ApplicantDashboard = () => {
           handleNextPageClick={handleNextPageClick}
           courseCertificateIdx={currentCourseCertificateIdx}
           courseCertificateData={courseCertificate}
+          isUpdate={isUpdate}
+          addNew={addNew}
         />
       ) : (
         ""
@@ -695,6 +809,8 @@ const ApplicantDashboard = () => {
           updateSchoolAchievement={updateAchievement}
           schoolAchievementIdx={currentAchievementIdx}
           achievementData={schoolAchievement}
+          isUpdate={isUpdate}
+          addNew={addNew}
         />
       ) : (
         ""
@@ -719,6 +835,8 @@ const ApplicantDashboard = () => {
           questionData={additionalQuestion}
           achievementData={schoolAchievement}
           handleReturnClick={handleReturnClick}
+          isUpdate={isUpdate}
+          updateQuestions={updateAdditionalQuestion}
         />
       ) : (
         ""
