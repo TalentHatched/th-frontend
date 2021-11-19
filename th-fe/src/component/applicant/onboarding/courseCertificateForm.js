@@ -28,7 +28,6 @@ const CourseCertificateForm = (props) => {
           props.courseCertificateData[props.courseCertificateIdx].issueDate
         );
       }
-      
     }
   }, []);
 
@@ -50,7 +49,7 @@ const CourseCertificateForm = (props) => {
     }
   };
 
-  const addCourseCertificateClick = type => {
+  const addCourseCertificateClick = (type) => {
     if (validateForm()) {
       let issueDateStr = date.toString();
       console.log("What is str", issueDateStr);
@@ -60,11 +59,24 @@ const CourseCertificateForm = (props) => {
       });
       console.log("What is final course", courseCertificate);
 
-      if (type === 'add') {
+      if (type === "add") {
         props.addCourseCertificate(courseCertificate);
-
-      } else if (type==='edit') {
-        props.updateCourseCertificate(courseCertificate, props.courseCertificateIdx)
+      } else if (type === "edit") {
+        props.updateCourseCertificate(
+          courseCertificate,
+          props.courseCertificateIdx,
+          "edit"
+        );
+      } else if (type === "update") {
+        if (props.addNew) {
+          props.updateCourseCertificate(courseCertificate, "newItem", "update");
+        } else {
+          props.updateCourseCertificate(
+            courseCertificate,
+            props.courseCertificateIdx,
+            "update"
+          );
+        }
       }
     }
     console.log("clicked");
@@ -107,9 +119,13 @@ const CourseCertificateForm = (props) => {
         <Button
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => {
-            props.courseCertificateData.length
-              ? props.handleReturnClick("COURSE_CERTIFICATE_LIST")
-              : props.handleReturnClick("COURSE_CERTIFICATE_PROMPT");
+            {
+              props.isUpdate
+                ? props.handleReturnClick("PROFILE")
+                : props.courseCertificateData.length
+                ? props.handleReturnClick("COURSE_CERTIFICATE_LIST")
+                : props.handleReturnClick("COURSE_CERTIFICATE_PROMPT");
+            }
           }}></Button>
       </div>
       <h1>Add courses/certificates</h1>
@@ -157,18 +173,30 @@ const CourseCertificateForm = (props) => {
           required
         />
       </FormGroup>
- {props.courseCertificateIdx === ''? 
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={() => addCourseCertificateClick('add')}>
-        Add course or certificate
-      </Button>:   <Button
-        variant='contained'
-        color='primary'
-        onClick={() => addCourseCertificateClick('edit')}>
-        Edit course or certificate
-      </Button>}
+      {props.isUpdate ? (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => addCourseCertificateClick("update")}>
+          {props.addNew
+            ? "Add course or certificate"
+            : "Update course or certificate"}
+        </Button>
+      ) : props.courseCertificateIdx === "" ? (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => addCourseCertificateClick("add")}>
+          Add course or certificate
+        </Button>
+      ) : (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => addCourseCertificateClick("edit")}>
+          Edit course or certificate
+        </Button>
+      )}
     </div>
   );
 };
