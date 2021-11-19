@@ -19,14 +19,14 @@ const ProgrammingLanguage = (props) => {
     JavaScript: false,
     Python: false,
   });
-  const [noneOfThese, setNoneOfThese] = useState(false)
+  const [noneOfThese, setNoneOfThese] = useState(false);
   const [warning, setWarning] = useState("");
 
   useEffect(() => {
     if (Object.values(props.programmingLanguageData).length) {
       setProgrammingLanguageState(props.programmingLanguageData);
     }
-  },[]);
+  }, []);
 
   const { HTML, CSS, JavaScript, Python } = programmingLanguageState;
 
@@ -38,9 +38,9 @@ const ProgrammingLanguage = (props) => {
         JavaScript: false,
         Python: false,
       });
-      setNoneOfThese(true)
+      setNoneOfThese(true);
     } else {
-      setNoneOfThese(false)
+      setNoneOfThese(false);
       setProgrammingLanguageState({
         ...programmingLanguageState,
         [event.target.name]: event.target.checked,
@@ -48,12 +48,12 @@ const ProgrammingLanguage = (props) => {
     }
   };
 
-  const handleChooseProgrammingLanguageClick = () => {
+  const handleChooseProgrammingLanguageClick = (type) => {
     setWarning("");
     if (!HTML & !CSS & !JavaScript && !Python && !noneOfThese) {
       setWarning("Please select at least one option");
     } else {
-      props.handleProgrammingLanguageClick(programmingLanguageState);
+      props.handleProgrammingLanguageClick(programmingLanguageState, type);
     }
   };
 
@@ -62,7 +62,11 @@ const ProgrammingLanguage = (props) => {
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
-          onClick={() => props.handleReturnClick("INDUSTRY")}></Button>
+          onClick={() => {
+            props.isUpdate
+              ? props.handleReturnClick("PROFILE")
+              : props.handleReturnClick("INDUSTRY");
+          }}></Button>
       </div>
       <h2>Do you have experience with any of these programming languages?</h2>
       <h3>Check all that apply. </h3>
@@ -110,7 +114,11 @@ const ProgrammingLanguage = (props) => {
 
           <FormControlLabel
             control={
-              <Checkbox checked={noneOfThese} onChange={handleChange} name='none' />
+              <Checkbox
+                checked={noneOfThese}
+                onChange={handleChange}
+                name='none'
+              />
             }
             label='None of these'
           />
@@ -120,12 +128,21 @@ const ProgrammingLanguage = (props) => {
       </FormControl>
       {warning ? <h4>{warning}</h4> : ""}
       <div>
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => handleChooseProgrammingLanguageClick()}>
-          Choose Skills
-        </Button>
+        {props.isUpdate ? (
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => handleChooseProgrammingLanguageClick("update")}>
+            Update Skills
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => handleChooseProgrammingLanguageClick("onboard")}>
+            Choose Skills
+          </Button>
+        )}
       </div>
     </div>
   );
