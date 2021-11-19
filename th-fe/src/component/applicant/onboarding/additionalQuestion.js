@@ -52,7 +52,9 @@ const AdditionalQuestion = (props) => {
         <Button
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => {
-            props.achievementData.length
+            props.isUpdate
+              ? props.handleReturnClick("PROFILE")
+              : props.achievementData.length
               ? props.handleReturnClick("SCHOOL_ACHIEVEMENT_LIST")
               : props.handleReturnClick("SCHOOL_ACHIEVEMENT_PROMPT");
           }}></Button>
@@ -163,13 +165,24 @@ const AdditionalQuestion = (props) => {
           required
         />
       </FormGroup> */}
-      <Button
-        color='primary'
-        variant='contained'
-        endIcon={<ArrowForwardIcon />}
-        onClick={() => props.additionalQuestionContinueClick(answer)}>
-        Continue
-      </Button>
+
+      {props.isUpdate ? (
+        <Button
+          color='primary'
+          variant='contained'
+          endIcon={<ArrowForwardIcon />}
+          onClick={() => props.updateQuestions(answer)}>
+          Update
+        </Button>
+      ) : (
+        <Button
+          color='primary'
+          variant='contained'
+          endIcon={<ArrowForwardIcon />}
+          onClick={() => props.additionalQuestionContinueClick(answer)}>
+          Continue
+        </Button>
+      )}
     </div>
   );
 };
