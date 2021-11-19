@@ -54,8 +54,16 @@ const SchoolAchievementForm = (props) => {
       } else if (type === "edit") {
         props.updateSchoolAchievement(
           schoolAchievement,
-          props.schoolAchievementIdx
+          props.schoolAchievementIdx,
+          'edit'
+
         );
+      } else if (type==='update') {
+        if (props.addNew) {
+          props.updateSchoolAchievement(schoolAchievement, 'newItem', 'update')
+        } else {
+          props.updateSchoolAchievement(schoolAchievement, props.schoolAchievementIdx, 'update')
+        }
       }
 
       //sprops.addSchoolAchievement(schoolAchievement);
@@ -94,13 +102,22 @@ const SchoolAchievementForm = (props) => {
   return (
     <div>
       <div>
-        <Button
-          startIcon={<KeyboardBackspaceIcon />}
-          onClick={() => {
-            props.achievementData.length
-              ? props.handleReturnClick("SCHOOL_ACHIEVEMENT_LIST")
-              : props.handleReturnClick("SCHOOL_ACHIEVEMENT_PROMPT");
-          }}></Button>
+        {props.isUpdate ? (
+          <Button
+            startIcon={<KeyboardBackspaceIcon />}
+            onClick={() => {
+              props.handleReturnClick("PROFILE");
+            }}
+          />
+        ) : (
+          <Button
+            startIcon={<KeyboardBackspaceIcon />}
+            onClick={() => {
+              props.achievementData.length
+                ? props.handleReturnClick("SCHOOL_ACHIEVEMENT_LIST")
+                : props.handleReturnClick("SCHOOL_ACHIEVEMENT_PROMPT");
+            }}></Button>
+        )}
       </div>
       <h1>Add school achievements/accomplishments</h1>
       <FormGroup>
@@ -157,7 +174,16 @@ const SchoolAchievementForm = (props) => {
         />
       </FormGroup>
 
-      {props.schoolAchievementIdx === "" ? (
+      {props.isUpdate ? (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => addSchoolAchievementClick("update")}>
+          {props.addNew
+            ? "Add school accomplishment"
+            : "Update school accomplishment"}
+        </Button>
+      ) : props.schoolAchievementIdx === "" ? (
         <Button
           variant='contained'
           color='primary'
