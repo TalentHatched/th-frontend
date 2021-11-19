@@ -71,12 +71,7 @@ const ApplicantDashboard = () => {
 
   useEffect(() => {
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
-      console.log("What is res", res.data);
-      //setFullName(res.data.applicantData[0].userFullName);
       setFullName(res.data.userData.userFullName);
-      // res.data.applicantData[0].dateOfBirth
-      //   ? setUserBirthDate(res.data.applicantData[0].dateOfBirth)
-      //   : setUserBirthDate("");
 
       if (Object.keys(res.data.userData.data).length === 0) {
         setCurrentPage("WELCOME");
@@ -91,7 +86,6 @@ const ApplicantDashboard = () => {
   };
 
   const handleNextPageClick = (page) => {
-    console.log("What is page", page);
     setCurrentPage(page);
   };
 
@@ -106,9 +100,7 @@ const ApplicantDashboard = () => {
 
   const handleIndustryClick = (data) => {
     setIndustry(data);
-    console.log("What is data", data);
     if (data.technology) {
-      console.log("got here");
       setTechTrack(true);
       setCurrentPage("PROGRAMMING_LANGUAGES");
     } else {
@@ -118,12 +110,10 @@ const ApplicantDashboard = () => {
 
   const handleProgrammingLanguageClick = (data, type) => {
     setProgrammingLanguage(data);
-    console.log("What is here");
 
     if (type === "onboard") {
       setCurrentPage("GENERAL_TECH_SKILL");
     } else if ((type = "update")) {
-      console.log(data);
       let convertData = convertDataForSave(data, "programmingLanguage");
       let updatedData = profileData;
       updatedData.programmingLanguage = convertData;
@@ -165,7 +155,6 @@ const ApplicantDashboard = () => {
     if (type === "onboard") {
       setCurrentPage("WORK_EXP_PROMPT");
     } else if (type === "update") {
-      console.log("What is data here", data);
       let updatedData = profileData;
       updatedData.otherSkill = data;
       setProfileData(updatedData);
@@ -183,8 +172,6 @@ const ApplicantDashboard = () => {
   };
 
   const handleCertificatePromptClick = (haveCertificate) => {
-    console.log("clicked");
-    console.log(haveCertificate);
     if (haveCertificate) {
       setCurrentCourseCertificateIdx("");
       setCurrentPage("COURSE_CERTIFICATE_FORM");
@@ -203,11 +190,8 @@ const ApplicantDashboard = () => {
   };
 
   const addWorkExperience = (data) => {
-    console.log("DATA", data);
     const updateWorkExperience = [...workExperience, data];
-    console.log(updateWorkExperience);
     setWorkExperience(updateWorkExperience);
-    console.log("What is work exp", workExperience);
     setCurrentPage("WORK_EXP_LIST");
   };
 
@@ -220,9 +204,7 @@ const ApplicantDashboard = () => {
       setCurrentPage("WORK_EXP_LIST");
     } else if (type === "update") {
       //updateWorkExperienceForProfile(data, index, type)
-      console.log("What is data", profileData);
-      console.log(workExperience);
-      console.log("index?", index);
+     
       let updatedData = profileData;
 
       if (index === "newItem") {
@@ -241,7 +223,6 @@ const ApplicantDashboard = () => {
 
       setProfileData(updatedData);
       updateData(updatedData);
-      console.log("What is UPDATED DATA", updatedData);
     }
   };
 
@@ -300,7 +281,6 @@ const ApplicantDashboard = () => {
       return idx !== index;
     });
     setWorkExperience(updateWorkExperience);
-    console.log("What is exp now", updateWorkExperience);
   };
 
   const deleteAchievement = (index) => {
@@ -311,18 +291,14 @@ const ApplicantDashboard = () => {
   };
 
   const deleteCourseCertificate = (index) => {
-    console.log("Clicked");
     let updateCourseCertificate = courseCertificate.filter((item, idx) => {
       return idx !== index;
     });
-    console.log("updateCourseCertificate", updateCourseCertificate);
     setCourseCertificate(updateCourseCertificate);
   };
 
   const addCourseCertificate = (data) => {
-    console.log("It is clicked");
     const updateCourseCertificate = [...courseCertificate, data];
-    console.log("What is course cert", updateCourseCertificate);
     setCourseCertificate(updateCourseCertificate);
     setCurrentPage("COURSE_CERTIFICATE_LIST");
   };
@@ -344,7 +320,6 @@ const ApplicantDashboard = () => {
   };
 
   const editCourseCertificate = (data, idx) => {
-    console.log("What is idx", idx);
     setCurrentCourseCertificateIdx(idx);
     setCurrentPage("COURSE_CERTIFICATE_FORM");
   };
@@ -367,7 +342,6 @@ const ApplicantDashboard = () => {
   // Functions for Applicant Profile
   const updateSoftSkills = (data) => {
     setProfileData(data);
-    console.log("DATA?", data);
     setIsUpdate(true);
     let skillRanking = {
       firstSkill: "",
@@ -381,8 +355,6 @@ const ApplicantDashboard = () => {
       skillRanking[ranking] = data.softSkill[index];
       index++;
     }
-    console.log("Skill Ranking Now", skillRanking);
-    console.log("what data here", softSkill);
     setSoftSkill(skillRanking);
     setCurrentPage("SOFT_SKILL");
   };
@@ -399,7 +371,6 @@ const ApplicantDashboard = () => {
     data.programmingLanguage.forEach((skill) => {
       programmingSkill[skill] = true;
     });
-    console.log("what now,", programmingSkill);
     setProgrammingLanguage(programmingSkill);
     setCurrentPage("PROGRAMMING_LANGUAGES");
   };
@@ -425,24 +396,22 @@ const ApplicantDashboard = () => {
     data.generalTech.forEach((skill) => {
       generalTechSkills[skill] = true;
     });
-    console.log(generalTechSkills);
     setGeneralTech(generalTechSkills);
     setCurrentPage("GENERAL_TECH_SKILL");
   };
 
   const updateQuestionsFromProfile = (data) => {
-    setProfileData(data)
-    setIsUpdate(true)
-    setAdditionalQuestion(data.additionalQuestion)
-    setCurrentPage('ADDITIONAL_QUESTION')
-  }
+    setProfileData(data);
+    setIsUpdate(true);
+    setAdditionalQuestion(data.additionalQuestion);
+    setCurrentPage("ADDITIONAL_QUESTION");
+  };
 
   const updateItemFromProfile = (data, index, action, type) => {
     if (action === "edit") {
       switch (type) {
         case "workExperience":
           // if (type === "workExperience") {
-          console.log("What is data at initial", data);
           setAddNew(false);
           setProfileData(data);
           setWorkExperience(data.workExperience);
@@ -451,7 +420,6 @@ const ApplicantDashboard = () => {
           setCurrentPage("WORK_EXP_FORM");
           break;
         case "course":
-          console.log("What is data here", data);
           setAddNew(false);
           setProfileData(data);
           setCourseCertificate(data.courseCertificate);
@@ -469,11 +437,9 @@ const ApplicantDashboard = () => {
           setCurrentPage("SCHOOL_ACHIEVEMENT_FORM");
           break;
         default:
-          console.log("WRONG ACTION ON EDIT");
       }
     } else if (action === "delete") {
       let updatedData = data;
-      console.log("WHAT IS DATA IN DELETE", data);
       switch (type) {
         case "workExperience":
           updatedData.workExperience = data.workExperience.filter(
@@ -502,17 +468,15 @@ const ApplicantDashboard = () => {
 
       setProfileData(updatedData);
       updateData(updatedData);
-      // setCurrentPage("PROFILE")
-      console.log("updated Data", updatedData);
     }
   };
 
   const updateAdditionalQuestion = (data) => {
-    let updatedData = profileData
-    updatedData.additionalQuestion = data
-    setProfileData(updatedData)
-    updateData(updatedData)
-  }
+    let updatedData = profileData;
+    updatedData.additionalQuestion = data;
+    setProfileData(updatedData);
+    updateData(updatedData);
+  };
 
   const addNewItem = (data, type) => {
     setIsUpdate(true);
@@ -543,7 +507,6 @@ const ApplicantDashboard = () => {
       case "additionalQuestion":
         let questionArray = [];
         for (const item in data) {
-          console.log("what is item", item);
           questionArray.push(data[item]);
         }
         return questionArray;
@@ -556,7 +519,6 @@ const ApplicantDashboard = () => {
         });
         return industryArray;
       case "programmingLanguage":
-        console.log(data);
         let languageArray = [];
         languageArray = Object.keys(data).filter((language) => {
           if (data[language]) {
@@ -565,7 +527,6 @@ const ApplicantDashboard = () => {
         });
         return languageArray;
       case "softSkill":
-        console.log("soft skill data", data);
         let softSkillArray = Object.values(data).map((skill) => {
           return skill;
         });
@@ -597,35 +558,28 @@ const ApplicantDashboard = () => {
         tagline: tagline,
       },
     };
-    console.log(applicantData);
-    console.log("ID", userId);
     applicantData.data = JSON.stringify(applicantData.data);
     axios
       .put(`api/applicantInfo/${userId}`, applicantData)
       .then((res) => {
         if (res) {
-          console.log("What is res in put request", res);
           setCurrentPage("PROFILE_COMPLETE");
         }
       })
       .catch((error) => {
-        console.log("Could not save");
       });
   };
 
   const updateData = (data) => {
-    console.log('PROFILE DATA BEFORE SAVE', profileData)
     let applicantData = {
       applicantId: localStorage.getItem("userId"),
       data: JSON.stringify(data),
     };
 
-    
     axios
       .put(`api/applicantInfo/${userId}`, applicantData)
       .then((res) => {
         if (res) {
-          console.log("What is res in put request", res);
           setCurrentPage("PROFILE");
         }
       })

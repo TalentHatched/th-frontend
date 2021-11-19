@@ -52,12 +52,10 @@ const CourseCertificateForm = (props) => {
   const addCourseCertificateClick = (type) => {
     if (validateForm()) {
       let issueDateStr = date.toString();
-      console.log("What is str", issueDateStr);
       setCourseCertificate({
         ...courseCertificate,
         ["issueDate"]: issueDateStr,
       });
-      console.log("What is final course", courseCertificate);
 
       if (type === "add") {
         props.addCourseCertificate(courseCertificate);
@@ -79,7 +77,6 @@ const CourseCertificateForm = (props) => {
         }
       }
     }
-    console.log("clicked");
   };
 
   const validateForm = () => {
@@ -103,7 +100,6 @@ const CourseCertificateForm = (props) => {
         ["issueDate"]: issueDateString,
       });
     }
-    console.log("What is courseCertificate 1", courseCertificate);
     if (invalidItems.length) {
       let warningMessage = invalidItems.join(", ");
       setWarning(warningMessage);

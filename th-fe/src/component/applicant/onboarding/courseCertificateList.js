@@ -8,9 +8,7 @@ const CourseCertificateList = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log("updating");
     setData(props.courseCertificateData);
-    console.log("data now", data);
   }, [data]);
 
   const convertDate = (date) => {

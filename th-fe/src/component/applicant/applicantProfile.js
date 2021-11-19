@@ -23,14 +23,12 @@ const ApplicantProfile = (props) => {
 
   let userId = localStorage.getItem("userId");
   useEffect(() => {
-    console.log("profile!!!", props);
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
       setApplicantData(res.data.userData.data); // try {
       if (
         res.data.userData.data.industry &&
         res.data.userData.data.industry.includes("technology")
       ) {
-        console.log("go here");
         setIsTech(true);
       }
     });
@@ -42,7 +40,6 @@ const ApplicantProfile = (props) => {
   };
 
   const deleteItem = (index, type) => {
-    console.log(" it is d");
     let updatedData = applicantData;
     switch (type) {
       case "workExperience":
@@ -84,34 +81,12 @@ const ApplicantProfile = (props) => {
         props.updateItem(applicantData, index, "delete", type);
         break;
     }
-
-    // setApplicantData(updatedData)
-    // console.log("applicant data here", applicantData);
-    // let userData = {
-    //   applicantId: localStorage.getItem("userId"),
-    //   data: JSON.stringify(applicantData),
-    // };
-
-    // console.log(userData);
-    // axios
-    //   .put(`api/applicantInfo/${userId}`, userData)
-    //   .then((res) => {
-    //     if (res) {
-    //       console.log("What is res in put request", res);
-    //       setApplicantData(updatedData)
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("Cou")
-    //   })
   };
 
   return (
     <div>
       <section className='applicant-info'>
-        <h2 onClick={() => console.log(applicantData.programmingLanguage)}>
-          {props.fullName}
-        </h2>
+        <h2>{props.fullName}</h2>
         {applicantData.tagline ? <h3>{applicantData.tagline}</h3> : ""}
       </section>
       <section className='tagline'></section>
@@ -243,10 +218,7 @@ const ApplicantProfile = (props) => {
                       }}>
                       Edit
                     </Button>
-                    <Button
-                      onClick={() =>
-                        deleteItem(index, "course")
-                      }>
+                    <Button onClick={() => deleteItem(index, "course")}>
                       Delete
                     </Button>
                     <Typography>{data.title}</Typography>
@@ -288,10 +260,7 @@ const ApplicantProfile = (props) => {
                       }}>
                       Edit
                     </Button>
-                    <Button
-                      onClick={() =>
-                        deleteItem(index, 'accomplishment')
-                      }>
+                    <Button onClick={() => deleteItem(index, "accomplishment")}>
                       Delete
                     </Button>
                     <Typography>{data.title}</Typography>
@@ -316,7 +285,9 @@ const ApplicantProfile = (props) => {
 
       <section className='about-you'>
         <h2>About You</h2>
-        <Button onClick={()=> props.updateAdditionalQuestion(applicantData)}>Update "Get to know you" questions</Button>
+        <Button onClick={() => props.updateAdditionalQuestion(applicantData)}>
+          Update "Get to know you" questions
+        </Button>
       </section>
     </div>
   );
