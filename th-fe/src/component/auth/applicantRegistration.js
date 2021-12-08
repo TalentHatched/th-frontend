@@ -124,7 +124,7 @@ const ApplicantRegistrationForm = (props) => {
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
-          onClick={props.handleReturnClick}>
+          onClick={() => props.handleReturnClick("registration")}>
           Return to dashboard
         </Button>
       </div>
