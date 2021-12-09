@@ -42,7 +42,7 @@ const AdminDashboard = () => {
         console.log("What is res", res.data.info);
         console.log(typeof res.data.info);
         setApplicantData(res.data.info);
-        setViewApplicantList(true)
+        setViewApplicantList(true);
       })
       .catch((err) => {
         console.log("What is error for fetching student", err.response);
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
     console.log("clicked");
     setShowAddApplicantButton(false);
     setViewApplicantList(false);
-    setViewApplicantProfile(false)
+    setViewApplicantProfile(false);
     setViewRegistrationForm(true);
   };
 

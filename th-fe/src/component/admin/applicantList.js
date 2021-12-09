@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import SearchFilter from "./searchFilter";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import {
   Table,
@@ -30,6 +32,9 @@ const ApplicantList = (props) => {
   // ]);
 
   const [applicantData, setApplicantData] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [originalData, setOriginalData] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -39,6 +44,8 @@ const ApplicantList = (props) => {
         console.log("What is res", res.data.info);
         console.log(typeof res.data.info);
         setApplicantData(res.data.info);
+        setOriginalData(props.data);
+        setDisplayData(props.data);
       })
       .catch((err) => {
         console.log("What is error for fetching student", err.response);
@@ -49,8 +56,120 @@ const ApplicantList = (props) => {
     console.log("what is index", index);
   };
 
+  const onSearchBarChange = (e) => {
+    setSearchText(e.target.value);
+    setTimeout(() => {
+      console.log("This is called");
+      if (e.target.value.length > 2) {
+        let updatedDataSet = originalData.filter((data) => {
+          if (data.userFullName.toLowerCase().includes(e.target.value)) {
+            return data;
+          }
+        });
+        setDisplayData(updatedDataSet);
+      } else {
+        setDisplayData(originalData);
+      }
+    }, 1000);
+  };
+
+  const onSearchFilterUpdate = (data) => {
+    let target = [];
+    for (const option in data) {
+      if (data[option]) {
+        target.push(option);
+      }
+    }
+    let currentList = originalData;
+
+    if (target.length) {
+      let currentIndex = 0;
+      while (target.length) {
+        if (
+          target[currentIndex] === "ninth" ||
+          target[currentIndex] === "tenth" ||
+          target[currentIndex] === "eleventh" ||
+          target[currentIndex] === "twelveth"
+        ) {
+          currentList = currentList.filter((data) => {
+            if (data.grade === target[currentIndex]) {
+              return data;
+            }
+          });
+        } else if (
+          target[currentIndex] === "technology" ||
+          target[currentIndex] === "medical" ||
+          target[currentIndex] === "retail" ||
+          target[currentIndex] === "business" ||
+          target[currentIndex] === "other"
+        ) {
+          currentList = currentList.filter((data) => {
+            if (data.specialization === target[currentIndex]) {
+              return data;
+            }
+          });
+        } else if (
+          target[currentIndex] === "completeProfile" ||
+          target[currentIndex] === "incompleteProfile"
+        ) {
+          if (data["incompleteProfile"] && data["completeProfile"]) {
+            continue;
+          } else {
+            if (target[currentIndex] === "completeProfile") {
+              currentList = currentList.filter((data) => {
+                return data.data !== "{}";
+              });
+            } else if (target[currentIndex] === "incompleteProfile") {
+              currentList = currentList.filter((data) => {
+                currentList=currentList.filter(data => {
+                  return data.data === "{}"
+                })
+              })
+            }
+          }
+        }
+
+        target.shift(target[currentIndex]);
+        console.log("target", target);
+      }
+      setDisplayData(currentList)
+    } else {
+      setDisplayData(originalData)
+    }
+
+    console.log("What is final list", currentList);
+
+    // if (Object.entries(target).length) {
+    //   console.log(target);
+    //   let updatedDataSet = originalData.filter((data) => {
+    //     if (data.grade in target && data.specialization in target) {
+    //       if ("incompleteProfile" in target) {
+    //         console.log("What is data here?", data);
+    //       }
+    //     }
+    //   });
+    // } else {
+    //   console.log("No change");
+    // }
+  };
+
+  const onResetClick = () => {
+    setDisplayData(originalData)
+  }
+
   return (
     <div>
+      <div className='search-bar'>
+        <input
+          className='search-bar-input'
+          type='text'
+          value={searchText}
+          placeholder='Search (Name)'
+          onChange={onSearchBarChange}></input>
+      </div>
+      <div>
+        <SearchFilter onSearchUpdateClick={onSearchFilterUpdate} onResetClick={onResetClick}/>
+      </div>
       <TableContainer>
         <Table stickyHeader>
           <TableHead>
@@ -64,8 +183,8 @@ const ApplicantList = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.data && props.data.length
-              ? props.data.map((applicant, index) => {
+            {displayData && displayData.length
+              ? displayData.map((applicant, index) => {
                   return (
                     <TableRow key={index}>
                       <TableCell component='th' scope='row'>
