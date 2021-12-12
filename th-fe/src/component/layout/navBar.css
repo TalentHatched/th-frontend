@@ -1,3 +1,10 @@
+.navBar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
 .th-logo {
     width:10%;
+    text-align: center;
 }
