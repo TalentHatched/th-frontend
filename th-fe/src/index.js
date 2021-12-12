@@ -9,8 +9,8 @@ import reducer from "./store/index";
 import axios from "axios";
 
 const store = createStore(reducer);
-axios.defaults.baseURL = "https://testing-th.herokuapp.com/"
-
+//axios.defaults.baseURL = "https://testing-th.herokuapp.com/"
+axios.defaults.baseURL = "https://dev-th.herokuapp.com/";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
