@@ -71,6 +71,15 @@ const ViewApplicantProfile = (props) => {
             <label>Password:</label>
             {data.userPassword ? <h4>{data.userPassword}</h4> : ""}
           </div>
+          <div>
+            <label>Parent/Guardian Name:</label>
+            {data.guardianName ? <h4>{data.guardianName}</h4> : ""}
+          </div>
+          <div>
+            <label>Parent/Guardian Email:</label>
+            {data.guardianEmail ? <h4>{data.guardianEmail}</h4> : ""}
+          </div>
+
         </div>
         {incompleteProfile ? (
           <div>
