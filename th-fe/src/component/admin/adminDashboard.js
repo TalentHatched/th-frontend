@@ -39,7 +39,6 @@ const AdminDashboard = () => {
     axios
       .get(`api/applicantAdmin/admin/${userId}`)
       .then((res) => {
-        console.log("What is res", res.data.info);
         console.log(typeof res.data.info);
         setApplicantData(res.data.info);
         setViewApplicantList(true);
@@ -76,6 +75,8 @@ const AdminDashboard = () => {
       .post("api/user/studentRegister", info)
       .then((res) => {
         setShowAddApplicantButton(true);
+        setViewApplicantList(true);
+        setViewRegistrationForm(false);
       })
       .catch((error) => {
         console.log("what is error", error.response);
