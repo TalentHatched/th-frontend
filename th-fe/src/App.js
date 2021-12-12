@@ -11,7 +11,7 @@ import ApplicantLogin from './component/auth/applicantLogin';
 import CompanyLogin from './component/auth/companyLogin';
 import SuperUserLogin from './component/auth/superUserLogin';
 
-import ApplicantDashboard from './component/dashboard/applicantDashboard';
+import ApplicantDashboard from './component/applicant/applicantDashboard';
 import CompanyDashboard from './component/dashboard/companyDashboard';
 import AdminDashboard from './component/admin/adminDashboard';
 import SuperUserDashboard from './component/dashboard/superuserDashboard';
@@ -34,7 +34,7 @@ function App() {
             <Route
               path='/companyregister'
               component={CompanyRegistration}></Route>
-            <Route exact path='dashboard1' component={ApplicantDashboard} />
+            <Route exact path='/dashboard1' component={ApplicantDashboard} />
             <Route
               exact
               path='/dashboard2'
