@@ -26,7 +26,7 @@ const SearchFilter = (props) => {
     incompleteProfile: false,
   });
 
-  const [defaultCriteria, setDefaultCriteria] = useState({
+  const defaultCriteria = {
     ninth: false,
     tenth: false,
     eleventh: false,
@@ -38,7 +38,7 @@ const SearchFilter = (props) => {
     other: false,
     completeProfile: false,
     incompleteProfile: false,
-  });
+  };
 
   const {
     ninth,
