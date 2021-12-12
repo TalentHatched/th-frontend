@@ -9,7 +9,7 @@ const CourseCertificateList = (props) => {
 
   useEffect(() => {
     setData(props.courseCertificateData);
-  }, [data]);
+  }, [props.courseCertificateData]);
 
   const convertDate = (date) => {
     if (date) {

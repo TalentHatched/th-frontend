@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchFilter from "./searchFilter";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FilterListIcon from "@material-ui/icons/FilterList";
 
 import {
@@ -43,7 +42,6 @@ const ApplicantList = (props) => {
     axios
       .get(`api/applicantAdmin/admin/${userId}`)
       .then((res) => {
-        console.log("What is res", res.data.info);
         console.log(typeof res.data.info);
         setApplicantData(res.data.info);
         setOriginalData(props.data);
@@ -52,11 +50,9 @@ const ApplicantList = (props) => {
       .catch((err) => {
         console.log("What is error for fetching student", err.response);
       });
-  }, []);
+  }, [props.data]);
 
-  const onViewProfileClick = (index) => {
-    console.log("what is index", index);
-  };
+  
 
   const onSearchBarChange = (e) => {
     setSearchText(e.target.value);
@@ -66,6 +62,8 @@ const ApplicantList = (props) => {
         let updatedDataSet = originalData.filter((data) => {
           if (data.userFullName.toLowerCase().includes(e.target.value)) {
             return data;
+          } else {
+            return "";
           }
         });
         setDisplayData(updatedDataSet);
@@ -103,6 +101,8 @@ const ApplicantList = (props) => {
             console.log(typeof data.grade);
             if (data.grade === reference[target[currentIndex]]) {
               return data;
+            } else {
+              return "";
             }
           });
         } else if (
@@ -115,6 +115,8 @@ const ApplicantList = (props) => {
           currentList = currentList.filter((data) => {
             if (data.specialization === target[currentIndex]) {
               return data;
+            } else {
+              return ""
             }
           });
         } else if (
@@ -130,9 +132,7 @@ const ApplicantList = (props) => {
               });
             } else if (target[currentIndex] === "incompleteProfile") {
               currentList = currentList.filter((data) => {
-                currentList = currentList.filter((data) => {
-                  return data.data === "{}";
-                });
+                return data.data === "{}";
               });
             }
           }

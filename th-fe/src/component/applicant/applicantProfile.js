@@ -32,7 +32,7 @@ const ApplicantProfile = (props) => {
         setIsTech(true);
       }
     });
-  }, []);
+  }, [userId]);
 
   const convertDate = (date) => {
     let dateStr = date.split(" ");
@@ -50,7 +50,7 @@ const ApplicantProfile = (props) => {
         );
         setApplicantData({
           ...applicantData,
-          ["workExperience"]: updatedData.workExperience,
+          "workExperience": updatedData.workExperience,
         });
         props.updateItem(applicantData, index, "delete", type);
         break;
@@ -63,7 +63,7 @@ const ApplicantProfile = (props) => {
         );
         setApplicantData({
           ...applicantData,
-          ["courseCertificate"]: updatedData.courseCertificate,
+          "courseCertificate": updatedData.courseCertificate,
         });
         props.updateItem(applicantData, index, "delete", type);
         break;
@@ -76,9 +76,12 @@ const ApplicantProfile = (props) => {
         );
         setApplicantData({
           ...applicantData,
-          ["schoolAchievement"]: updatedData,
+          "schoolAchievement": updatedData,
         });
         props.updateItem(applicantData, index, "delete", type);
+        break;
+      default:
+        console.log('Wrong case')
         break;
     }
   };

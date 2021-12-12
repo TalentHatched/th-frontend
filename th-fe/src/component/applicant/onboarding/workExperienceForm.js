@@ -44,9 +44,9 @@ const WorkExperienceForm = (props) => {
     jobDescription: "",
   });
   const [warning, setWarning] = useState("");
+  const hideItem = true;
 
   useEffect(() => {
-    console.log("Form Props", props);
     if (props.workExperienceIdx !== "") {
       setWorkExperience(props.workData[props.workExperienceIdx]);
       setJobStartDate(props.workData[props.workExperienceIdx].startDate);
@@ -55,7 +55,7 @@ const WorkExperienceForm = (props) => {
         setJobEndDate(props.workData[props.workExperienceIdx].endDate);
       }
     }
-  }, []);
+  }, [props.workExperienceIdx, props.workData]);
 
   const {
     jobTitle,
@@ -69,23 +69,21 @@ const WorkExperienceForm = (props) => {
   } = workExperience;
 
   const handleChange = (event) => {
-    console.log("EVENT", event);
-    console.log("Work Exp", workExperience);
     if (event.target.name === "currentJob") {
       setIsCurrentJob(event.target.checked);
       setWorkExperience({
         ...workExperience,
-        ["currentJob"]: event.target.checked,
+        currentJob: event.target.checked,
       });
       if (event.target.checked) {
-        setWorkExperience({ ...workExperience, ["endDate"]: "" });
+        setWorkExperience({ ...workExperience, endDate: "" });
         setJobEndDate("");
       }
     } else {
       setWorkExperience({
         ...workExperience,
         [event.target.name]: event.target.value,
-        ["currentJob"]: isCurrentJob,
+        currentJob: isCurrentJob,
       });
     }
   };
@@ -94,7 +92,7 @@ const WorkExperienceForm = (props) => {
     setJobStartDate(value);
     if (value) {
       let dateStr = value.toString();
-      setWorkExperience({ ...workExperience, ["startDate"]: dateStr });
+      setWorkExperience({ ...workExperience, startDate: dateStr });
     }
     // let dateStr = value.toString();
     // setWorkExperience({ ...workExperience, ["startDate"]: dateStr });
@@ -104,7 +102,7 @@ const WorkExperienceForm = (props) => {
     setJobEndDate(value);
     if (value) {
       let dateStr = value.toString();
-      setWorkExperience({ ...workExperience, ["endDate"]: dateStr });
+      setWorkExperience({ ...workExperience, endDate: dateStr });
     }
     // let dateStr = value.toString();
     // setWorkExperience({ ...workExperience, ["endDate"]: dateStr });
@@ -112,19 +110,16 @@ const WorkExperienceForm = (props) => {
 
   const addExperienceClick = (type) => {
     if (validateForm()) {
-      let startDateStr = jobStartDate.toString();
       let endDateStr = "";
       if (!isCurrentJob) {
         endDateStr = jobEndDate.toString();
       }
-      console.log("start", startDateStr);
-      console.log("end", endDateStr);
-      console.log("isCurrentJob", isCurrentJob);
+
       setWorkExperience({
         ...workExperience,
-        ["currentJob"]: isCurrentJob,
-        ["startDate"]: jobStartDate.toString(),
-        ["endDate"]: endDateStr,
+        currentJob: isCurrentJob,
+        startDate: jobStartDate.toString(),
+        endDate: endDateStr,
       });
 
       workExperience.currentJob = isCurrentJob;
@@ -138,10 +133,6 @@ const WorkExperienceForm = (props) => {
           "edit"
         );
       } else if (type === "update") {
-        console.log("props add new", props.addNew);
-        console.log("idx", props.workExperienceIdx);
-        console.log(props.workData);
-
         if (props.addNew) {
           props.updateWorkExperience(workExperience, "newItem", "update");
         } else {
@@ -274,6 +265,7 @@ const WorkExperienceForm = (props) => {
           }
           label='I currently work here'
         />
+        {hideItem ? "" : <h6>{currentJob}</h6>}
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             views={["year", "month"]}

@@ -25,6 +25,7 @@ const NavBar = () => {
         break;
       case "4":
         window.location.href = "/#/superuserlogin";
+        break;
       default:
         console.log("Logout unsuccessful");
         break;

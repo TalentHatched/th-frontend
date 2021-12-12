@@ -8,7 +8,7 @@ import ViewApplicantProfile from "./viewApplicantProfile";
 import axios from "axios";
 
 const AdminDashboard = () => {
-  const [showAddApplicantButton, setShowAddApplicantButton] = useState(true);
+  //const [showAddApplicantButton, setShowAddApplicantButton] = useState(true);
   const [applicantRegistrationWarning, setApplicantRegistrationWarning] =
     useState("");
 
@@ -50,14 +50,14 @@ const AdminDashboard = () => {
 
   const handleAddApplicantClick = (event) => {
     console.log("clicked");
-    setShowAddApplicantButton(false);
+    //setShowAddApplicantButton(false);
     setViewApplicantList(false);
     setViewApplicantProfile(false);
     setViewRegistrationForm(true);
   };
 
   const handleReturnClick = (type) => {
-    setShowAddApplicantButton(true);
+   // setShowAddApplicantButton(true);
 
     if (type === "profile") {
       setViewApplicantList(true);
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
     axios
       .post("api/user/studentRegister", info)
       .then((res) => {
-        setShowAddApplicantButton(true);
+       // setShowAddApplicantButton(true);
         setViewApplicantList(true);
         setViewRegistrationForm(false);
       })

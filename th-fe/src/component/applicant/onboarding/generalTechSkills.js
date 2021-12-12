@@ -6,10 +6,8 @@ import {
   FormGroup,
   Checkbox,
   FormControlLabel,
-  FormHelperText,
 } from "@material-ui/core";
 
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
 const GeneralTechSkill = (props) => {
@@ -21,13 +19,12 @@ const GeneralTechSkill = (props) => {
     MicrosoftOffice: false,
     Slack: false,
   });
-  const [warning, setWarning] = useState("");
 
   useEffect(() => {
     if (Object.values(props.generalTechData).length) {
       setGeneralTech(props.generalTechData);
     }
-  }, []);
+  }, [props.generalTechData]);
 
   const { Figma, AdobeXD, Photoshop, GoogleSuite, MicrosoftOffice, Slack } =
     generalTech;
@@ -133,7 +130,6 @@ const GeneralTechSkill = (props) => {
 
         {/* <FormHelperText>You can display an error</FormHelperText> */}
       </FormControl>
-      {warning ? <h4>{warning}</h4> : ""}
       <div>
         {props.isUpdate? <Button
           variant='contained'

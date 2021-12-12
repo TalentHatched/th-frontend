@@ -6,11 +6,9 @@ import {
   FormGroup,
   Checkbox,
   FormControlLabel,
-  FormHelperText,
 } from "@material-ui/core";
 
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+
 
 const IndustryScreen = (props) => {
   const [industryState, setIndustryState] = useState({
@@ -29,7 +27,7 @@ const IndustryScreen = (props) => {
     if (Object.values(props.industryData).length) {
       setIndustryState(props.industryData);
     }
-  }, []);
+  }, [props.industryData]);
 
   const { technology, business, medical, retail, other } = industryState;
 

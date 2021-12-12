@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   Typography,
   Accordion,
@@ -17,12 +16,9 @@ const ViewApplicantProfile = (props) => {
   const [profile, setProfile] = useState({});
   const [incompleteProfile, setIncompleteProfile] = useState(false);
   useEffect(() => {
-    console.log("What is props", props);
     //let studentProfile = JSON.parse(props.profileData.data);
     // console.log('What is studentProfile', studentProfile)
-    console.log(props.profileData.data);
     if (props.profileData.data === "{}") {
-      console.log("GOT HERe");
       setIncompleteProfile(true);
     } else {
       let studentProfile = JSON.parse(props.profileData.data);
@@ -30,7 +26,7 @@ const ViewApplicantProfile = (props) => {
     }
     // console.log("profile?", JSON.parse(studentProfile.data));
     setData(props.profileData);
-  }, []);
+  }, [props.profileData]);
 
   const convertDate = (date) => {
     let dateStr = date.split(" ");

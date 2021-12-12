@@ -2,21 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./workExperienceList.css";
 
 import {
-  FormGroup,
-  TextField,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Select,
-  InputLabel,
-  FormHelperText,
+  
   Button,
   Card,
   CardContent,
   Typography,
 } from "@material-ui/core";
 
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
@@ -24,10 +16,8 @@ const WorkExperienceList = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log(props);
     setData(props.workData);
-    console.log("What is data", props.workData);
-  }, [data]);
+  }, [props.workData]);
 
   const convertDate = (date) => {
     let dateStr = date.split(" ");

@@ -24,28 +24,11 @@ import LastQuestion from "./onboarding/lastQuestion";
 import ProfileComplete from "./onboarding/profileComplete";
 
 const ApplicantDashboard = () => {
-  const initialData = {
-    id: "",
-    applicantId: "",
-    data: {},
-    under18: "",
-    userName: "",
-    userEmail: "",
-    userPassword: "",
-    isActive: "",
-    userTypeId: "",
-    registrationDate: "",
-    gender: "",
-    dateOfBirth: "",
-    userFullName: "",
-    grade: "",
-    specialization: "",
-  };
+ 
 
   let userId = localStorage.getItem("userId");
   const [fullName, setFullName] = useState("");
   const [profileData, setProfileData] = useState({});
-  const [userBirthDate, setUserBirthDate] = useState("");
   const [currentPage, setCurrentPage] = useState("PROFILE");
 
   const [techTrack, setTechTrack] = useState(false);
@@ -59,7 +42,6 @@ const ApplicantDashboard = () => {
   const [courseCertificate, setCourseCertificate] = useState([]);
   const [schoolAchievement, setSchoolAchievement] = useState([]);
   const [additionalQuestion, setAdditionalQuestion] = useState({});
-  const [tagline, setTagline] = useState("");
 
   const [currentWorkExpIdx, setCurrentWorkExpIdx] = useState("");
   const [currentAchievementIdx, setCurrentAchievementIdx] = useState("");
@@ -79,7 +61,7 @@ const ApplicantDashboard = () => {
         setCurrentPage("PROFILE");
       }
     });
-  }, []);
+  }, [userId]);
 
   const handleReturnClick = (page) => {
     setCurrentPage(page);
@@ -330,8 +312,6 @@ const ApplicantDashboard = () => {
   };
 
   const lastQuestionContinueClick = (data) => {
-    console.log("What is the tagline here", data);
-    setTagline(data);
     saveData(data);
   };
 
@@ -501,6 +481,8 @@ const ApplicantDashboard = () => {
         techArray = Object.keys(data).filter((skill) => {
           if (data[skill]) {
             return skill;
+          } else {
+            return ""
           }
         });
         return techArray;
@@ -515,6 +497,8 @@ const ApplicantDashboard = () => {
         industryArray = Object.keys(data).filter((skill) => {
           if (data[skill]) {
             return skill;
+          } else {
+            return ""
           }
         });
         return industryArray;
@@ -523,6 +507,8 @@ const ApplicantDashboard = () => {
         languageArray = Object.keys(data).filter((language) => {
           if (data[language]) {
             return language;
+          } else {
+            return ""
           }
         });
         return languageArray;
