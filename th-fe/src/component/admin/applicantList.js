@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchFilter from "./searchFilter";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import FilterListIcon from "@material-ui/icons/FilterList";
 
 import {
   Table,
@@ -35,6 +36,7 @@ const ApplicantList = (props) => {
   const [searchText, setSearchText] = useState("");
   const [originalData, setOriginalData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -92,7 +94,14 @@ const ApplicantList = (props) => {
           target[currentIndex] === "twelveth"
         ) {
           currentList = currentList.filter((data) => {
-            if (data.grade === target[currentIndex]) {
+            let reference = {
+              ninth: "9",
+              tenth: "10",
+              eleventh: "11",
+              twelveth: "12",
+            };
+            console.log(typeof data.grade);
+            if (data.grade === reference[target[currentIndex]]) {
               return data;
             }
           });
@@ -121,10 +130,10 @@ const ApplicantList = (props) => {
               });
             } else if (target[currentIndex] === "incompleteProfile") {
               currentList = currentList.filter((data) => {
-                currentList=currentList.filter(data => {
-                  return data.data === "{}"
-                })
-              })
+                currentList = currentList.filter((data) => {
+                  return data.data === "{}";
+                });
+              });
             }
           }
         }
@@ -132,11 +141,11 @@ const ApplicantList = (props) => {
         target.shift(target[currentIndex]);
         console.log("target", target);
       }
-      setDisplayData(currentList)
+      setDisplayData(currentList);
     } else {
-      setDisplayData(originalData)
+      setDisplayData(originalData);
     }
-
+    setShowFilter(false);
     console.log("What is final list", currentList);
 
     // if (Object.entries(target).length) {
@@ -154,8 +163,9 @@ const ApplicantList = (props) => {
   };
 
   const onResetClick = () => {
-    setDisplayData(originalData)
-  }
+    setDisplayData(originalData);
+    setShowFilter(false);
+  };
 
   return (
     <div>
@@ -168,7 +178,21 @@ const ApplicantList = (props) => {
           onChange={onSearchBarChange}></input>
       </div>
       <div>
-        <SearchFilter onSearchUpdateClick={onSearchFilterUpdate} onResetClick={onResetClick}/>
+        <Button
+          onClick={() => {
+            setShowFilter(true);
+          }}
+          endIcon={<FilterListIcon />}>
+          Filter{" "}
+        </Button>
+        {showFilter ? (
+          <SearchFilter
+            onSearchUpdateClick={onSearchFilterUpdate}
+            onResetClick={onResetClick}
+          />
+        ) : (
+          ""
+        )}
       </div>
       <TableContainer>
         <Table stickyHeader>
