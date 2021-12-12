@@ -5,11 +5,11 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
 const LastQuestion = (props) => {
-  const [adjectives, setAdjectives] = useState("")
+  const [adjectives, setAdjectives] = useState("");
 
-  const handleChange = event => {
-    setAdjectives(event.target.value)
-  }
+  const handleChange = (event) => {
+    setAdjectives(event.target.value);
+  };
   return (
     <div>
       <div>
@@ -26,7 +26,7 @@ const LastQuestion = (props) => {
       <div>
         <input
           type='text'
-          placeHolder='Type your three adjectives here'
+          placeholder='Type your three adjectives here'
           value={adjectives}
           onChange={handleChange}></input>
       </div>
