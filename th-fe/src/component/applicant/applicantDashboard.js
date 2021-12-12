@@ -204,7 +204,7 @@ const ApplicantDashboard = () => {
       setCurrentPage("WORK_EXP_LIST");
     } else if (type === "update") {
       //updateWorkExperienceForProfile(data, index, type)
-     
+
       let updatedData = profileData;
 
       if (index === "newItem") {
@@ -330,9 +330,9 @@ const ApplicantDashboard = () => {
   };
 
   const lastQuestionContinueClick = (data) => {
+    console.log("What is the tagline here", data);
     setTagline(data);
-    // POST CALL HERE
-    saveData();
+    saveData(data);
   };
 
   const viewProfileClick = () => {
@@ -536,7 +536,7 @@ const ApplicantDashboard = () => {
     }
   };
 
-  const saveData = () => {
+  const saveData = (taglineData) => {
     let applicantData = {
       applicantId: localStorage.getItem("userId"),
       data: {
@@ -555,7 +555,7 @@ const ApplicantDashboard = () => {
           additionalQuestion,
           "additionalQuestion"
         ),
-        tagline: tagline,
+        tagline: taglineData,
       },
     };
     applicantData.data = JSON.stringify(applicantData.data);
@@ -566,8 +566,7 @@ const ApplicantDashboard = () => {
           setCurrentPage("PROFILE_COMPLETE");
         }
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 
   const updateData = (data) => {
