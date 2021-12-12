@@ -59,11 +59,11 @@ const IndustryScreen = (props) => {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => props.handleReturnClick("PARENT_CONTACT")}></Button>
-      </div>
+      </div> */}
       <h2>Which industry/industries are you interested in?</h2>
       <h3>Check all that apply. </h3>
 
