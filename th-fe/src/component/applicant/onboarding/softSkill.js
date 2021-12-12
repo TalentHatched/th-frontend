@@ -4,7 +4,6 @@ import {
   Button,
   Box,
   InputLabel,
-  Menu,
   MenuItem,
   FormControl,
   Select,
@@ -36,7 +35,7 @@ const SoftSkillScreen = (props) => {
     if (Object.values(props.skillData).length) {
       setSoftSkill(props.skillData);
     }
-  }, []);
+  }, [props.skillData]);
 
   const { firstSkill, secondSkill, thirdSkill, forthSkill, fifthSkill } =
     softSkill;

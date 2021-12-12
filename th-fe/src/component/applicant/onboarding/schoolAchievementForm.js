@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Button, FormGroup, FormControlLabel } from "@material-ui/core";
+import { Button, FormGroup } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -27,7 +27,7 @@ const SchoolAchievementForm = (props) => {
         props.achievementData[props.schoolAchievementIdx].date
       );
     }
-  }, []);
+  }, [props.achievementData, props.schoolAchievementIdx]);
 
   const { title, schoolName, location, date, description } = schoolAchievement;
 
@@ -42,7 +42,7 @@ const SchoolAchievementForm = (props) => {
     setAchievementDate(value);
     if (value) {
       let dateStr = value.toString();
-      setSchoolAchievement({ ...schoolAchievement, ["date"]: dateStr });
+      setSchoolAchievement({ ...schoolAchievement, "date": dateStr });
     }
   };
 

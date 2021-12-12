@@ -6,10 +6,9 @@ import {
   FormGroup,
   Checkbox,
   FormControlLabel,
-  FormHelperText,
+  
 } from "@material-ui/core";
 
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
 const ProgrammingLanguage = (props) => {
@@ -26,7 +25,7 @@ const ProgrammingLanguage = (props) => {
     if (Object.values(props.programmingLanguageData).length) {
       setProgrammingLanguageState(props.programmingLanguageData);
     }
-  }, []);
+  }, [props.programmingLanguageData]);
 
   const { HTML, CSS, JavaScript, Python } = programmingLanguageState;
 

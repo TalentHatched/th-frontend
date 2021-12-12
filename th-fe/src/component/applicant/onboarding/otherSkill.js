@@ -5,10 +5,7 @@ import {
   TextField,
   List,
   ListItem,
-  ListItemButton,
   IconButton,
-  ListItemAvatar,
-  Avatar,
   ListItemText,
 } from "@material-ui/core";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
@@ -24,7 +21,7 @@ const OtherSkillScreen = (props) => {
     if (props.otherSkillData.length) {
       setSkillList(props.otherSkillData);
     }
-  }, []);
+  }, [props.otherSkillData]);
   const onInputFieldChange = (event) => {
     setCurrentSkill(event.target.value);
   };

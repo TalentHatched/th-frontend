@@ -9,7 +9,7 @@ const SchoolAchievementList = (props) => {
 
   useEffect(() => {
     setData(props.schoolAchievementData);
-  }, [data]);
+  }, [props.schoolAchievementData]);
 
   const convertDate = (date) => {
     if (date) {

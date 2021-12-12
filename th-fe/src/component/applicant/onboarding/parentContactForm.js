@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 
 import { Button } from "@material-ui/core";
 import axios from "axios";
 
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
 const ParentContactScreen = (props) => {
   const [guardianInfo, setGuardianInfo] = useState({
     guardianName: "",
     guardianContact: "",
-    applicantId: "",
   });
   const [warning, setWarning] = useState("");
 
-  const { guardianName, guardianContact, applicantId } = guardianInfo;
+  const { guardianName, guardianContact} = guardianInfo;
 
   const handleChange = (event) => {
     console.log("What is event", event);
