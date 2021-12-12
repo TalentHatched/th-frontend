@@ -38,7 +38,7 @@ const AdditionalQuestion = (props) => {
     if (Object.values(props.questionData).length) {
       setAnswer(props.questionData);
     }
-  }, []);
+  }, [props.questionData]);
 
   const handleChange = (event) => {
     let updatedAnswer = answer[event.target.name];

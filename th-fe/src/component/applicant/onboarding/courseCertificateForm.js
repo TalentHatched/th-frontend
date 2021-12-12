@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import { Button, FormGroup, FormControlLabel } from "@material-ui/core";
+import { Button, FormGroup } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const CourseCertificateForm = (props) => {
   const [date, setDate] = useState("");
@@ -17,6 +16,7 @@ const CourseCertificateForm = (props) => {
     description: "",
   });
   const [warning, setWarning] = useState("");
+  const hideItem = true;
 
   useEffect(() => {
     if (props.courseCertificateIdx !== "") {
@@ -29,7 +29,7 @@ const CourseCertificateForm = (props) => {
         );
       }
     }
-  }, []);
+  }, [props.courseCertificateIdx, props.courseCertificateData]);
 
   const { title, issuingOrganization, issueDate, description } =
     courseCertificate;
@@ -43,9 +43,10 @@ const CourseCertificateForm = (props) => {
 
   const handleIssueDateChange = (value) => {
     setDate(value);
+
     if (value) {
       let dateStr = value.toString();
-      setCourseCertificate({ ...courseCertificate, ["issueDate"]: dateStr });
+      setCourseCertificate({ ...courseCertificate, issueDate: dateStr });
     }
   };
 
@@ -54,7 +55,7 @@ const CourseCertificateForm = (props) => {
       let issueDateStr = date.toString();
       setCourseCertificate({
         ...courseCertificate,
-        ["issueDate"]: issueDateStr,
+        issueDate: issueDateStr,
       });
 
       if (type === "add") {
@@ -97,7 +98,7 @@ const CourseCertificateForm = (props) => {
     } else {
       setCourseCertificate({
         ...courseCertificate,
-        ["issueDate"]: issueDateString,
+        issueDate: issueDateString,
       });
     }
     if (invalidItems.length) {
@@ -115,13 +116,11 @@ const CourseCertificateForm = (props) => {
         <Button
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => {
-            {
-              props.isUpdate
-                ? props.handleReturnClick("PROFILE")
-                : props.courseCertificateData.length
-                ? props.handleReturnClick("COURSE_CERTIFICATE_LIST")
-                : props.handleReturnClick("COURSE_CERTIFICATE_PROMPT");
-            }
+            props.isUpdate
+              ? props.handleReturnClick("PROFILE")
+              : props.courseCertificateData.length
+              ? props.handleReturnClick("COURSE_CERTIFICATE_LIST")
+              : props.handleReturnClick("COURSE_CERTIFICATE_PROMPT");
           }}></Button>
       </div>
       <h1>Add courses/certificates</h1>
@@ -158,6 +157,7 @@ const CourseCertificateForm = (props) => {
             )}
           />
         </LocalizationProvider>
+        {hideItem ? "" : <h6>{issueDate}</h6>}
         <TextField
           variant='outlined'
           multiline
@@ -169,6 +169,7 @@ const CourseCertificateForm = (props) => {
           required
         />
       </FormGroup>
+      {warning ? "" : ""}
       {props.isUpdate ? (
         <Button
           variant='contained'
