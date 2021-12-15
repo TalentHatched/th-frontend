@@ -60,11 +60,11 @@ const ApplicantRegistrationForm = (props) => {
         grade: grade,
         specialization: specialization,
         userFullName: userFullName,
-        adminId: 3,
+        adminId: localStorage.getItem("userId"),
         isActive: true,
         userTypeId: 1,
       };
-
+ 
       props.handleAddStudentSubmission(newApplicantInfo);
     } else {
       //
@@ -114,6 +114,11 @@ const ApplicantRegistrationForm = (props) => {
         setUserPasswordWarning("Password must have at least 6 characters");
         readyToSubmit = false;
       }
+    }
+
+    let userType = localStorage.getItem("userTypeId");
+    if (userType !== 3) {
+      readyToSubmit = false;
     }
 
     return readyToSubmit;
