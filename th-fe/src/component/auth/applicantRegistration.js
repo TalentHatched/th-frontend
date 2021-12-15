@@ -60,7 +60,7 @@ const ApplicantRegistrationForm = (props) => {
         grade: grade,
         specialization: specialization,
         userFullName: userFullName,
-        adminId: localStorage.getItem("userId"),
+        adminId: parseInt(localStorage.getItem("userId")),
         isActive: true,
         userTypeId: 1,
       };
@@ -117,7 +117,8 @@ const ApplicantRegistrationForm = (props) => {
     }
 
     let userType = localStorage.getItem("userTypeId");
-    if (userType !== 3) {
+    console.log('What is userType', typeof userType)
+    if (userType !== "3") {
       readyToSubmit = false;
     }
 
