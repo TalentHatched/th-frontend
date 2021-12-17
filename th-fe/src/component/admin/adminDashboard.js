@@ -33,6 +33,7 @@ const AdminDashboard = () => {
   const [viewApplicantList, setViewApplicantList] = useState(false);
   const [viewApplicantProfile, setViewApplicantProfile] = useState(false);
   const [viewRegistrationForm, setViewRegistrationForm] = useState(false);
+const [needUpdate, setNeedUpdate] = useState(false)
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -46,7 +47,7 @@ const AdminDashboard = () => {
       .catch((err) => {
         console.log("What is error for fetching student", err.response);
       });
-  }, []);
+  }, [needUpdate]);
 
   const handleAddApplicantClick = (event) => {
     console.log("clicked");
@@ -77,6 +78,7 @@ const AdminDashboard = () => {
        // setShowAddApplicantButton(true);
         setViewApplicantList(true);
         setViewRegistrationForm(false);
+        setNeedUpdate(true)
       })
       .catch((error) => {
         console.log("what is error", error.response);
