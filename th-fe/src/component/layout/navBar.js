@@ -3,7 +3,7 @@ import "./navBar.css";
 
 import { Button } from "@material-ui/core";
 
-const NavBar = () => {
+const NavBar = (props) => {
   const [isLogin, setIsLogin] = useState(true);
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -31,6 +31,7 @@ const NavBar = () => {
         break;
     }
     localStorage.clear();
+    props.setLoginStatus(false);
   };
 
   return (
@@ -43,7 +44,7 @@ const NavBar = () => {
             alt='Talent Hatched Logo'></img>
         </a>
       </nav>
-      {isLogin ? (
+      {props.isLogin ? (
         <Button variant='outlined' onClick={() => logout()}>
           Logout
         </Button>

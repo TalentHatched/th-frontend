@@ -42,6 +42,8 @@ const ApplicantLogin = ({ history, ...props }) => {
             localStorage.setItem('userId', res.data.userInfo.id);
             localStorage.setItem('userTypeId', res.data.userInfo.userTypeId);
             history.push('/dashboard1');
+            props.setLoginStatus(true)
+
           }
         })
         .catch((err) => {
@@ -74,6 +76,8 @@ const ApplicantLogin = ({ history, ...props }) => {
         warning={hideWarning}
         warningMessage={warningMessage}
       />
+      <h4>Don't have an account?</h4>
+      <h4>Contact your school or organization for log in information</h4>
     </div>
   );
 };

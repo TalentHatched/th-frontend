@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoginForm from './reusable/login';
 import "./adminLogin.css"
@@ -10,6 +10,8 @@ const AdminLogin = ({ history, ...props }) => {
   const [warningMessage, setWarningMessage] = useState('');
   const userTypeId = 3;
 
+
+  
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
   };
@@ -42,6 +44,7 @@ const AdminLogin = ({ history, ...props }) => {
             localStorage.setItem('userId', res.data.userInfo.id);
             localStorage.setItem('userTypeId', res.data.userInfo.userTypeId);
             history.push('/dashboard3');
+            props.setLoginStatus(true)
           }
         })
         .catch((err) => {

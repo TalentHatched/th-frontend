@@ -44,6 +44,8 @@ const SuperUserLogin = ({ history, ...props }) => {
             localStorage.setItem('userId', res.data.userInfo.id);
             localStorage.setItem('userTypeId', res.data.userInfo.userTypeId);
             history.push('/dashboard4');
+            props.setLoginStatus(true)
+
           }
         })
         .catch((err) => {
