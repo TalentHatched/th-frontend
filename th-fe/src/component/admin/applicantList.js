@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchFilter from "./searchFilter";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import "./applicantList.css";
 
 import {
   Table,
@@ -51,8 +52,6 @@ const ApplicantList = (props) => {
         console.log("What is error for fetching student", err.response);
       });
   }, [props.data]);
-
-  
 
   const onSearchBarChange = (e) => {
     setSearchText(e.target.value);
@@ -116,7 +115,7 @@ const ApplicantList = (props) => {
             if (data.specialization === target[currentIndex]) {
               return data;
             } else {
-              return ""
+              return "";
             }
           });
         } else if (
@@ -198,9 +197,7 @@ const ApplicantList = (props) => {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell onClick={() => console.log("data", applicantData)}>
-                Name
-              </TableCell>
+              <TableCell>Name</TableCell>
               <TableCell>Specialization</TableCell>
               <TableCell>Grade</TableCell>
               <TableCell>Profile</TableCell>
