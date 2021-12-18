@@ -6,6 +6,7 @@ import ApplicantRegistrationForm from "../auth/applicantRegistration";
 import ApplicantList from "./applicantList";
 import ViewApplicantProfile from "./viewApplicantProfile";
 import axios from "axios";
+import "./adminDashboard.css"
 
 const AdminDashboard = () => {
   //const [showAddApplicantButton, setShowAddApplicantButton] = useState(true);
@@ -111,7 +112,7 @@ const [needUpdate, setNeedUpdate] = useState(false)
       </div>
       {viewApplicantList ? (
         <div>
-          <div>
+          <div className="add-applicant-button-box">
             <Button
               variant='contained'
               color='primrary'

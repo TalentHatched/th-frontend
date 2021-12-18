@@ -3,6 +3,7 @@ import axios from "axios";
 import SearchFilter from "./searchFilter";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import "./applicantList.css";
+import colors from "../../keyColor";
 
 import {
   Table,
@@ -12,6 +13,8 @@ import {
   TableHead,
   TableRow,
   Button,
+  Modal,
+  Box,
 } from "@material-ui/core";
 
 const ApplicantList = (props) => {
@@ -37,6 +40,26 @@ const ApplicantList = (props) => {
   const [originalData, setOriginalData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
+  const [filterText, setFilterText] = useState("");
+  const [filterValue, setFilterValue] = useState({
+    ninth: false,
+    tenth: false,
+    eleventh: false,
+    twelveth: false,
+    technology: false,
+    business: false,
+    medical: false,
+    retail: false,
+    other: false,
+    completeProfile: false,
+    incompleteProfile: false,
+  });
+  const filterLabel = {
+    ninth: "9th Grade",
+    tenth: "10th Grade",
+    eleventh: "11th Grade",
+    twelveth: "12th Grade",
+  };
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -52,6 +75,10 @@ const ApplicantList = (props) => {
         console.log("What is error for fetching student", err.response);
       });
   }, [props.data]);
+
+  const onSearchFilterSelection = (e) => {
+    setFilterValue({ ...filterValue, [e.target.name]: e.target.checked });
+  };
 
   const onSearchBarChange = (e) => {
     setSearchText(e.target.value);
@@ -72,10 +99,10 @@ const ApplicantList = (props) => {
     }, 1000);
   };
 
-  const onSearchFilterUpdate = (data) => {
+  const onSearchFilterUpdate = () => {
     let target = [];
-    for (const option in data) {
-      if (data[option]) {
+    for (const option in filterValue) {
+      if (filterValue[option]) {
         target.push(option);
       }
     }
@@ -122,7 +149,10 @@ const ApplicantList = (props) => {
           target[currentIndex] === "completeProfile" ||
           target[currentIndex] === "incompleteProfile"
         ) {
-          if (data["incompleteProfile"] && data["completeProfile"]) {
+          if (
+            filterValue["incompleteProfile"] &&
+            filterValue["completeProfile"]
+          ) {
             continue;
           } else {
             if (target[currentIndex] === "completeProfile") {
@@ -166,41 +196,93 @@ const ApplicantList = (props) => {
     setShowFilter(false);
   };
 
+  const handleClose = () => {
+    setShowFilter(false);
+  };
+
   return (
     <div>
-      <div className='search-bar'>
-        <input
-          className='search-bar-input'
-          type='text'
-          value={searchText}
-          placeholder='Search (Name)'
-          onChange={onSearchBarChange}></input>
-      </div>
-      <div>
-        <Button
-          onClick={() => {
-            setShowFilter(true);
-          }}
-          endIcon={<FilterListIcon />}>
-          Filter{" "}
-        </Button>
-        {showFilter ? (
-          <SearchFilter
-            onSearchUpdateClick={onSearchFilterUpdate}
-            onResetClick={onResetClick}
-          />
-        ) : (
-          ""
-        )}
+      <div className='search-tools'>
+        <div className='search-bar'>
+          <input
+            className='search-bar-input'
+            type='text'
+            value={searchText}
+            placeholder='Search (Name)'
+            onChange={onSearchBarChange}></input>
+        </div>
+        <div className='filter'>
+          <Button
+            onClick={() => {
+              setShowFilter(true);
+            }}
+            endIcon={<FilterListIcon />}>
+            <h5>Filter</h5>
+          </Button>
+          <Button
+            className='reset-filter'
+            onClick={() => {
+              onResetClick();
+            }}
+            style={{ color: colors.primary }}>
+            <h5>Reset Filter</h5>
+          </Button>
+
+          <Modal open={showFilter} onClose={handleClose}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: "20%",
+                left: "50%",
+                maxWidth: "400px",
+              }}>
+              <SearchFilter
+                filterValue={filterValue}
+                onSearchUpdateClick={onSearchFilterUpdate}
+                onSearchFilterSelection={onSearchFilterSelection}
+                onResetClick={onResetClick}
+              />
+            </Box>
+          </Modal>
+        </div>
       </div>
       <TableContainer>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Specialization</TableCell>
-              <TableCell>Grade</TableCell>
-              <TableCell>Profile</TableCell>
+              <TableCell
+                style={{
+                  backgroundColor: "#3F67F8",
+                  color: "#FFFFFF",
+                  minWidth: "120px",
+                  maxWidth: "220px;",
+                }}>
+                Name
+              </TableCell>
+              <TableCell
+                style={{
+                  backgroundColor: "#3F67F8",
+                  color: "#FFFFFF",
+                  minWidth: "150px",
+                }}>
+                Specialization
+              </TableCell>
+              <TableCell
+                style={{
+                  backgroundColor: "#3F67F8",
+                  color: "#FFFFFF",
+                  minWidth: "100px",
+                }}>
+                Grade
+              </TableCell>
+              <TableCell
+                style={{
+                  backgroundColor: "#3F67F8",
+                  color: "#FFFFFF",
+                  minWidth: "150px",
+                }}>
+                Profile
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -214,12 +296,17 @@ const ApplicantList = (props) => {
                       <TableCell component='th' scope='row'>
                         {applicant.specialization}
                       </TableCell>
-                      <TableCell component='th' scope='row'>
+                      <TableCell
+                        component='th'
+                        scope='row'
+                        style={{ width: "100%" }}>
                         {applicant.grade}
                       </TableCell>
 
                       <TableCell component='th' scope='row'>
-                        <Button onClick={() => props.onViewProfileClick(index)}>
+                        <Button
+                          variant='text'
+                          onClick={() => props.onViewProfileClick(index)}>
                           {applicant.data === "{}"
                             ? "Incomplete Profile"
                             : "View Profile"}
