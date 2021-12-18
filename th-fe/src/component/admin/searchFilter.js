@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Typography,
@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import "./searchFilter.css";
 
 const SearchFilter = (props) => {
   const [criteria, setCriteria] = useState({
@@ -26,6 +27,12 @@ const SearchFilter = (props) => {
     incompleteProfile: false,
   });
 
+  useEffect(() => {
+    console.log('what is props', props)
+    if (props.filterValue) {
+      setCriteria(props.filterValue);
+    }
+  });
   const defaultCriteria = {
     ninth: false,
     tenth: false,
@@ -55,7 +62,8 @@ const SearchFilter = (props) => {
   } = criteria;
 
   const handleChange = (event) => {
-    setCriteria({ ...criteria, [event.target.name]: event.target.checked });
+    //setCriteria({ ...criteria, [event.target.name]: event.target.checked });
+    props.onSearchFilterSelection(event)
   };
 
   const onResetClick = () => {
@@ -64,7 +72,7 @@ const SearchFilter = (props) => {
   };
 
   return (
-    <div>
+    <div className='search-filter'>
       <Accordion className='extra-question'>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -72,18 +80,20 @@ const SearchFilter = (props) => {
           id='panel1a-header'>
           <Typography>Grade</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails style={{ display: "flex", flexDirection: "column" }}>
           <FormControlLabel
             control={
               <Checkbox checked={ninth} onChange={handleChange} name='ninth' />
             }
             label='9'
+            labelPlacement='start'
           />
           <FormControlLabel
             control={
               <Checkbox checked={tenth} onChange={handleChange} name='tenth' />
             }
             label='10'
+            labelPlacement='start'
           />
           <FormControlLabel
             control={
@@ -94,6 +104,7 @@ const SearchFilter = (props) => {
               />
             }
             label='11'
+            labelPlacement='start'
           />
           <FormControlLabel
             control={
@@ -104,6 +115,7 @@ const SearchFilter = (props) => {
               />
             }
             label='12'
+            labelPlacement='start'
           />
         </AccordionDetails>
       </Accordion>
@@ -114,7 +126,7 @@ const SearchFilter = (props) => {
           id='panel1a-header'>
           <Typography>Specialization</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails style={{ display: "flex", flexDirection: "column" }}>
           <FormControlLabel
             control={
               <Checkbox
@@ -124,6 +136,7 @@ const SearchFilter = (props) => {
               />
             }
             label='Technology'
+            labelPlacement='start'
           />
           <FormControlLabel
             control={
@@ -134,6 +147,7 @@ const SearchFilter = (props) => {
               />
             }
             label='Business'
+            labelPlacement='start'
           />
           <FormControlLabel
             control={
@@ -144,6 +158,7 @@ const SearchFilter = (props) => {
               />
             }
             label='Medical'
+            labelPlacement='start'
           />
           <FormControlLabel
             control={
@@ -154,45 +169,53 @@ const SearchFilter = (props) => {
               />
             }
             label='Retail/Hospitality'
+            labelPlacement='start'
           />
           <FormControlLabel
             control={
               <Checkbox checked={other} onChange={handleChange} name='other' />
             }
             label='Other'
+            labelPlacement='start'
           />
         </AccordionDetails>
       </Accordion>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={completeProfile}
-            onChange={handleChange}
-            name='completeProfile'
-          />
-        }
-        label='Profile complete'
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={incompleteProfile}
-            onChange={handleChange}
-            name='incompleteProfile'
-          />
-        }
-        label='Profile incomplete'
-      />
+      <div className='profile-complete-labels'>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={completeProfile}
+              onChange={handleChange}
+              name='completeProfile'
+            />
+          }
+          label='Profile complete'
+          labelPlacement='start'
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={incompleteProfile}
+              onChange={handleChange}
+              name='incompleteProfile'
+            />
+          }
+          label='Profile incomplete'
+          labelPlacement='start'
+        />
+      </div>
       <Button
+        className='update-button'
         color='primary'
         variant='contained'
         endIcon={<ArrowForwardIcon />}
-        onClick={() => props.onSearchUpdateClick(criteria)}>
-        Update
+        onClick={() => props.onSearchUpdateClick()}
+        style={{ fontSize: "16px", width: "80%", margin: "10px" }}>
+        <h5>Update</h5>
       </Button>
-      <Button color='primary' variant='outlined' onClick={() => onResetClick()}>
+      {/* <Button color='primary' variant='outlined' onClick={() => onResetClick()}>
         Reset
-      </Button>
+      </Button> */}
     </div>
   );
 };

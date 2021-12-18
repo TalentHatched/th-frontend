@@ -1,0 +1,16 @@
+.search-filter {
+  max-width: 250px;
+  border: 1px solid red;
+  background-color: #ffffff;
+}
+
+.extra-question {
+  margin-top: 0px;
+}
+
+.profile-complete-labels {
+  text-align: right;
+  padding: 16px;
+}
+
+
