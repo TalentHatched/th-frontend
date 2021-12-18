@@ -1,0 +1,8 @@
+.applicant-login-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+h2 {
+  text-align: left;
+}

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-import LoginForm from './reusable/login';
-
+import LoginForm from "./reusable/login";
+import "./applicantLogin.css";
 const ApplicantLogin = ({ history, ...props }) => {
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [hideWarning, setHideWarning] = useState(true);
-  const [warningMessage, setWarningMessage] = useState('');
+  const [warningMessage, setWarningMessage] = useState("");
   const userTypeId = 1;
 
   const handleUserNameChange = (event) => {
@@ -18,13 +18,13 @@ const ApplicantLogin = ({ history, ...props }) => {
     setPassword(event.target.value);
   };
   const handleSubmit = () => {
-    console.log('Company Login Form Submit Clicked');
+    console.log("Company Login Form Submit Clicked");
     if (!userName || !password) {
-      setWarningMessage('Username and Password are required.');
+      setWarningMessage("Username and Password are required.");
       setHideWarning(false);
     } else if (password.length < 6) {
       // May adjust this based on password requirement
-      setWarningMessage('Invalid password.');
+      setWarningMessage("Invalid password.");
       setHideWarning(false);
     } else {
       setHideWarning(true);
@@ -34,29 +34,28 @@ const ApplicantLogin = ({ history, ...props }) => {
         userTypeId: userTypeId,
       };
       axios
-        .post('api/user/login', credential)
+        .post("api/user/login", credential)
         .then((res) => {
           if (res.data) {
-            console.log('Success', res.data);
-            localStorage.setItem('token', res.data.userToken);
-            localStorage.setItem('userId', res.data.userInfo.id);
-            localStorage.setItem('userTypeId', res.data.userInfo.userTypeId);
-            history.push('/dashboard1');
-            props.setLoginStatus(true)
-
+            console.log("Success", res.data);
+            localStorage.setItem("token", res.data.userToken);
+            localStorage.setItem("userId", res.data.userInfo.id);
+            localStorage.setItem("userTypeId", res.data.userInfo.userTypeId);
+            history.push("/dashboard1");
+            props.setLoginStatus(true);
           }
         })
         .catch((err) => {
-          console.log('err', err);
+          console.log("err", err);
           if (!err.response) {
-            setWarningMessage('Server error. Please try again.');
+            setWarningMessage("Server error. Please try again.");
             setHideWarning(false);
           } else {
             if (err.response.status === 400 || err.response.status === 404) {
-              setWarningMessage('Invalid credentials.');
+              setWarningMessage("Invalid credentials.");
               setHideWarning(false);
             } else {
-              setWarningMessage('Login Unsuccessful. Please try again.');
+              setWarningMessage("Login Unsuccessful. Please try again.");
               setHideWarning(false);
             }
           }
@@ -65,19 +64,22 @@ const ApplicantLogin = ({ history, ...props }) => {
   };
 
   return (
-    <div className='admin-login-form'>
-      <h1>Applicant Login</h1>
-      <LoginForm
-        onClick={handleSubmit}
-        userName={userName}
-        password={password}
-        onUserNameChange={handleUserNameChange}
-        onPasswordChange={handlePasswordChange}
-        warning={hideWarning}
-        warningMessage={warningMessage}
-      />
-      <h4>Don't have an account?</h4>
-      <h4>Contact your school or organization for log in information</h4>
+    <div className='applicant-login-form'>
+      <div className='login-form'>
+        <h2>Applicant Login</h2>
+        <LoginForm
+          onClick={handleSubmit}
+          userName={userName}
+          password={password}
+          onUserNameChange={handleUserNameChange}
+          onPasswordChange={handlePasswordChange}
+          warning={hideWarning}
+          warningMessage={warningMessage}
+        />
+        <h4>Don't have an account?</h4>
+        <h4>Contact your school or organization for log in information</h4>
+      </div>
+      <div className="login-image"></div>
     </div>
   );
 };

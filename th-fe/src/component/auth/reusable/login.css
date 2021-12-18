@@ -1,9 +1,14 @@
-.login-btn {
-  /* background: red !important; */
+.login-form {
+  text-align: left;
 }
 
 input {
-  width: 50%;
-  font-size: 20px;
-  margin: 20px;
+  text-align: left !important;
 }
+
+Button {
+  width: 55%;
+  padding: 0px !important;
+}
+
+

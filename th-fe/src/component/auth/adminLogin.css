@@ -1,0 +1,19 @@
+* {
+  width: 100%;
+  text-align: center;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: space-between;
+  margin-top:30px
+}
+
+.login-header {
+  text-align: left;
+}
+
+h4 {
+  text-align: left;
+  margin-top: 10px;
+}
