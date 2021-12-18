@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LoginForm from "./reusable/login";
 import "./adminLogin.css";
+import adminLoginImage from "../../img/admin-login-img.png";
 
 const AdminLogin = ({ history, ...props }) => {
   const [userName, setUserName] = useState("");
@@ -77,7 +78,11 @@ const AdminLogin = ({ history, ...props }) => {
           warningMessage={warningMessage}
         />
       </div>
-      <div className='login-image'></div>
+      <div className='login-image-holder'>
+        <div className='login-img'>
+          <img src={adminLoginImage}></img>
+        </div>
+      </div>
     </div>
   );
 };

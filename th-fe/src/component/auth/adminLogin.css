@@ -6,7 +6,7 @@
 .admin-login-form {
   display: flex;
   flex-direction: space-between;
-  margin-top:30px
+  margin-top: 30px;
 }
 
 .login-header {
@@ -16,4 +16,25 @@
 h4 {
   text-align: left;
   margin-top: 10px;
+}
+
+.login-img {
+  margin: 20px;
+}
+
+img {
+  width: 80%;
+  height: auto;
+}
+
+@media (max-width: 700px) {
+  
+
+  .login-image-holder {
+    display: none;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    max-width:98%;
+  }
 }
