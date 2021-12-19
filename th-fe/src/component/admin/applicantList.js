@@ -86,7 +86,7 @@ const ApplicantList = (props) => {
       console.log("This is called");
       if (e.target.value.length > 2) {
         let updatedDataSet = originalData.filter((data) => {
-          if (data.userFullName.toLowerCase().includes(e.target.value)) {
+          if (data.userFullName.toLowerCase().includes(e.target.value.toLowerCase())) {
             return data;
           } else {
             return "";
