@@ -24,8 +24,6 @@ import LastQuestion from "./onboarding/lastQuestion";
 import ProfileComplete from "./onboarding/profileComplete";
 
 const ApplicantDashboard = () => {
- 
-
   let userId = localStorage.getItem("userId");
   const [fullName, setFullName] = useState("");
   const [profileData, setProfileData] = useState({});
@@ -42,6 +40,7 @@ const ApplicantDashboard = () => {
   const [courseCertificate, setCourseCertificate] = useState([]);
   const [schoolAchievement, setSchoolAchievement] = useState([]);
   const [additionalQuestion, setAdditionalQuestion] = useState({});
+  const [adjectives, setAdjectives] = useState("");
 
   const [currentWorkExpIdx, setCurrentWorkExpIdx] = useState("");
   const [currentAchievementIdx, setCurrentAchievementIdx] = useState("");
@@ -311,12 +310,28 @@ const ApplicantDashboard = () => {
     setCurrentPage("LAST_QUESTION");
   };
 
-  const lastQuestionContinueClick = (data) => {
-    saveData(data);
+  const lastQuestionContinueClick = (data, type) => {
+    if (type === "onboard") {
+      saveData(data);
+    } else if (type === "update") {
+      console.log('What data???',data)
+      let updatedData = profileData;
+      updatedData.tagline = data;
+      console.log('UPDATED DATA WJAT?', updatedData)
+      setProfileData(updatedData);
+      updateData(updatedData);
+    }
   };
 
   const viewProfileClick = () => {
     setCurrentPage("PROFILE");
+  };
+
+  const updateAdjectives = (data) => {
+    setProfileData(data);
+    setIsUpdate(true);
+    setAdjectives(data.tagline);
+    setCurrentPage("LAST_QUESTION");
   };
 
   // Functions for Applicant Profile
@@ -482,7 +497,7 @@ const ApplicantDashboard = () => {
           if (data[skill]) {
             return skill;
           } else {
-            return ""
+            return "";
           }
         });
         return techArray;
@@ -498,7 +513,7 @@ const ApplicantDashboard = () => {
           if (data[skill]) {
             return skill;
           } else {
-            return ""
+            return "";
           }
         });
         return industryArray;
@@ -508,7 +523,7 @@ const ApplicantDashboard = () => {
           if (data[language]) {
             return language;
           } else {
-            return ""
+            return "";
           }
         });
         return languageArray;
@@ -556,6 +571,7 @@ const ApplicantDashboard = () => {
   };
 
   const updateData = (data) => {
+    console.log("what is data on update data", data);
     let applicantData = {
       applicantId: localStorage.getItem("userId"),
       data: JSON.stringify(data),
@@ -578,6 +594,7 @@ const ApplicantDashboard = () => {
       {currentPage === "PROFILE" ? (
         <ApplicantProfile
           fullName={fullName}
+          updateAdjectives={updateAdjectives}
           updateSoftSkills={updateSoftSkills}
           updateOtherSkills={updateOtherSkills}
           updateProgrammingSkills={updateProgrammingSkills}
@@ -785,6 +802,8 @@ const ApplicantDashboard = () => {
         <LastQuestion
           lastQuestionContinueClick={lastQuestionContinueClick}
           handleReturnClick={handleReturnClick}
+          adjectivesData={adjectives}
+          isUpdate={isUpdate}
         />
       ) : (
         ""
