@@ -3,14 +3,16 @@ import React from "react";
 import { Button } from "@material-ui/core";
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import WelcomeScreenImg from "../../../img/welcome-screen-img.png"
+
 
 const WelcomeScreen = (props) => {
   return (
     <div>
-      <h1>Hello, {props.fullName}!</h1>
+      <h1>Hello, {props.firstName}!</h1>
 
       <h1>Welcome!</h1>
-      <h4>Image here</h4>
+      <img src={WelcomeScreenImg}></img>
       <section>
         <h2>
           You're the newest member of <br></br>
