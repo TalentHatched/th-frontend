@@ -50,7 +50,7 @@ const ApplicantProfile = (props) => {
         );
         setApplicantData({
           ...applicantData,
-          "workExperience": updatedData.workExperience,
+          workExperience: updatedData.workExperience,
         });
         props.updateItem(applicantData, index, "delete", type);
         break;
@@ -63,7 +63,7 @@ const ApplicantProfile = (props) => {
         );
         setApplicantData({
           ...applicantData,
-          "courseCertificate": updatedData.courseCertificate,
+          courseCertificate: updatedData.courseCertificate,
         });
         props.updateItem(applicantData, index, "delete", type);
         break;
@@ -76,12 +76,12 @@ const ApplicantProfile = (props) => {
         );
         setApplicantData({
           ...applicantData,
-          "schoolAchievement": updatedData,
+          schoolAchievement: updatedData,
         });
         props.updateItem(applicantData, index, "delete", type);
         break;
       default:
-        console.log('Wrong case')
+        console.log("Wrong case");
         break;
     }
   };
@@ -90,9 +90,15 @@ const ApplicantProfile = (props) => {
     <div>
       <section className='applicant-info'>
         <h2>{props.fullName}</h2>
-        {applicantData.tagline ? <h3>{applicantData.tagline}</h3> : ""}
       </section>
-      <section className='tagline'></section>
+      <section className='tagline'>
+        {applicantData.tagline ? <h3>{applicantData.tagline}</h3> : ""}
+        <Button
+          variant='outlined'
+          onClick={() => props.updateAdjectives(applicantData)}>
+          Update Adjectives
+        </Button>
+      </section>
       <section className='top-skills'>
         <h2>Top 5 Soft Skills</h2>
         {applicantData.softSkill && applicantData.softSkill.length
