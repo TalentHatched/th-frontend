@@ -137,17 +137,6 @@ code {
     monospace;
 }
 
-html {
-  display: flex;
-  justify-content: center;
-}
-
-body {
-  max-width: 919px;
-  text-align: center;
-  margin: 0 15px;
-}
-
 h1,
 h2 {
   font-family: "Red Hat Display", sans-serif;
@@ -189,6 +178,10 @@ span {
 
 label {
   font-size: 20px;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  max-width: 85%;
 }
 
 @media (max-width: 599px) {
