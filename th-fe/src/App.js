@@ -28,50 +28,54 @@ function App() {
 
   return (
     <Router>
-      <div className='App' isLogin={isLogin}>
-        <NavBar isLogin={isLogin} setLoginStatus={setLoginStatus} />
-        <div className='content'>
-          <Switch>
-            <Route
-              path='/adminlogin'
-              render={(props) => (
-                <AdminLogin
-                  {...props}
-                  isLogin={isLogin}
-                  setLoginStatus={setLoginStatus}
-                />
-              )}></Route>
-            <Route
-              path='/applicantlogin'
-              render={(props) => (
-                <ApplicantLogin
-                  {...props}
-                  isLogin={isLogin}
-                  setLoginStatus={setLoginStatus}
-                />
-              )}></Route>
-            <Route
-              path='/superuserlogin'
-              render={(props) => (
-                <SuperUserLogin
-                  {...props}
-                  isLogin={isLogin}
-                  setLoginStatus={setLoginStatus}
-                />
-              )}></Route>
-            <Route path='/companylogin' component={CompanyLogin}></Route>
-            <Route path='/adminregister' component={AdminRegistration}></Route>
-            <Route
-              path='/companyregister'
-              component={CompanyRegistration}></Route>
-            <Route exact path='/dashboard1' component={ApplicantDashboard} />
-            <Route
-              exact
-              path='/dashboard2'
-              component={CompanyDashboard}></Route>
-            <Route exact path='/dashboard3' component={AdminDashboard} />
-            <Route exact path='/dashboard4' component={SuperUserDashboard} />
-          </Switch>
+      <div className='container'>
+        <div className='App' isLogin={isLogin}>
+          <NavBar isLogin={isLogin} setLoginStatus={setLoginStatus} />
+          <div className='content'>
+            <Switch>
+              <Route
+                path='/adminlogin'
+                render={(props) => (
+                  <AdminLogin
+                    {...props}
+                    isLogin={isLogin}
+                    setLoginStatus={setLoginStatus}
+                  />
+                )}></Route>
+              <Route
+                path='/applicantlogin'
+                render={(props) => (
+                  <ApplicantLogin
+                    {...props}
+                    isLogin={isLogin}
+                    setLoginStatus={setLoginStatus}
+                  />
+                )}></Route>
+              <Route
+                path='/superuserlogin'
+                render={(props) => (
+                  <SuperUserLogin
+                    {...props}
+                    isLogin={isLogin}
+                    setLoginStatus={setLoginStatus}
+                  />
+                )}></Route>
+              <Route path='/companylogin' component={CompanyLogin}></Route>
+              <Route
+                path='/adminregister'
+                component={AdminRegistration}></Route>
+              <Route
+                path='/companyregister'
+                component={CompanyRegistration}></Route>
+              <Route exact path='/dashboard1' component={ApplicantDashboard} />
+              <Route
+                exact
+                path='/dashboard2'
+                component={CompanyDashboard}></Route>
+              <Route exact path='/dashboard3' component={AdminDashboard} />
+              <Route exact path='/dashboard4' component={SuperUserDashboard} />
+            </Switch>
+          </div>
         </div>
       </div>
     </Router>

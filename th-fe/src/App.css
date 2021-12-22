@@ -1,3 +1,10 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .App {
-  width:100%;
+  max-width: 919px;
+  margin:0px 20px;
 }
