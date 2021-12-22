@@ -33,6 +33,10 @@ const ViewApplicantProfile = (props) => {
     return dateStr[1] + " " + dateStr[3];
   };
 
+  const viewPasswordClick = () => {
+    console.log('This is clicked', data)
+  }
+
   return (
     <div>
       <div>
@@ -44,7 +48,7 @@ const ViewApplicantProfile = (props) => {
       </div>
       <div>
         <div className='applicantName'>
-          {data.userFullName ? <h2>{data.userFullName}</h2> : <h2>Fail</h2>}
+          {data.userFirstName && data.userLastName? <h2>{data.userFirstName} {data.userLastName}</h2> : <h2>Fail</h2>}
         </div>
         <div className='applicantInfo'>
           <div>
@@ -65,17 +69,8 @@ const ViewApplicantProfile = (props) => {
           </div>
           <div>
             <label>Password:</label>
-            {data.userPassword ? <h4>{data.userPassword}</h4> : ""}
+            <h4 onClick={() => viewPasswordClick()}>Click to view Password</h4>
           </div>
-          <div>
-            <label>Parent/Guardian Name:</label>
-            {data.guardianName ? <h4>{data.guardianName}</h4> : ""}
-          </div>
-          <div>
-            <label>Parent/Guardian Email:</label>
-            {data.guardianEmail ? <h4>{data.guardianEmail}</h4> : ""}
-          </div>
-
         </div>
         {incompleteProfile ? (
           <div>
