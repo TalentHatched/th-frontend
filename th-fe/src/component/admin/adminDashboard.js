@@ -6,7 +6,7 @@ import ApplicantRegistrationForm from "../auth/applicantRegistration";
 import ApplicantList from "./applicantList";
 import ViewApplicantProfile from "./viewApplicantProfile";
 import axios from "axios";
-import "./adminDashboard.css"
+import "./adminDashboard.css";
 
 const AdminDashboard = () => {
   //const [showAddApplicantButton, setShowAddApplicantButton] = useState(true);
@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   const [viewApplicantList, setViewApplicantList] = useState(false);
   const [viewApplicantProfile, setViewApplicantProfile] = useState(false);
   const [viewRegistrationForm, setViewRegistrationForm] = useState(false);
-const [needUpdate, setNeedUpdate] = useState(false)
+  const [needUpdate, setNeedUpdate] = useState(false);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -59,7 +59,7 @@ const [needUpdate, setNeedUpdate] = useState(false)
   };
 
   const handleReturnClick = (type) => {
-   // setShowAddApplicantButton(true);
+    // setShowAddApplicantButton(true);
 
     if (type === "profile") {
       setViewApplicantList(true);
@@ -76,10 +76,10 @@ const [needUpdate, setNeedUpdate] = useState(false)
     axios
       .post("api/user/studentRegister", info)
       .then((res) => {
-       // setShowAddApplicantButton(true);
+        // setShowAddApplicantButton(true);
         setViewApplicantList(true);
         setViewRegistrationForm(false);
-        setNeedUpdate(true)
+        setNeedUpdate(true);
       })
       .catch((error) => {
         console.log("what is error", error.response);
@@ -96,23 +96,10 @@ const [needUpdate, setNeedUpdate] = useState(false)
   return (
     <div className='admin-dashboard'>
       <h1>Admin Dashboard</h1>
-      <div>
-        {/* {showAddApplicantButton ? (
-          <div>
-            <Button
-              variant='contained'
-              color='primrary'
-              onClick={() => handleAddApplicantClick()}>
-              Add Applicant
-            </Button>
-          </div>
-        ) : (
-          ""
-        )} */}
-      </div>
+      <div></div>
       {viewApplicantList ? (
         <div>
-          <div className="add-applicant-button-box">
+          <div className='add-applicant-button-box'>
             <Button
               variant='contained'
               color='primrary'
@@ -149,12 +136,22 @@ const [needUpdate, setNeedUpdate] = useState(false)
       )}
 
       {viewRegistrationForm ? (
-        <ApplicantRegistrationForm
-          handleReturnClick={handleReturnClick}
-          isAdmin={true}
-          handleAddStudentSubmission={handleAddStudentSubmission}
-          applicantRegistrationWarning={applicantRegistrationWarning}
-        />
+        <div>
+          <div className='add-applicant-button-box'>
+            <Button
+              variant='contained'
+              color='primrary'
+              onClick={() => handleAddApplicantClick()}>
+              Add Applicant
+            </Button>
+          </div>
+          <ApplicantRegistrationForm
+            handleReturnClick={handleReturnClick}
+            isAdmin={true}
+            handleAddStudentSubmission={handleAddStudentSubmission}
+            applicantRegistrationWarning={applicantRegistrationWarning}
+          />
+        </div>
       ) : (
         ""
       )}
