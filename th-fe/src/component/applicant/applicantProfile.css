@@ -1,3 +1,15 @@
+section {
+  margin: 10px 10px;
+}
+
 section:not(:last-child) {
-    border-bottom: 5px solid #c4c4c4
+  border-bottom: 5px solid #c4c4c4;
+}
+
+h4 {
+  border-radius: 4.8px;
+  border: 1px solid #3f67f8;
+  padding: 8px 16px;
+  text-align: center;
+  margin:20px 10px;
 }

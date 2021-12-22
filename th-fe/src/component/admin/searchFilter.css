@@ -1,7 +1,9 @@
 .search-filter {
-  max-width: 250px;
+  max-width: 500px;
   border: 1px solid red;
   background-color: #ffffff;
+  padding:10px 30px;
+  text-align:left
 }
 
 .extra-question {
