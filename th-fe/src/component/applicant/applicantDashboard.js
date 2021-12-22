@@ -26,6 +26,8 @@ import ProfileComplete from "./onboarding/profileComplete";
 const ApplicantDashboard = () => {
   let userId = localStorage.getItem("userId");
   const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName]=useState("")
+  const [lastName, setLastName] = useState("")
   const [profileData, setProfileData] = useState({});
   const [currentPage, setCurrentPage] = useState("PROFILE");
 
@@ -53,6 +55,8 @@ const ApplicantDashboard = () => {
   useEffect(() => {
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
       setFullName(res.data.userData.userFullName);
+      setFirstName(res.data.userData.userFirstName)
+      setLastName(res.data.userData.userLastName)
 
       if (Object.keys(res.data.userData.data).length === 0) {
         setCurrentPage("WELCOME");
@@ -607,7 +611,7 @@ const ApplicantDashboard = () => {
         ""
       )}
       {currentPage === "WELCOME" ? (
-        <Welcome fullName={fullName} handleStartClick={handleStartClick} />
+        <Welcome firstName={firstName} handleStartClick={handleStartClick} />
       ) : (
         ""
       )}

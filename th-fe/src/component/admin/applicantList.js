@@ -233,8 +233,8 @@ const ApplicantList = (props) => {
               sx={{
                 position: "absolute",
                 top: "20%",
-                left: "50%",
-                maxWidth: "400px",
+                left: "40%",
+                maxWidth: "600px",
               }}>
               <SearchFilter
                 filterValue={filterValue}
@@ -257,7 +257,16 @@ const ApplicantList = (props) => {
                   minWidth: "120px",
                   maxWidth: "220px;",
                 }}>
-                Name
+                Last Name
+              </TableCell>
+              <TableCell
+                style={{
+                  backgroundColor: "#3F67F8",
+                  color: "#FFFFFF",
+                  minWidth: "120px",
+                  maxWidth: "220px;",
+                }}>
+                First Name
               </TableCell>
               <TableCell
                 style={{
@@ -291,7 +300,10 @@ const ApplicantList = (props) => {
                   return (
                     <TableRow key={index}>
                       <TableCell component='th' scope='row'>
-                        {applicant.userFullName}
+                        {applicant.userLastName}
+                      </TableCell>
+                      <TableCell component='th' scope='row'>
+                        {applicant.userFirstName}
                       </TableCell>
                       <TableCell component='th' scope='row'>
                         {applicant.specialization}

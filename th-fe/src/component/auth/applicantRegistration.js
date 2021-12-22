@@ -1,29 +1,41 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, TextField, MenuItem } from "@material-ui/core";
 
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
 import "./applicantRegistration.css";
 
 const ApplicantRegistrationForm = (props) => {
-  const [userFullName, setUserFullName] = useState("");
+  const [userFirstName, setUserFirstName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [grade, setGrade] = useState("");
   const [specialization, setSpecialization] = useState("");
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [fullNameWarning, setFullNameWarning] = useState("");
+  const [firstNameWarning, setFirstNameWarning] = useState("");
+  const [lastNameWarning, setLastNameWarning] = useState("");
   const [dateOfBirthWarning, setDateOfBirthWarning] = useState("");
   const [userNameWarning, setUserNameWarning] = useState("");
   const [userEmailWarning, setUserEmailWarning] = useState("");
-  const [userPasswordWarning, setUserPasswordWarning] = useState("");
   const [userIdWarning, setUserIdWarning] = useState("");
 
   let userId = localStorage.getItem("userId");
 
-  const handleFullNameChange = (event) => {
-    setUserFullName(event.target.value);
+  const specializations = [
+    { value: "Technology" },
+    { value: "Business" },
+    { value: "Medical" },
+    { value: "Retail/Hospitality" },
+    { value: "Other" },
+  ];
+
+  const handleFirstNameChange = (event) => {
+    setUserFirstName(event.target.value);
+  };
+
+  const handleLastNameChange = (event) => {
+    setUserLastName(event.target.value);
   };
 
   const handleDateOfBirthChange = (event) => {
@@ -35,6 +47,7 @@ const ApplicantRegistrationForm = (props) => {
   };
 
   const handleSpecializationChange = (event) => {
+    console.log(event);
     setSpecialization(event.target.value);
   };
 
@@ -46,25 +59,26 @@ const ApplicantRegistrationForm = (props) => {
     setUserEmail(event.target.value);
   };
 
-  const handleUserPasswordChange = (event) => {
-    setUserPassword(event.target.value);
-  };
+  // const handleUserPasswordChange = (event) => {
+  //   setUserPassword(event.target.value);
+  // };
 
   const handleSubmissionClick = (event) => {
     if (validate()) {
       let newApplicantInfo = {
         userName: userName,
         userEmail: userEmail,
-        userPassword: userPassword,
+        userPassword: "",
         dateOfBirth: dateOfBirth,
         grade: grade,
         specialization: specialization,
-        userFullName: userFullName,
+        userFirstName: userFirstName,
+        userLastName: userLastName,
         adminId: parseInt(localStorage.getItem("userId")),
         isActive: true,
         userTypeId: 1,
       };
- 
+      console.log("What is newApplicantInfo", newApplicantInfo);
       props.handleAddStudentSubmission(newApplicantInfo);
     } else {
       //
@@ -74,17 +88,22 @@ const ApplicantRegistrationForm = (props) => {
 
   const validate = () => {
     let readyToSubmit = true;
-    setFullNameWarning("");
+    setFirstNameWarning("");
+    setLastNameWarning("");
     setUserNameWarning("");
     setUserEmailWarning("");
-    setUserPasswordWarning("");
+    //setUserPasswordWarning("");
     setDateOfBirthWarning("");
 
-    if (!userFullName || !userName || !userEmail || !userPassword || !userId) {
+    if (!userFirstName || !userLastName || !userName || !userEmail || !userId) {
       readyToSubmit = false;
 
-      if (!userFullName) {
-        setFullNameWarning("Applicant Name required");
+      if (!userFirstName) {
+        setFirstNameWarning("Applicant First Name required");
+      }
+
+      if (!userLastName) {
+        setLastNameWarning("Applicant Last Name required");
       }
 
       if (!userName) {
@@ -95,9 +114,9 @@ const ApplicantRegistrationForm = (props) => {
         setUserEmailWarning("Email required");
       }
 
-      if (!userPassword) {
-        setUserPasswordWarning("Password required");
-      }
+      // if (!userPassword) {
+      //   setUserPasswordWarning("Password required");
+      // }
 
       if (!userId) {
         setUserIdWarning(
@@ -105,19 +124,17 @@ const ApplicantRegistrationForm = (props) => {
         );
       }
     } else {
-      if (!userEmail.includes("@")) {
-        setUserEmailWarning("Please provide a valid email");
+      if (userName !== userEmail) {
+        setUserEmailWarning("Confirm user email does not match");
         readyToSubmit = false;
-      }
-
-      if (userPassword.length < 6) {
-        setUserPasswordWarning("Password must have at least 6 characters");
+      } else if (!userName.includes("@")) {
+        setUserEmailWarning("Please provide a valid email");
         readyToSubmit = false;
       }
     }
 
     let userType = localStorage.getItem("userTypeId");
-    console.log('What is userType', typeof userType)
+    console.log("What is userType", typeof userType);
     if (userType !== "3") {
       readyToSubmit = false;
     }
@@ -127,108 +144,150 @@ const ApplicantRegistrationForm = (props) => {
 
   return (
     <div className='applicant-registration-form'>
-      <div>
+      <div className='return-button'>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
+          style={{ width: "100px" }}
           onClick={() => props.handleReturnClick("registration")}>
-          Return to dashboard
+          Back to dashboard
         </Button>
       </div>
-      <h2>New Applicant Form</h2>
-      <form>
-        <div>
-          <label>Applicant Name</label>
-          <input
-            type='text'
-            title='name'
-            value={userFullName}
-            onChange={handleFullNameChange}></input>
-        </div>
-        {fullNameWarning ? <h4 className='warning'>{fullNameWarning}</h4> : ""}
 
-        <div>
-          <label>Date of Birth</label>
-          <input
-            type='date'
-            title='name'
-            value={dateOfBirth}
-            onChange={handleDateOfBirthChange}></input>
-        </div>
-        {dateOfBirthWarning ? (
-          <h4 className='warning'>{dateOfBirthWarning}</h4>
-        ) : (
-          ""
-        )}
+      <div>
+        <h2>New Applicant Form</h2>
+        <form>
+          <div>
+            <TextField
+              type='text'
+              variant='outlined'
+              label='Applicant First Name'
+              title='name'
+              value={userFirstName}
+              onChange={handleFirstNameChange}></TextField>
+          </div>
+          {firstNameWarning ? (
+            <h4 className='warning'>{firstNameWarning}</h4>
+          ) : (
+            ""
+          )}
+          <div>
+            <TextField
+              type='text'
+              variant='outlined'
+              label='Applicant Last Name'
+              title='name'
+              value={userLastName}
+              onChange={handleLastNameChange}></TextField>
+          </div>
+          {lastNameWarning ? (
+            <h4 className='warning'>{lastNameWarning}</h4>
+          ) : (
+            ""
+          )}
 
-        <div>
-          <label>Grade</label>
-          <input
-            type='number'
-            title='grade'
-            value={grade}
-            onChange={handleGradeChange}></input>
-        </div>
+          <div>
+            <TextField
+              variant='outlined'
+              type='date'
+              title='name'
+              value={dateOfBirth}
+              onChange={handleDateOfBirthChange}></TextField>
+          </div>
+          {dateOfBirthWarning ? (
+            <h4 className='warning'>{dateOfBirthWarning}</h4>
+          ) : (
+            ""
+          )}
 
-        <div>
-          <label>Specialization</label>
-          <input
-            type='text'
-            title='specialization'
-            value={specialization}
-            onChange={handleSpecializationChange}></input>
-        </div>
+          <div>
+            <TextField
+              variant='outlined'
+              label='Grade'
+              type='number'
+              title='grade'
+              value={grade}
+              onChange={handleGradeChange}></TextField>
+          </div>
 
-        <div>
-          <label>Username</label>
-          <input
-            type='text'
-            title='username'
-            value={userName}
-            onChange={handleUserNameChange}></input>
-        </div>
-        {userNameWarning ? <h4 className='warning'>{userNameWarning}</h4> : ""}
+          <div>
+            <TextField
+              variant='outlined'
+              select
+              title='specialization'
+              label='specialization'
+              name='specialization'
+              value={specialization}
+              onChange={handleSpecializationChange}>
+              {specializations.map((item, index) => {
+                return (
+                  <MenuItem key={index} name='item' value={item.value}>
+                    {item.value}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+          </div>
 
-        <div>
-          <label>User Email</label>
-          <input
-            type='text'
-            title='email'
-            value={userEmail}
-            onChange={handleUserEmailChange}></input>
-        </div>
+          <div>
+            <TextField
+              variant='outlined'
+              type='text'
+              title='username'
+              label='userEmail (will be used as username)'
+              value={userName}
+              onChange={handleUserNameChange}></TextField>
+          </div>
+          {userNameWarning ? (
+            <h4 className='warning'>{userNameWarning}</h4>
+          ) : (
+            ""
+          )}
 
-        {userEmailWarning ? (
-          <h4 className='warning'>{userEmailWarning}</h4>
-        ) : (
-          ""
-        )}
-        <div>
-          <label>Password</label>
-          <input
-            type='password'
-            value={userPassword}
-            onChange={handleUserPasswordChange}></input>
-        </div>
-        {userPasswordWarning ? (
-          <h4 className='warning'>{userPasswordWarning}</h4>
-        ) : (
-          ""
-        )}
+          <div>
+            <TextField
+              label=''
+              variant='outlined'
+              label='Confirm User Email'
+              type='text'
+              title='email'
+              value={userEmail}
+              onChange={handleUserEmailChange}></TextField>
+          </div>
 
-        {userIdWarning ? <h4 className='warning'>{userIdWarning}</h4> : ""}
-        {props.applicantRegistrationWarning ? (
-          <h4 className='warning'>{props.applicantRegistrationWarning}</h4>
-        ) : (
-          ""
-        )}
-        <Button
-          variant='contained'
-          color='primary'
-          size='large'
-          onClick={handleSubmissionClick}>
-          Create Applicant Account
-        </Button>
-      </form>
+          {userEmailWarning ? (
+            <h4 className='warning'>{userEmailWarning}</h4>
+          ) : (
+            ""
+          )}
+          {/* <div>
+            <TextField
+              variant='outlined'
+              label='Password'
+              type='password'
+              value={userPassword}
+              onChange={handleUserPasswordChange}></TextField>
+          </div>
+          {userPasswordWarning ? (
+            <h4 className='warning'>{userPasswordWarning}</h4>
+          ) : (
+            ""
+          )} */}
+
+          {userIdWarning ? <h4 className='warning'>{userIdWarning}</h4> : ""}
+          {props.applicantRegistrationWarning ? (
+            <h4 className='warning'>{props.applicantRegistrationWarning}</h4>
+          ) : (
+            ""
+          )}
+          <Button
+            variant='contained'
+            color='primary'
+            size='large'
+            onClick={handleSubmissionClick}>
+            Create Applicant Account
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };
