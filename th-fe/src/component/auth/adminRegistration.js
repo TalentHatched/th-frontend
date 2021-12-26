@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import RegistrationForm from './reusable/registration';
-import './adminRegistration.css';
+import React, { useState } from "react";
+import axios from "axios";
+import RegistrationForm from "./reusable/registration";
+import "./adminRegistration.css";
 
 const AdminRegistration = ({ history, ...props }) => {
-  const [name, setName] = useState('');
-  const [contactPerson, setContactPerson] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [contactPerson, setContactPerson] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [nameWarning, setNameWarning] = useState('');
-  const [contactPersonWarning, setContactPersonWarning] = useState('');
-  const [emailWarning, setEmailWarning] = useState('');
-  const [passwordWarning, setPasswordWarning] = useState('');
-  const [confirmPasswordWarning, setConfirmPasswordWarning] = useState('');
-  const [submitWarning, setSubmitWarning] = useState('');
+  const [nameWarning, setNameWarning] = useState("");
+  const [contactPersonWarning, setContactPersonWarning] = useState("");
+  const [emailWarning, setEmailWarning] = useState("");
+  const [passwordWarning, setPasswordWarning] = useState("");
+  const [confirmPasswordWarning, setConfirmPasswordWarning] = useState("");
+  const [submitWarning, setSubmitWarning] = useState("");
 
   //const [snackBarOpen, setSnackBarOpen]=useState(false)
-  const nameLabel = 'Name of school or organization';
+  const nameLabel = "Name of school or organization";
   const userTypeId = 3;
 
   const handleNameChange = (event) => {
@@ -43,7 +43,7 @@ const AdminRegistration = ({ history, ...props }) => {
 
   const handleSubmit = (event) => {
     if (validate()) {
-      console.log('CREATE ACCOUNT');
+      console.log("CREATE ACCOUNT");
       const credentials = {
         userName: email,
         userEmail: email,
@@ -53,40 +53,40 @@ const AdminRegistration = ({ history, ...props }) => {
         registrationDate: Date.now(),
         isActive: true,
       };
-      console.log('CREDS', credentials)
+      console.log("CREDS", credentials);
       axios
-        .post('api/user/register', credentials)
+        .post("api/user/register", credentials)
         .then((res) => {
-          console.log('What is res.data', res.data);
-         // setSnackBarOpen(true)
-          history.push('/adminlogin');
+          console.log("What is res.data", res.data);
+          // setSnackBarOpen(true)
+          history.push("/adminlogin");
         })
         .catch((err) => {
-          console.log('There is an error', err);
+          console.log("There is an error", err);
           if (err.response) {
-            console.log('What is the error', err.response)
+            console.log("What is the error", err.response);
             if (err.response.status === 400) {
-              setSubmitWarning(err.response.data.message)
+              setSubmitWarning(err.response.data.message);
             } else {
-              setSubmitWarning('Registration unsuccessful. Please try again.')
+              setSubmitWarning("Registration unsuccessful. Please try again.");
             }
           }
         });
     } else {
-      console.log('NOT READY');
+      console.log("NOT READY");
     }
   };
 
   const validate = () => {
     let readyToSubmit = true;
-    setNameWarning('');
-    setContactPersonWarning('');
-    setEmailWarning('');
-    setPasswordWarning('');
-    setConfirmPasswordWarning('');
+    setNameWarning("");
+    setContactPersonWarning("");
+    setEmailWarning("");
+    setPasswordWarning("");
+    setConfirmPasswordWarning("");
 
     console.log(
-      'Show me the creds',
+      "Show me the creds",
       name,
       contactPerson,
       email,
@@ -96,52 +96,53 @@ const AdminRegistration = ({ history, ...props }) => {
     if (!name || !contactPerson || !email || !password || !confirmPassword) {
       readyToSubmit = false;
       if (!name) {
-        setNameWarning('Name of school or organization required');
+        setNameWarning("Name of school or organization required");
       }
 
       if (!contactPerson) {
-        setContactPersonWarning('Contact Person required');
+        setContactPersonWarning("Contact Person required");
       }
 
       if (!email) {
-        setEmailWarning('Email required');
+        setEmailWarning("Email required");
       }
 
       if (!password) {
-        setPasswordWarning('Password required');
+        setPasswordWarning("Password required");
       }
 
       if (!confirmPassword) {
-        setConfirmPasswordWarning('Confirm Password required');
+        setConfirmPasswordWarning("Confirm Password required");
       }
     } else {
-      console.log('password.length', password.length);
-      if (!email.includes('@')) {
-        setEmailWarning('Please provide a valid email');
+      console.log("password.length", password.length);
+      if (!email.includes("@")) {
+        setEmailWarning("Please provide a valid email");
         readyToSubmit = false;
       }
 
       if (password.length < 6) {
-        setPasswordWarning('Password must have at least 6 characters');
+        setPasswordWarning("Password must have at least 6 characters");
         readyToSubmit = false;
       }
       if (password !== confirmPassword) {
-        setConfirmPasswordWarning('Password does not match');
+        setConfirmPasswordWarning("Password does not match");
         readyToSubmit = false;
       }
-      let letterNumOnly = /^[A-Za-z0-9]+$/.test(password);
+      //let letterNumOnly = /^[A-Za-z0-9]+$/.test(password);
       let letterOnly = /^[A-Za-z]+$/.test(password);
       let numOnly = /^\d+$/.test(password);
 
       if (numOnly || letterOnly) {
         setPasswordWarning(
-          'Password must contain at least 1 number and 1 character'
+          "Password must contain at least 1 number and 1 character"
         );
         readyToSubmit = false;
-      } else if (!letterNumOnly) {
-        setPasswordWarning('Password can contain letters and numbers only');
-        readyToSubmit = false;
       }
+      // else if (!letterNumOnly) {
+      //   setPasswordWarning('Password can contain letters and numbers only');
+      //   readyToSubmit = false;
+      // }
     }
     return readyToSubmit;
   };
@@ -169,7 +170,7 @@ const AdminRegistration = ({ history, ...props }) => {
         submitWarning={submitWarning}
         // snackBarOpen={snackBarOpen}
       />
-       {/* <Snackbar
+      {/* <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={props.snackBarOpen}
         autoHideDuration={6000}
