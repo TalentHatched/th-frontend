@@ -37,6 +37,7 @@ const ResetPassword = (props) => {
   const onResetPasswordClick = () => {
     if (validate()) {
       let data = { id: userId, password: password };
+      console.log('What is the data being sent', data)
       axios
         .put("/api/user/updatePassword", data)
         .then((response) => {
