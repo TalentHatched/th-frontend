@@ -19,6 +19,7 @@ import SuperUserDashboard from "./component/dashboard/superuserDashboard";
 import CompanyRegistration from "./component/auth/companyRegistration";
 import AdminRegistration from "./component/auth/adminRegistration";
 
+import ResetPassword from "./component/auth/reusable/resetPassword";
 function App() {
   const [isLogin, setIsLogin] = useState(false);
 
@@ -67,6 +68,9 @@ function App() {
               <Route
                 path='/companyregister'
                 component={CompanyRegistration}></Route>
+              <Route
+                path='/reset'
+                render={(props) => <ResetPassword {...props} />}></Route>{" "}
               <Route exact path='/dashboard1' component={ApplicantDashboard} />
               <Route
                 exact
