@@ -28,24 +28,23 @@ const SearchFilter = (props) => {
   });
 
   useEffect(() => {
-    console.log('what is props', props)
     if (props.filterValue) {
       setCriteria(props.filterValue);
     }
-  });
-  const defaultCriteria = {
-    ninth: false,
-    tenth: false,
-    eleventh: false,
-    twelveth: false,
-    technology: false,
-    business: false,
-    medical: false,
-    retail: false,
-    other: false,
-    completeProfile: false,
-    incompleteProfile: false,
-  };
+  },[props.filterValue]);
+  // const defaultCriteria = {
+  //   ninth: false,
+  //   tenth: false,
+  //   eleventh: false,
+  //   twelveth: false,
+  //   technology: false,
+  //   business: false,
+  //   medical: false,
+  //   retail: false,
+  //   other: false,
+  //   completeProfile: false,
+  //   incompleteProfile: false,
+  // };
 
   const {
     ninth,
@@ -66,10 +65,7 @@ const SearchFilter = (props) => {
     props.onSearchFilterSelection(event)
   };
 
-  const onResetClick = () => {
-    setCriteria(defaultCriteria);
-    props.onResetClick();
-  };
+  
 
   return (
     <div className='search-filter'>
@@ -213,9 +209,7 @@ const SearchFilter = (props) => {
         style={{ fontSize: "16px", width: "80%", margin: "10px" }}>
         <h5>Update</h5>
       </Button>
-      {/* <Button color='primary' variant='outlined' onClick={() => onResetClick()}>
-        Reset
-      </Button> */}
+      
     </div>
   );
 };

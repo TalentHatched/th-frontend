@@ -11,7 +11,7 @@ const LastQuestion = (props) => {
     if (props.adjectivesData) {
       setAdjectives(props.adjectivesData);
     }
-  },[]);
+  },[props.adjectivesData]);
 
   const handleChange = (event) => {
     console.log('eve?', event)

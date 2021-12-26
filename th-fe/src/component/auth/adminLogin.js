@@ -98,7 +98,7 @@ const AdminLogin = ({ history, ...props }) => {
           </div>
           <div className='login-image-holder'>
             <div className='login-img'>
-              <img src={adminLoginImage}></img>
+              <img src={adminLoginImage} alt="admin-login"></img>
             </div>
           </div>
         </div>

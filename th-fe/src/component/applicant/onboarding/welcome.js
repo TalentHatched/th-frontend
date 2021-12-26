@@ -12,7 +12,7 @@ const WelcomeScreen = (props) => {
       <h1>Hello, {props.firstName}!</h1>
 
       <h1>Welcome!</h1>
-      <img src={WelcomeScreenImg}></img>
+      <img src={WelcomeScreenImg} alt="welcome"></img>
       <section>
         <h2>
           You're the newest member of <br></br>

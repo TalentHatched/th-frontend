@@ -245,7 +245,6 @@ const ApplicantRegistrationForm = (props) => {
 
           <div>
             <TextField
-              label=''
               variant='outlined'
               label='Confirm User Email'
               type='text'

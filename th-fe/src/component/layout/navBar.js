@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./navBar.css";
 
 import { Button } from "@material-ui/core";
 
 const NavBar = (props) => {
-  const [isLogin, setIsLogin] = useState(true);
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setIsLogin(true);
-    }
-  }, []);
+ 
   const logout = () => {
-    setIsLogin(false);
     const currentUserType = localStorage.getItem("userTypeId").toString();
     switch (currentUserType) {
       case "1":

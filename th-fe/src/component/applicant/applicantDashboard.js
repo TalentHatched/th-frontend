@@ -611,7 +611,7 @@ const ApplicantDashboard = () => {
         ""
       )}
       {currentPage === "WELCOME" ? (
-        <Welcome firstName={firstName} handleStartClick={handleStartClick} />
+        <Welcome firstName={firstName} lastName={lastName} handleStartClick={handleStartClick} />
       ) : (
         ""
       )}

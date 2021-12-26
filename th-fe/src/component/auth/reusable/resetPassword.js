@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import axios from "axios";
 
 const ResetPassword = (props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validToken, setValidToken] = useState(false);
-  const [userName, setUserName] = useState("");
   const [warning, setWarning] = useState("");
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    console.log(props);
     let token = props.location.pathname.split("/");
     console.log("what is token", token[2]);
     axios
@@ -21,14 +18,13 @@ const ResetPassword = (props) => {
         console.log("What is response", response);
         if (response.data.validToken) {
           setValidToken(true);
-          setUserName(response.data.data.userName);
           setUserId(response.data.data.id);
         }
       })
       .catch((error) => {
         console.log("error", error.data);
       });
-  }, []);
+  }, [props.location]);
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);

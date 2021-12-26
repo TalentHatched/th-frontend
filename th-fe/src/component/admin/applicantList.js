@@ -35,12 +35,10 @@ const ApplicantList = (props) => {
   //   },
   // ]);
 
-  const [applicantData, setApplicantData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [originalData, setOriginalData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
-  const [filterText, setFilterText] = useState("");
   const [filterValue, setFilterValue] = useState({
     ninth: false,
     tenth: false,
@@ -54,12 +52,7 @@ const ApplicantList = (props) => {
     completeProfile: false,
     incompleteProfile: false,
   });
-  const filterLabel = {
-    ninth: "9th Grade",
-    tenth: "10th Grade",
-    eleventh: "11th Grade",
-    twelveth: "12th Grade",
-  };
+  
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -67,7 +60,6 @@ const ApplicantList = (props) => {
       .get(`api/applicantAdmin/admin/${userId}`)
       .then((res) => {
         console.log(typeof res.data.info);
-        setApplicantData(res.data.info);
         setOriginalData(props.data);
         setDisplayData(props.data);
       })
