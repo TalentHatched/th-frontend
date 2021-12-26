@@ -75,6 +75,7 @@ const ApplicantLogin = ({ history, ...props }) => {
           onPasswordChange={handlePasswordChange}
           warning={hideWarning}
           warningMessage={warningMessage}
+          userType="applicant"
         />
         <h4>Don't have an account?</h4>
         <h4>Contact your school or organization for log in information</h4>
