@@ -6,13 +6,18 @@ import { Button, CircularProgress, TextField } from "@material-ui/core";
 
 const LoginForm = (props) => {
   const [inProgress, setInProgress] = useState(false);
+  const [passwordWarning, setPasswordWarning] = useState("");
   const onLoginClick = () => {
     setInProgress(true);
     props.onClick(props.userName, props.password);
   };
 
   const onForgotPasswordClick = () => {
-    console.log("forgot password");
+    if (props.userType === "applicant") {
+      setPasswordWarning("Please contact your administrator.");
+    } else if (props.userType==="admin") {
+      props.resetPasswordClick()
+    }
   };
   return (
     <div className='login-form'>
@@ -41,6 +46,7 @@ const LoginForm = (props) => {
             value={props.password}></TextField>
         </div>
         <h4 onClick={() => onForgotPasswordClick()}>Forgot Password?</h4>
+        {passwordWarning !== "" ? <h4>{passwordWarning}</h4> : ""}
         <Button
           variant='contained'
           color='primary'
