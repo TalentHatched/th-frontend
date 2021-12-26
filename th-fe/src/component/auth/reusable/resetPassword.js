@@ -40,7 +40,7 @@ const ResetPassword = (props) => {
       axios
         .put("/api/user/updatePassword", data)
         .then((response) => {
-          props.history.push("/adminlogin")
+          props.history.push("/#/adminlogin")
         })
         .catch((error) => {
           setWarning("Unable to update password. Please try again later")
