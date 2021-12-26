@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LoginForm from "./reusable/login";
+import ForgetPassword from "./reusable/forgetPassword";
 import "./adminLogin.css";
 import adminLoginImage from "../../img/admin-login-img.png";
 
@@ -10,6 +11,11 @@ const AdminLogin = ({ history, ...props }) => {
   const [hideWarning, setHideWarning] = useState(true);
   const [warningMessage, setWarningMessage] = useState("");
   const userTypeId = 3;
+  const [currentPage, setCurrentPage] = useState("");
+
+  useEffect(() => {
+    setCurrentPage("LOGIN");
+  }, []);
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -64,25 +70,47 @@ const AdminLogin = ({ history, ...props }) => {
     }
   };
 
+  const resetPasswordClick = () => {
+    setCurrentPage("FORGET_PASSWORD");
+  };
+
+  const returnToLogin = ()=> {
+    setCurrentPage("LOGIN")
+  }
+
   return (
     <div className='admin-login-form'>
-      <div className='login-form'>
-        <h2 className='login-header'>Administrator Log In</h2>
-        <LoginForm
-          onClick={handleSubmit}
-          userName={userName}
-          password={password}
-          onUserNameChange={handleUserNameChange}
-          onPasswordChange={handlePasswordChange}
-          warning={hideWarning}
-          warningMessage={warningMessage}
-        />
-      </div>
-      <div className='login-image-holder'>
-        <div className='login-img'>
-          <img src={adminLoginImage}></img>
+      {currentPage === "LOGIN" ? (
+        <div>
+          <div className='login-form'>
+            <h2 className='login-header'>Administrator Log In</h2>
+            <LoginForm
+              onClick={handleSubmit}
+              userName={userName}
+              password={password}
+              onUserNameChange={handleUserNameChange}
+              onPasswordChange={handlePasswordChange}
+              warning={hideWarning}
+              warningMessage={warningMessage}
+              userType='admin'
+              resetPasswordClick={resetPasswordClick}
+            />
+          </div>
+          <div className='login-image-holder'>
+            <div className='login-img'>
+              <img src={adminLoginImage}></img>
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        " "
+      )}
+
+      {currentPage === "FORGET_PASSWORD" ? (
+        <ForgetPassword returnToLogin={returnToLogin} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
