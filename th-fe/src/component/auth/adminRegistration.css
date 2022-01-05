@@ -1,5 +1,27 @@
 .admin-registration {
+  display:flex;
+  align-items: center;
+}
+
+.admin-registration-form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin:10px 0px;
+}
+
+.register-image-holder {
+  padding-left:70px;
+}
+
+@media (max-width: 800px) {
+  
+
+  .register-image-holder {
+    display: none;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    max-width:98%;
+  }
 }

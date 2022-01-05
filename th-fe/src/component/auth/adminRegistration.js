@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import RegistrationForm from "./reusable/registration";
 import "./adminRegistration.css";
+import adminRegisterImage from "../../img/admin-register-img.png";
+import { Button } from "@material-ui/core";
 
 const AdminRegistration = ({ history, ...props }) => {
+  // This name is company name
   const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +29,14 @@ const AdminRegistration = ({ history, ...props }) => {
 
   const handleNameChange = (event) => {
     setName(event.target.value);
+  };
+
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
   };
 
   const handleContactPersonChange = (event) => {
@@ -45,10 +59,13 @@ const AdminRegistration = ({ history, ...props }) => {
     if (validate()) {
       console.log("CREATE ACCOUNT");
       const credentials = {
+        userFirstName: firstName,
+        userLastName: lastName,
         userName: email,
         userEmail: email,
         userPassword: password,
         userTypeId: userTypeId,
+        institution: name,
         companyName: name,
         registrationDate: Date.now(),
         isActive: true,
@@ -88,19 +105,23 @@ const AdminRegistration = ({ history, ...props }) => {
     console.log(
       "Show me the creds",
       name,
-      contactPerson,
+      firstName,
+      lastName,
       email,
       password,
       confirmPassword
     );
-    if (!name || !contactPerson || !email || !password || !confirmPassword) {
+    if (
+      !name ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword
+    ) {
       readyToSubmit = false;
       if (!name) {
         setNameWarning("Name of school or organization required");
-      }
-
-      if (!contactPerson) {
-        setContactPersonWarning("Contact Person required");
       }
 
       if (!email) {
@@ -149,27 +170,42 @@ const AdminRegistration = ({ history, ...props }) => {
 
   return (
     <div className='admin-registration'>
-      <RegistrationForm
-        name={name}
-        contactPerson={contactPerson}
-        email={email}
-        password={password}
-        confirmPassword={confirmPassword}
-        nameLabel={nameLabel}
-        onNameChange={handleNameChange}
-        onContactPersonChange={handleContactPersonChange}
-        onEmailChange={handleEmailChange}
-        onPasswordChange={handlePasswordChange}
-        onConfirmPasswordChange={handleConfirmPasswordChange}
-        onClick={handleSubmit}
-        nameWarning={nameWarning}
-        contactPersonWarning={contactPersonWarning}
-        emailWarning={emailWarning}
-        passwordWarning={passwordWarning}
-        confirmPasswordWarning={confirmPasswordWarning}
-        submitWarning={submitWarning}
-        // snackBarOpen={snackBarOpen}
-      />
+      <div className='admin-registration-form'>
+        <RegistrationForm
+          name={name}
+          firstName={firstName}
+          lastName={lastName}
+          contactPerson={contactPerson}
+          email={email}
+          password={password}
+          confirmPassword={confirmPassword}
+          nameLabel={nameLabel}
+          onNameChange={handleNameChange}
+          onFirstNameChange={handleFirstNameChange}
+          onLastNameChange={handleLastNameChange}
+          onContactPersonChange={handleContactPersonChange}
+          onEmailChange={handleEmailChange}
+          onPasswordChange={handlePasswordChange}
+          onConfirmPasswordChange={handleConfirmPasswordChange}
+          onClick={handleSubmit}
+          nameWarning={nameWarning}
+          contactPersonWarning={contactPersonWarning}
+          emailWarning={emailWarning}
+          passwordWarning={passwordWarning}
+          confirmPasswordWarning={confirmPasswordWarning}
+          submitWarning={submitWarning}
+          // snackBarOpen={snackBarOpen}
+        />
+        <div className="have-account-message">
+          <span>Already have an account? </span>
+          <span className="login-link" onClick={() => history.push("/adminlogin")}>Log In</span>
+        </div>
+      </div>
+      <div className='register-image-holder'>
+        <div className='register-img'>
+          <img src={adminRegisterImage} alt='admin-register'></img>
+        </div>
+      </div>
       {/* <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={props.snackBarOpen}
