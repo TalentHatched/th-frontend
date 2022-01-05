@@ -75,12 +75,13 @@ const ApplicantLogin = ({ history, ...props }) => {
           onPasswordChange={handlePasswordChange}
           warning={hideWarning}
           warningMessage={warningMessage}
-          userType="applicant"
+          userType='applicant'
         />
-        <h4>Don't have an account?</h4>
-        <h4>Contact your school or organization for log in information</h4>
+        <div className='no-account-message'>
+          <p>Don't have an account?</p>
+          <p>Contact your school or organization for log in information</p>
+        </div>
       </div>
-      <div className="login-image"></div>
     </div>
   );
 };

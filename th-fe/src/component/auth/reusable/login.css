@@ -6,9 +6,19 @@ input {
   text-align: left !important;
 }
 
-Button {
-  width: 55%;
-  padding: 0px !important;
+.forget-password-container {
+  display: flex;
+  width: 36%;
+
 }
 
+.MuiButton-label {
+  background-color: transparent;
+}
 
+@media (max-width:500px) {
+  .forget-password-container {
+    margin: 10px 0px;
+    width:45%;
+  }
+}

@@ -6,3 +6,12 @@
 h2 {
   text-align: left;
 }
+
+.no-account-message {
+  margin: 20px 0px;
+  text-align: left;
+}
+
+p {
+  padding: 2px 0px;
+}

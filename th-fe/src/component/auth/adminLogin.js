@@ -45,9 +45,15 @@ const AdminLogin = ({ history, ...props }) => {
         .then((res) => {
           if (res.data) {
             console.log("Success");
+            console.log("data?", res.data);
             localStorage.setItem("token", res.data.userToken);
             localStorage.setItem("userId", res.data.userInfo.id);
             localStorage.setItem("userTypeId", res.data.userInfo.userTypeId);
+            localStorage.setItem("institution", res.data.userInfo.institution);
+            localStorage.setItem(
+              "userFirstName",
+              res.data.userInfo.userFirstName
+            );
             history.push("/dashboard3");
             props.setLoginStatus(true);
           }
@@ -74,14 +80,14 @@ const AdminLogin = ({ history, ...props }) => {
     setCurrentPage("FORGET_PASSWORD");
   };
 
-  const returnToLogin = ()=> {
-    setCurrentPage("LOGIN")
-  }
+  const returnToLogin = () => {
+    setCurrentPage("LOGIN");
+  };
 
   return (
-    <div className='admin-login-form'>
+    <div className='admin-login'>
       {currentPage === "LOGIN" ? (
-        <div>
+        <div className='admin-login-form'>
           <div className='login-form'>
             <h2 className='login-header'>Administrator Log In</h2>
             <LoginForm
@@ -95,10 +101,18 @@ const AdminLogin = ({ history, ...props }) => {
               userType='admin'
               resetPasswordClick={resetPasswordClick}
             />
+            <div class='no-account-message'>
+              <span>Don't have an account? </span>
+              <span
+                onClick={() => history.push("/adminregister")}
+                className='sign-up-link'>
+                Sign Up
+              </span>
+            </div>
           </div>
           <div className='login-image-holder'>
             <div className='login-img'>
-              <img src={adminLoginImage} alt="admin-login"></img>
+              <img src={adminLoginImage} alt='admin-login'></img>
             </div>
           </div>
         </div>
