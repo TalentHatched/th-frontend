@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./workExperienceList.css";
+//import "./workExperienceList.css";
 
-import {
-  
-  Button,
-  Card,
-  CardContent,
-  Typography,
-} from "@material-ui/core";
+import { Button, Card, CardContent, Typography } from "@material-ui/core";
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -33,13 +27,8 @@ const WorkExperienceList = (props) => {
   };
 
   return (
-    <div>
-      <div>
-        {/* <Button
-          startIcon={<KeyboardBackspaceIcon />}
-          onClick={() => props.handleReturnClick("WORK_EXP_PROMPT")}></Button> */}
-      </div>
-      <h1>My Work Experience</h1>
+    <div className='work-exp-list instruction'>
+      <h2>My Work Experience</h2>
       {data.map((data, index) => {
         return (
           <Card variant='outlined' className='work-experience-card' key={index}>
@@ -69,6 +58,8 @@ const WorkExperienceList = (props) => {
         <Button
           variant='outlined'
           startIcon={<AddCircleIcon />}
+          style={{ width: "80%", margin: "10px 10% 20px 10%" }}
+
           onClick={() => props.handleNextPageClick(true)}>
           Add work experience
         </Button>
@@ -78,6 +69,8 @@ const WorkExperienceList = (props) => {
           color='primary'
           variant='contained'
           endIcon={<ArrowForwardIcon />}
+          style={{ width: "100%", margin: "20px 0px" }}
+
           onClick={() =>
             props.handleWorkExperienceContinueClick("COURSE_CERTIFICATE_PROMPT")
           }>

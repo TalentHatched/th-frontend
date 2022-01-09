@@ -1,4 +1,209 @@
-.applicant-dashboard{
-  max-width: 800px;
-  padding: 3rem;
+/* .MuiButton-label {
+  font-size: 16px;
+} */
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+}
+
+#welcome-img {
+  margin: 15px 0px;
+}
+
+.welcome-text {
+  margin: 20px 5px;
+}
+
+.parent-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.parent-contact-form {
+  margin: 20px 0px;
+  width: 98%;
+}
+
+.parent-contact-instruction > h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 400;
+  padding: 10px 5px;
+  line-height: 1.3;
+  font-family: "Roboto";
+}
+
+.parent-contact-input-div {
+  margin: 20px 5px;
+}
+
+.parent-contact-submit {
+  width: 95%;
+}
+
+.contact-warning {
+  color: red;
+  margin-bottom: 20px;
+}
+
+.parent-contact-input-field {
+  margin: 10px 0px 20px 0px;
+  height: 25px;
+  font-size: 24px;
+  width: 100%;
+}
+
+.instruction h2 {
+  margin: 20px 0px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.check-all {
+  text-align: center;
+}
+
+.warning-message {
+  font-size: 20px;
+  color: #d0342c;
+}
+
+.add-other-skill {
+  margin: 40px 0px 20px 0px;
+}
+
+.skip {
+  text-align: center;
+  color: #3f67f8;
+  font-weight: 700;
+  margin: 40px 0px;
+  cursor: pointer;
+}
+
+.save-later {
+  margin: 50px 0px;
+  color: grey;
+  text-align: center;
+  cursor: pointer;
+}
+
+.work-exp-prompt-instruction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+}
+
+#work-exp-img {
+  width: 90%;
+  margin: 10px;
+}
+
+.prompt-instruction {
+  text-align: center;
+  margin: 5px;
+}
+
+.accomplish-prompt-instruction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+}
+
+.work-prompt-detail {
+  line-height: 1.2;
+}
+
+.work-experience-form {
+  text-align: center;
+  margin: 10px;
+}
+
+.course-certificate-form {
+  text-align: center;
+  margin: 10px;
+}
+
+#accomplish-img {
+  width: 90%;
+  margin: 10px;
+}
+
+.accomplish-header {
+  margin: 10px;
+  overflow-wrap: break-word;
+}
+
+.achievement-form {
+  text-align: center;
+  margin: 10px 20px;
+}
+
+.Mui-error {
+  border-color: rgba(0, 0, 0, 0.23) !important;
+  color: #808080 !important;
+}
+
+.MuiOutlinedInput-root.Mui-error.MuiOutlinedInput-notchedOutline {
+  border-color: rgba(0, 0, 0, 0.23) !important;
+}
+
+.date-picker {
+  display: flex;
+}
+
+.work-experience-card {
+  border-radius: 10px !important;
+  border: 2px solid #3f67f8 !important;
+  margin: 20px;
+}
+
+.extra-question {
+  margin: 10px;
+}
+
+#more-info-img {
+  width: 90%;
+  margin: 20px 10px;
+}
+
+#final-img {
+  width: 90%;
+  margin: 20px 10px;
+}
+
+@media (min-width: 768px) {
+  #welcome-img {
+    max-height: 400px;
+    max-width: 400px;
+  }
+
+  .parent-contact-input-field {
+    width: 95%;
+  }
+
+  #work-exp-img {
+    max-height: 400px;
+    max-width: 400px;
+  }
+
+  .prompt-instruction {
+    text-align: left;
+  }
+
+  #more-info-img {
+    max-height: 400px;
+    max-width: 400px;
+    margin: 20px 25%;
+  }
+
+  #final-img {
+    max-height: 400px;
+    max-width: 400px;
+  }
 }

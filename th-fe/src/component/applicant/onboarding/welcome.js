@@ -3,8 +3,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import WelcomeScreenImg from "../../../img/welcome-screen-img.png"
-
+import WelcomeScreenImg from "../../../img/welcome-screen-img.png";
 
 const WelcomeScreen = (props) => {
   return (
@@ -12,8 +11,8 @@ const WelcomeScreen = (props) => {
       <h1>Hello, {props.firstName}!</h1>
 
       <h1>Welcome!</h1>
-      <img src={WelcomeScreenImg} alt="welcome"></img>
-      <section>
+      <img id="welcome-img" src={WelcomeScreenImg} alt='welcome'></img>
+      <div className='welcome-text'>
         <h2>
           You're the newest member of <br></br>
           <strong>Talent Hatched!</strong>
@@ -21,14 +20,23 @@ const WelcomeScreen = (props) => {
         <br></br>
         <br></br>
         <h2>Ready to set up your profile?</h2>
-        <Button
-          variant='contained'
-          color='primary'
-          endIcon={<ArrowForwardIcon />}
-          onClick={() => props.handleStartClick()}>
-          I'm ready
-        </Button>
-      </section>
+      </div>
+
+      <Button
+        id='welcome-button'
+        variant='contained'
+        color='primary'
+        endIcon={<ArrowForwardIcon />}
+        onClick={() => props.handleStartClick()}
+        style={{
+          width:"50%",
+          padding: " 10px 45%",
+          margin: "30px 0px",
+          whiteSpace: "nowrap",
+          fontSize: "16px",
+        }}>
+        I'm ready
+      </Button>
     </div>
   );
 };

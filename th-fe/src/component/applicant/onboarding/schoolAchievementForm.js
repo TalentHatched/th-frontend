@@ -42,7 +42,7 @@ const SchoolAchievementForm = (props) => {
     setAchievementDate(value);
     if (value) {
       let dateStr = value.toString();
-      setSchoolAchievement({ ...schoolAchievement, "date": dateStr });
+      setSchoolAchievement({ ...schoolAchievement, date: dateStr });
     }
   };
 
@@ -55,14 +55,17 @@ const SchoolAchievementForm = (props) => {
         props.updateSchoolAchievement(
           schoolAchievement,
           props.schoolAchievementIdx,
-          'edit'
-
+          "edit"
         );
-      } else if (type==='update') {
+      } else if (type === "update") {
         if (props.addNew) {
-          props.updateSchoolAchievement(schoolAchievement, 'newItem', 'update')
+          props.updateSchoolAchievement(schoolAchievement, "newItem", "update");
         } else {
-          props.updateSchoolAchievement(schoolAchievement, props.schoolAchievementIdx, 'update')
+          props.updateSchoolAchievement(
+            schoolAchievement,
+            props.schoolAchievementIdx,
+            "update"
+          );
         }
       }
 
@@ -119,86 +122,100 @@ const SchoolAchievementForm = (props) => {
             }}></Button>
         )}
       </div>
-      <h1>Add school achievements/accomplishments</h1>
-      <FormGroup>
-        <TextField
-          id='title'
-          variant='outlined'
-          label='Title'
-          name='title'
-          value={title}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          id='school-name'
-          variant='outlined'
-          label='School Name'
-          name='schoolName'
-          value={schoolName}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          id='location'
-          variant='outlined'
-          label='Location'
-          name='location'
-          value={location}
-          onChange={handleChange}
-          required
-        />
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            views={["year", "month"]}
-            label='Date'
-            minDate={new Date("1970-01-01")}
-            maxDate={new Date()}
-            name='date'
-            value={achievementDate}
-            onChange={(newValue) => handleAchievementDateChange(newValue)}
-            renderInput={(params) => (
-              <TextField {...params} helperText={null} />
-            )}
+      <div className='achievement-form'>
+        <h2 className='accomplish-header'>
+          Add school achievements or accomplishments
+        </h2>
+        <FormGroup>
+          <TextField
+            id='title'
+            variant='outlined'
+            label='Title'
+            name='title'
+            value={title}
+            style={{ margin: "10px 5px" }}
+            onChange={handleChange}
+            required
           />
-        </LocalizationProvider>
-        <TextField
-          variant='outlined'
-          multiline
-          rows={5}
-          label='Description'
-          name='description'
-          value={description}
-          onChange={handleChange}
-          required
-        />
-      </FormGroup>
-      {warning ? "" : ""}
+          <TextField
+            id='school-name'
+            variant='outlined'
+            label='School Name'
+            name='schoolName'
+            value={schoolName}
+            style={{ margin: "10px 5px" }}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            id='location'
+            variant='outlined'
+            label='Location'
+            name='location'
+            value={location}
+            style={{ margin: "10px 5px" }}
+            onChange={handleChange}
+            required
+          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              views={["year", "month"]}
+              label='Date'
+              minDate={new Date("1970-01-01")}
+              maxDate={new Date()}
+              name='date'
+              value={achievementDate}
+              onChange={(newValue) => handleAchievementDateChange(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  helperText={null}
+                  style={{ margin: "10px 5px" }}
+                />
+              )}
+            />
+          </LocalizationProvider>
+          <TextField
+            variant='outlined'
+            multiline
+            rows={5}
+            label='Description'
+            name='description'
+            value={description}
+            style={{ margin: "10px 5px" }}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+        {warning ? "" : ""}
 
-      {props.isUpdate ? (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addSchoolAchievementClick("update")}>
-          {props.addNew
-            ? "Add school accomplishment"
-            : "Update school accomplishment"}
-        </Button>
-      ) : props.schoolAchievementIdx === "" ? (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addSchoolAchievementClick("add")}>
-          Add school achievement
-        </Button>
-      ) : (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addSchoolAchievementClick("edit")}>
-          Update school achievement
-        </Button>
-      )}
+        {props.isUpdate ? (
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => addSchoolAchievementClick("update")}>
+            {props.addNew
+              ? "Add school accomplishment"
+              : "Update school accomplishment"}
+          </Button>
+        ) : props.schoolAchievementIdx === "" ? (
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => addSchoolAchievementClick("add")}>
+            Add school achievement
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => addSchoolAchievementClick("edit")}>
+            Update school achievement
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 import { Button } from "@material-ui/core";
 import axios from "axios";
@@ -12,7 +12,7 @@ const ParentContactScreen = (props) => {
   });
   const [warning, setWarning] = useState("");
 
-  const { guardianName, guardianContact} = guardianInfo;
+  const { guardianName, guardianContact } = guardianInfo;
 
   const handleChange = (event) => {
     console.log("What is event", event);
@@ -60,32 +60,40 @@ const ParentContactScreen = (props) => {
   };
 
   return (
-    <div>
+    <div className='parent-contact-form'>
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => props.handleReturnClick("WELCOME")}></Button>
       </div>
-      <h2>
-        Our data shows that you are under 18. Please provide the name and email
-        of a parent or guardian who can provide parental consent to use Talent
-        Hatched.
-      </h2>
-      <label>Name of parent or guardian</label>
-      <input
-        type='text'
-        name='guardianName'
-        value={guardianName}
-        onChange={handleChange}></input>
-      <label>Parent or guardian email</label>
-      <input
-        type='text'
-        name='guardianContact'
-        value={guardianContact}
-        onChange={handleChange}></input>
+
+      <div className='parent-contact-instruction'>
+        <h2>
+          Our data shows that you are under 18. Please provide the name and
+          email of a arent or guardian who can provide parental consent to use
+          Talent Hatched.
+        </h2>
+      </div>
+      <div className='parent-contact-input-div'>
+        <label>Name of parent or guardian</label>
+        <input
+          className='parent-contact-input-field'
+          type='text'
+          name='guardianName'
+          value={guardianName}
+          onChange={handleChange}></input>
+        <label>Parent or guardian email</label>
+        <input
+          className='parent-contact-input-field'
+          type='text'
+          name='guardianContact'
+          value={guardianContact}
+          onChange={handleChange}></input>
+      </div>
       <div>
-        {warning ? <h4>{warning}</h4> : ""}
+        {warning ? <h4 className='contact-warning'>{warning}</h4> : ""}
         <Button
+          className='parent-contact-submit'
           variant='contained'
           color='primary'
           onClick={() => onSubmitGuardianContact()}>

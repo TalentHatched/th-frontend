@@ -29,13 +29,13 @@ const SchoolAchievementList = (props) => {
   };
 
   return (
-    <div>
-      <h1>My school achievements</h1>
+    <div className='achievement-list instruction'>
+      <h2>My school achievements</h2>
       {data.map((data, index) => {
         return (
           <Card key={index} variant='outlined' className='work-experience-card'>
             <CardContent>
-            <Button
+              <Button
                 onClick={() => {
                   props.editAchievement(data, index);
                 }}>
@@ -56,6 +56,7 @@ const SchoolAchievementList = (props) => {
         <Button
           variant='outlined'
           startIcon={<AddCircleIcon />}
+          style={{ width: "80%", margin: "10px 10% 20px 10%" }}
           onClick={() => props.handleNextPageClick(true)}>
           Add school achievement
         </Button>
@@ -65,6 +66,7 @@ const SchoolAchievementList = (props) => {
           color='primary'
           variant='contained'
           endIcon={<ArrowForwardIcon />}
+          style={{ width: "100%", margin: "20px 0px" }}
           onClick={() =>
             props.handleSchoolAchievementContinueClick("ADDITIONAL_QUESTION")
           }>

@@ -210,127 +210,148 @@ const WorkExperienceForm = (props) => {
             }}></Button>
         )}
       </div>
-      <h1>Add work experience</h1>
-      <FormGroup>
-        <TextField
-          id='job-title'
-          variant='outlined'
-          label='Job Title'
-          name='jobTitle'
-          value={jobTitle}
-          onChange={handleChange}
-          required
-        />
-
-        <TextField
-          id='employment-type'
-          select
-          label='Employment Type'
-          variant='outlined'
-          name='employmentType'
-          value={employmentType}
-          onChange={handleChange}
-          required>
-          {employmentTypeOptions.map((option, index) => (
-            <MenuItem key={index} value={option.value}>
-              {option.value}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id='business-name'
-          variant='outlined'
-          label='Business Name'
-          name='businessName'
-          value={businessName}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          id='location'
-          variant='outlined'
-          label='Location'
-          name='location'
-          value={location}
-          onChange={handleChange}
-          required
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              name='currentJob'
-              onChange={handleChange}
-              checked={isCurrentJob}
-            />
-          }
-          label='I currently work here'
-        />
-        {hideItem ? "" : <h6>{currentJob}</h6>}
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            views={["year", "month"]}
-            label='Start date'
-            minDate={new Date("1970-01-01")}
-            maxDate={new Date()}
-            name='startDate'
-            value={jobStartDate}
-            onChange={(newValue) => handleStartDateChange(newValue)}
-            renderInput={(params) => (
-              <TextField {...params} helperText={null} />
-            )}
+      <div className='work-experience-form'>
+        <h2>Add work experience</h2>
+        <FormGroup>
+          <TextField
+            id='job-title'
+            color='primary'
+            variant='outlined'
+            label='Job Title'
+            name='jobTitle'
+            style={{ margin: "10px 5px" }}
+            value={jobTitle}
+            onChange={handleChange}
+            required
           />
-          {!isCurrentJob ? (
-            <DatePicker
-              views={["year", "month"]}
-              label='End date'
-              minDate={new Date("1970-01-01")}
-              maxDate={new Date()}
-              name='endDate'
-              value={jobEndDate}
-              onChange={(newValue) => handleEndDateChange(newValue)}
-              renderInput={(params) => (
-                <TextField {...params} helperText={null} />
-              )}
-            />
-          ) : (
-            ""
-          )}
-        </LocalizationProvider>
-        <TextField
-          variant='outlined'
-          multiline
-          rows={5}
-          label='Job description'
-          name='jobDescription'
-          value={jobDescription}
-          onChange={handleChange}
-          required
-        />
-      </FormGroup>
-      {warning ? <h4>{warning} required</h4> : ""}
 
-      {props.isUpdate ? (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addExperienceClick("update")}>
-          {props.addNew ? "Add experience" : "Update experience"}
-        </Button>
-      ) : props.workExperienceIdx === "" ? (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addExperienceClick("add")}>
-          Add experience
-        </Button>
-      ) : (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addExperienceClick("edit")}>
-          Update experience
-        </Button>
-      )}
+          <TextField
+            id='employment-type'
+            select
+            label='Employment Type'
+            variant='outlined'
+            name='employmentType'
+            style={{ margin: "10px 5px" }}
+            value={employmentType}
+            onChange={handleChange}
+            required>
+            {employmentTypeOptions.map((option, index) => (
+              <MenuItem key={index} value={option.value}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id='business-name'
+            variant='outlined'
+            label='Business Name'
+            name='businessName'
+            style={{ margin: "10px 5px" }}
+            value={businessName}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            id='location'
+            variant='outlined'
+            label='Location'
+            name='location'
+            style={{ margin: "10px 5px" }}
+            value={location}
+            onChange={handleChange}
+            required
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name='currentJob'
+                onChange={handleChange}
+                checked={isCurrentJob}
+              />
+            }
+            label='I currently work here'
+          />
+          {hideItem ? "" : <h6>{currentJob}</h6>}
+          <div className='date-picker'>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                views={["year", "month"]}
+                label='Start date'
+                minDate={new Date("1970-01-01")}
+                maxDate={new Date()}
+                name='startDate'
+                value={jobStartDate}
+                style={{ borderColor: "black" }}
+                onChange={(newValue) => handleStartDateChange(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    helperText={null}
+                    style={{ width: "50%", margin: "10px 5px" }}
+                  />
+                )}
+              />
+              {!isCurrentJob ? (
+                <DatePicker
+                  views={["year", "month"]}
+                  label='End date'
+                  minDate={new Date("1970-01-01")}
+                  maxDate={new Date()}
+                  name='endDate'
+                  value={jobEndDate}
+                  onChange={(newValue) => handleEndDateChange(newValue)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      helperText={null}
+                      style={{ width: "50%", margin: "10px 5px" }}
+                    />
+                  )}
+                />
+              ) : (
+                ""
+              )}
+            </LocalizationProvider>
+          </div>
+          <TextField
+            variant='outlined'
+            multiline
+            rows={5}
+            label='Job description'
+            name='jobDescription'
+            style={{ margin: "10px 5px" }}
+            value={jobDescription}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+        {warning ? <h4 className='warning-message'>{warning} required</h4> : ""}
+
+        {props.isUpdate ? (
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => addExperienceClick("update")}>
+            {props.addNew ? "Add experience" : "Update experience"}
+          </Button>
+        ) : props.workExperienceIdx === "" ? (
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => addExperienceClick("add")}>
+            Add experience
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => addExperienceClick("edit")}>
+            Update experience
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

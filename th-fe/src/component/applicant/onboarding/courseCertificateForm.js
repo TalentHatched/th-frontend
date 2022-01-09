@@ -123,77 +123,88 @@ const CourseCertificateForm = (props) => {
               : props.handleReturnClick("COURSE_CERTIFICATE_PROMPT");
           }}></Button>
       </div>
-      <h1>Add courses/certificates</h1>
-      <FormGroup>
-        <TextField
-          id='title'
-          variant='outlined'
-          label='Title'
-          name='title'
-          value={title}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          id='issuing-organization'
-          variant='outlined'
-          label='Issuing Organization'
-          name='issuingOrganization'
-          value={issuingOrganization}
-          onChange={handleChange}
-          required
-        />
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            views={["year", "month"]}
-            label='Issue date'
-            minDate={new Date("1970-01-01")}
-            maxDate={new Date()}
-            name='issueDate'
-            value={date}
-            onChange={(newValue) => handleIssueDateChange(newValue)}
-            renderInput={(params) => (
-              <TextField {...params} helperText={null} />
-            )}
+      <div className='course-certificate-form'>
+        <h2>Add courses/certificates</h2>
+        <FormGroup>
+          <TextField
+            id='title'
+            variant='outlined'
+            label='Title'
+            name='title'
+            style={{ margin: "10px 5px" }}
+            value={title}
+            onChange={handleChange}
+            required
           />
-        </LocalizationProvider>
-        {hideItem ? "" : <h6>{issueDate}</h6>}
-        <TextField
-          variant='outlined'
-          multiline
-          rows={5}
-          label='Description'
-          name='description'
-          value={description}
-          onChange={handleChange}
-          required
-        />
-      </FormGroup>
-      {warning ? "" : ""}
-      {props.isUpdate ? (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addCourseCertificateClick("update")}>
-          {props.addNew
-            ? "Add course or certificate"
-            : "Update course or certificate"}
-        </Button>
-      ) : props.courseCertificateIdx === "" ? (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addCourseCertificateClick("add")}>
-          Add course or certificate
-        </Button>
-      ) : (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => addCourseCertificateClick("edit")}>
-          Edit course or certificate
-        </Button>
-      )}
+          <TextField
+            id='issuing-organization'
+            variant='outlined'
+            label='Issuing Organization'
+            name='issuingOrganization'
+            style={{ margin: "10px 5px" }}
+            value={issuingOrganization}
+            onChange={handleChange}
+            required
+          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              views={["year", "month"]}
+              label='Issue date'
+              minDate={new Date("1970-01-01")}
+              maxDate={new Date()}
+              name='issueDate'
+              value={date}
+              onChange={(newValue) => handleIssueDateChange(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  helperText={null}
+                  style={{ margin: "10px 5px" }}
+                />
+              )}
+            />
+          </LocalizationProvider>
+          {hideItem ? "" : <h6>{issueDate}</h6>}
+          <TextField
+            variant='outlined'
+            multiline
+            rows={5}
+            label='Description'
+            name='description'
+            style={{ margin: "10px 5px" }}
+            value={description}
+            onChange={handleChange}
+            required
+          />
+        </FormGroup>
+        {warning ? "" : ""}
+        {props.isUpdate ? (
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => addCourseCertificateClick("update")}>
+            {props.addNew
+              ? "Add course or certificate"
+              : "Update course or certificate"}
+          </Button>
+        ) : props.courseCertificateIdx === "" ? (
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => addCourseCertificateClick("add")}>
+            Add course or certificate
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => addCourseCertificateClick("edit")}>
+            Edit course or certificate
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

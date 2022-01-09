@@ -8,8 +8,6 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 
-
-
 const IndustryScreen = (props) => {
   const [industryState, setIndustryState] = useState({
     technology: false,
@@ -23,7 +21,7 @@ const IndustryScreen = (props) => {
   useEffect(() => {
     // if (props.industryData.length) {
     console.log("industryData", props.industryData);
-   
+
     if (Object.values(props.industryData).length) {
       setIndustryState(props.industryData);
     }
@@ -55,16 +53,25 @@ const IndustryScreen = (props) => {
     }
   };
 
+  const saveNow = async () => {
+    await props.handleIndustryClick(industryState)
+    
+    if (warning === "") {
+      props.saveNow();
+    }
+  };
+
   return (
-    <div>
+    <div className='industry-selection'>
       {/* <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => props.handleReturnClick("PARENT_CONTACT")}></Button>
       </div> */}
-      <h2>Which industry/industries are you interested in?</h2>
-      <h3>Check all that apply. </h3>
-
+      <div className='industry-instruction instruction'>
+        <h2>Which industry/industries are you interested in?</h2>
+        <h2 className='check-all'>Check all that apply. </h2>
+      </div>
       <FormControl
         required
         error={props.error}
@@ -124,14 +131,18 @@ const IndustryScreen = (props) => {
 
         {/* <FormHelperText>You can display an error</FormHelperText> */}
       </FormControl>
-      {warning ? <h4>{warning}</h4> : ""}
+      {warning ? <h4 className='warning-message'>{warning}</h4> : ""}
       <div>
         <Button
           variant='contained'
           color='primary'
+          style={{ width: "100%", margin: "20px 0px" }}
           onClick={() => handleChooseIndustryClick()}>
           Choose Industry
         </Button>
+      </div>
+      <div className="save-later">
+        <h6 onClick={() => saveNow()}>Save and complete later?</h6>
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ const GeneralTechSkill = (props) => {
   };
 
   return (
-    <div>
+    <div className='tech-lg-selection'>
       <div>
         {props.isUpdate ? (
           <Button
@@ -61,8 +61,10 @@ const GeneralTechSkill = (props) => {
             }}></Button>
         )}
       </div>
-      <h2>Do you have experience with any of these programming languages?</h2>
-      <h3>Check all that apply. </h3>
+      <div className='tech-lg-instruction instruction'>
+        <h2>Do you have experience with any of the following?</h2>
+        <h2 className='check-all'>Check all that apply. </h2>
+      </div>
 
       <FormControl
         required
@@ -131,18 +133,26 @@ const GeneralTechSkill = (props) => {
         {/* <FormHelperText>You can display an error</FormHelperText> */}
       </FormControl>
       <div>
-        {props.isUpdate? <Button
-          variant='contained'
-          color='primary'
-          onClick={() => handleGeneralTechClick('update')}>
-          Choose Skills
-        </Button>: <Button
-          variant='contained'
-          color='primary'
-          onClick={() => handleGeneralTechClick('onboard')}>
-          Choose Skills
-        </Button>}
-        
+        {props.isUpdate ? (
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => handleGeneralTechClick("update")}>
+            Choose Skills
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => handleGeneralTechClick("onboard")}>
+            Choose Skills
+          </Button>
+        )}
+      </div>
+      <div className='save-later'>
+        <h6 onClick={() => props.saveNow()}>Save and complete later?</h6>
       </div>
     </div>
   );

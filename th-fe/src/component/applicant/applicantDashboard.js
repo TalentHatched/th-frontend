@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./applicantDashboard.css";
 
 import Welcome from "./onboarding/welcome";
 import ApplicantProfile from "./applicantProfile";
@@ -23,11 +22,13 @@ import AdditionalQuestion from "./onboarding/additionalQuestion";
 import LastQuestion from "./onboarding/lastQuestion";
 import ProfileComplete from "./onboarding/profileComplete";
 
+import "./applicantDashboard.css";
+
 const ApplicantDashboard = () => {
   let userId = localStorage.getItem("userId");
   const [fullName, setFullName] = useState("");
-  const [firstName, setFirstName]=useState("")
-  const [lastName, setLastName] = useState("")
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [profileData, setProfileData] = useState({});
   const [currentPage, setCurrentPage] = useState("PROFILE");
 
@@ -55,8 +56,8 @@ const ApplicantDashboard = () => {
   useEffect(() => {
     axios.get(`api/applicantInfo/${userId}`).then((res) => {
       setFullName(res.data.userData.userFullName);
-      setFirstName(res.data.userData.userFirstName)
-      setLastName(res.data.userData.userLastName)
+      setFirstName(res.data.userData.userFirstName);
+      setLastName(res.data.userData.userLastName);
 
       if (Object.keys(res.data.userData.data).length === 0) {
         setCurrentPage("WELCOME");
@@ -318,10 +319,10 @@ const ApplicantDashboard = () => {
     if (type === "onboard") {
       saveData(data);
     } else if (type === "update") {
-      console.log('What data???',data)
+      console.log("What data???", data);
       let updatedData = profileData;
       updatedData.tagline = data;
-      console.log('UPDATED DATA WJAT?', updatedData)
+      console.log("UPDATED DATA WJAT?", updatedData);
       setProfileData(updatedData);
       updateData(updatedData);
     }
@@ -593,116 +594,157 @@ const ApplicantDashboard = () => {
       });
   };
 
+  const saveNow = () => {
+    console.log("fired here", programmingLanguage);
+    saveData("");
+  };
+
+  const skip = (type) => {
+    setCurrentPage(type);
+  };
+
   return (
     <div className='applicant-dashboard'>
       {currentPage === "PROFILE" ? (
-        <ApplicantProfile
-          fullName={fullName}
-          updateAdjectives={updateAdjectives}
-          updateSoftSkills={updateSoftSkills}
-          updateOtherSkills={updateOtherSkills}
-          updateProgrammingSkills={updateProgrammingSkills}
-          updateGeneralTech={updateGeneralTechSkills}
-          updateItem={updateItemFromProfile}
-          addNewItem={addNewItem}
-          updateAdditionalQuestion={updateQuestionsFromProfile}
-        />
+        <div className='profile'>
+          <ApplicantProfile
+            fullName={fullName}
+            updateAdjectives={updateAdjectives}
+            updateSoftSkills={updateSoftSkills}
+            updateOtherSkills={updateOtherSkills}
+            updateProgrammingSkills={updateProgrammingSkills}
+            updateGeneralTech={updateGeneralTechSkills}
+            updateItem={updateItemFromProfile}
+            addNewItem={addNewItem}
+            updateAdditionalQuestion={updateQuestionsFromProfile}
+          />
+        </div>
       ) : (
-        ""
+        <div />
       )}
       {currentPage === "WELCOME" ? (
-        <Welcome firstName={firstName} lastName={lastName} handleStartClick={handleStartClick} />
+        <div className='welcome'>
+          <Welcome
+            firstName={firstName}
+            lastName={lastName}
+            handleStartClick={handleStartClick}
+          />
+        </div>
       ) : (
-        ""
+        <div />
       )}
       {currentPage === "PARENT_CONTACT" ? (
-        <ParentContact
-          handleParentContactClick={handleParentContactClick}
-          handleReturnClick={handleReturnClick}
-        />
+        <div className='parentContact'>
+          <ParentContact
+            handleParentContactClick={handleParentContactClick}
+            handleReturnClick={handleReturnClick}
+          />
+        </div>
       ) : (
         ""
       )}
       {currentPage === "INDUSTRY" ? (
-        <Industry
-          handleReturnClick={handleReturnClick}
-          handleIndustryClick={handleIndustryClick}
-          industryData={industry}
-        />
+        <div className='industry'>
+          <Industry
+            handleReturnClick={handleReturnClick}
+            handleIndustryClick={handleIndustryClick}
+            industryData={industry}
+            saveNow={saveNow}
+          />
+        </div>
       ) : (
         ""
       )}
 
       {currentPage === "PROGRAMMING_LANGUAGES" ? (
-        <ProgrammingLanguages
-          handleReturnClick={handleReturnClick}
-          handleProgrammingLanguageClick={handleProgrammingLanguageClick}
-          programmingLanguageData={programmingLanguage}
-          isUpdate={isUpdate}
-        />
+        <div className='programmingLanguage'>
+          <ProgrammingLanguages
+            handleReturnClick={handleReturnClick}
+            handleProgrammingLanguageClick={handleProgrammingLanguageClick}
+            programmingLanguageData={programmingLanguage}
+            isUpdate={isUpdate}
+            saveNow={saveNow}
+          />
+        </div>
       ) : (
         ""
       )}
 
       {currentPage === "GENERAL_TECH_SKILL" ? (
-        <GeneralTechSkill
-          handleReturnClick={handleReturnClick}
-          handleGeneralTechClick={handleGeneralTechClick}
-          techTrack={techTrack}
-          generalTechData={generalTech}
-          isUpdate={isUpdate}
-        />
+        <div className='general-tech'>
+          <GeneralTechSkill
+            handleReturnClick={handleReturnClick}
+            handleGeneralTechClick={handleGeneralTechClick}
+            techTrack={techTrack}
+            generalTechData={generalTech}
+            isUpdate={isUpdate}
+            saveNow={saveNow}
+          />
+        </div>
       ) : (
         " "
       )}
 
       {currentPage === "SOFT_SKILL" ? (
-        <SoftSkill
-          handleReturnClick={handleReturnClick}
-          handleSoftSkillClick={handleSoftSkillClick}
-          skillData={softSkill}
-          techTrack={techTrack}
-          isUpdate={isUpdate}
-        />
+        <div className='softSkill'>
+          <SoftSkill
+            handleReturnClick={handleReturnClick}
+            handleSoftSkillClick={handleSoftSkillClick}
+            skillData={softSkill}
+            techTrack={techTrack}
+            isUpdate={isUpdate}
+            saveNow={saveNow}
+          />
+        </div>
       ) : (
         ""
       )}
       {currentPage === "OTHER_SKILL" ? (
-        <OtherSkill
-          handleReturnClick={handleReturnClick}
-          handleOtherSkillClick={handleOtherSkillClick}
-          otherSkillData={otherSkill}
-          isUpdate={isUpdate}
-        />
+        <div className='otherSkill'>
+          <OtherSkill
+            handleReturnClick={handleReturnClick}
+            handleOtherSkillClick={handleOtherSkillClick}
+            otherSkillData={otherSkill}
+            isUpdate={isUpdate}
+            saveNow={saveNow}
+            skip={skip}
+          />
+        </div>
       ) : (
         ""
       )}
       {currentPage === "WORK_EXP_PROMPT" ? (
-        <WorkExperiencePrompt
-          handleReturnClick={handleReturnClick}
-          handleWorkExperiencePromptClick={handleWorkExperiencePromptClick}
-        />
+        <div className='work-exp'>
+          <WorkExperiencePrompt
+            handleReturnClick={handleReturnClick}
+            handleWorkExperiencePromptClick={handleWorkExperiencePromptClick}
+          />
+        </div>
       ) : (
         ""
       )}
       {currentPage === "COURSE_CERTIFICATE_PROMPT" ? (
-        <CourseCertificatePrompt
-          handleReturnClick={handleReturnClick}
-          haveWorkExperience={workExperience.length}
-          handleCourseCertificatePromptClick={handleCertificatePromptClick}
-        />
+        <div className='course-cert'>
+          <CourseCertificatePrompt
+            handleReturnClick={handleReturnClick}
+            haveWorkExperience={workExperience.length}
+            handleCourseCertificatePromptClick={handleCertificatePromptClick}
+          />
+        </div>
       ) : (
         ""
       )}
 
       {currentPage === "SCHOOL_ACHIEVEMENT_PROMPT" ? (
-        <SchoolAchievementPrompt
-          handleReturnClick={handleReturnClick}
-          haveCertificate={courseCertificate.length}
-          handleSchoolAchievementPromptClick={
-            handleSchoolAchievementPromptClick
-          }
-        />
+        <div className='school-achievement'>
+          <SchoolAchievementPrompt
+            handleReturnClick={handleReturnClick}
+            haveCertificate={courseCertificate.length}
+            handleSchoolAchievementPromptClick={
+              handleSchoolAchievementPromptClick
+            }
+          />
+        </div>
       ) : (
         ""
       )}

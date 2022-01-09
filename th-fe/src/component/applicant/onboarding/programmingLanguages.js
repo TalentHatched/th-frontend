@@ -6,7 +6,6 @@ import {
   FormGroup,
   Checkbox,
   FormControlLabel,
-  
 } from "@material-ui/core";
 
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
@@ -56,8 +55,18 @@ const ProgrammingLanguage = (props) => {
     }
   };
 
+  const saveNow = async () => {
+    console.log(programmingLanguageState);
+    await props.handleProgrammingLanguageClick(
+      programmingLanguageState,
+      "onboard"
+    );
+
+    props.saveNow();
+  };
+
   return (
-    <div>
+    <div className='programming-lg-selection'>
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
@@ -67,8 +76,10 @@ const ProgrammingLanguage = (props) => {
               : props.handleReturnClick("INDUSTRY");
           }}></Button>
       </div>
-      <h2>Do you have experience with any of these programming languages?</h2>
-      <h3>Check all that apply. </h3>
+      <div className='programming-instruction instruction'>
+        <h2>Do you have experience with any of these programming languages?</h2>
+        <h2 className='check-all'>Check all that apply. </h2>
+      </div>
 
       <FormControl
         required
@@ -125,22 +136,29 @@ const ProgrammingLanguage = (props) => {
 
         {/* <FormHelperText>You can display an error</FormHelperText> */}
       </FormControl>
-      {warning ? <h4>{warning}</h4> : ""}
+      {warning ? <h4 className='warning-message'>{warning}</h4> : ""}
       <div>
         {props.isUpdate ? (
           <Button
             variant='contained'
             color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
             onClick={() => handleChooseProgrammingLanguageClick("update")}>
             Update Skills
           </Button>
         ) : (
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={() => handleChooseProgrammingLanguageClick("onboard")}>
-            Choose Skills
-          </Button>
+          <div>
+            <Button
+              variant='contained'
+              color='primary'
+              style={{ width: "100%", margin: "20px 0px" }}
+              onClick={() => handleChooseProgrammingLanguageClick("onboard")}>
+              Choose Skills
+            </Button>
+            <div className='save-later'>
+              <h6 onClick={() => saveNow()}>Save and complete later?</h6>
+            </div>
+          </div>
         )}
       </div>
     </div>

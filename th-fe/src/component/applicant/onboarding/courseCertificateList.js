@@ -30,8 +30,8 @@ const CourseCertificateList = (props) => {
   };
 
   return (
-    <div>
-      <h1>My Course/Certificate</h1>
+    <div className='course-cert-list instruction'>
+      <h2>My Course/Certificate</h2>
       {data.map((data, index) => {
         return (
           <Card key={index} variant='outlined' className='work-experience-card'>
@@ -57,6 +57,7 @@ const CourseCertificateList = (props) => {
         <Button
           variant='outlined'
           startIcon={<AddCircleIcon />}
+          style={{ width: "80%", margin: "10px 10% 20px 10%" }}
           onClick={() => props.handleNextPageClick("COURSE_CERTIFICATE_FORM")}>
           Add course/certificate
         </Button>
@@ -66,6 +67,7 @@ const CourseCertificateList = (props) => {
           color='primary'
           variant='contained'
           endIcon={<ArrowForwardIcon />}
+          style={{ width: "100%", margin: "20px 0px" }}
           onClick={() =>
             props.handleCourseCertificateContinueClick(
               "SCHOOL_ACHIEVEMENT_PROMPT"

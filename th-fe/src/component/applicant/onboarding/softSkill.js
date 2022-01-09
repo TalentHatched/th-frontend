@@ -48,8 +48,10 @@ const SoftSkillScreen = (props) => {
   const handleSubmit = (type) => {
     if (validate()) {
       props.handleSoftSkillClick(softSkill, type);
+      return true;
     } else {
       setWarning("Please select a unique skill for each dropdown");
+      return false;
     }
   };
 
@@ -66,6 +68,12 @@ const SoftSkillScreen = (props) => {
     }
   };
 
+  const saveNow = () => {
+    if (handleSubmit()) {
+      props.saveNow();
+    }
+  };
+
   return (
     <div>
       <div>
@@ -77,8 +85,10 @@ const SoftSkillScreen = (props) => {
               : props.handleReturnClick("GENERAL_TECH_SKILL");
           }}></Button>
       </div>
-      <h2>What are your top 5 soft skills?</h2>
-      <Box sx={{ minWidth: 120 }}>
+      <div className='soft-skill-instruction instruction'>
+        <h2>What are your top 5 soft skills?</h2>
+      </div>
+      <Box sx={{ minWidth: 120, margin: "20px 0px" }}>
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>
             Choose First Skill
@@ -101,7 +111,7 @@ const SoftSkillScreen = (props) => {
         </FormControl>
       </Box>
 
-      <Box sx={{ minWidth: 120 }}>
+      <Box sx={{ minWidth: 120, margin: "20px 0px" }}>
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>
             Choose Second Skill
@@ -124,7 +134,7 @@ const SoftSkillScreen = (props) => {
         </FormControl>
       </Box>
 
-      <Box sx={{ minWidth: 120 }}>
+      <Box sx={{ minWidth: 120, margin: "20px 0px" }}>
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>
             Choose Third Skill
@@ -147,7 +157,7 @@ const SoftSkillScreen = (props) => {
         </FormControl>
       </Box>
 
-      <Box sx={{ minWidth: 120 }}>
+      <Box sx={{ minWidth: 120, margin: "20px 0px" }}>
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>
             Choose Forth Skill
@@ -170,7 +180,7 @@ const SoftSkillScreen = (props) => {
         </FormControl>
       </Box>
 
-      <Box sx={{ minWidth: 120 }}>
+      <Box sx={{ minWidth: 120, margin: "20px 0px" }}>
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>
             Choose Fifth Skill
@@ -192,23 +202,31 @@ const SoftSkillScreen = (props) => {
           </Select>
         </FormControl>
       </Box>
-      {warning ? <h4>{warning}</h4> : ""}
+      {warning ? <h4 className='warning-message'>{warning}</h4> : ""}
 
       <div>
         {props.isUpdate ? (
           <Button
             variant='contained'
             color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
             onClick={() => handleSubmit("update")}>
             Update Your Skills
           </Button>
         ) : (
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={() => handleSubmit("onboard")}>
-            Choose Your Skills
-          </Button>
+          <div>
+            <Button
+              variant='contained'
+              color='primary'
+              style={{ width: "100%", margin: "20px 0px" }}
+              onClick={() => handleSubmit("onboard")}>
+              Choose Your Skills
+            </Button>
+
+            <div className='save-later'>
+              <h6 onClick={() => saveNow()}>Save and complete later?</h6>
+            </div>
+          </div>
         )}
       </div>
     </div>

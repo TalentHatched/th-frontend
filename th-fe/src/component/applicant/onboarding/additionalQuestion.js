@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button, FormGroup, TextField } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
-
+import moreInfoImg from "../../../img/more-info-img.png";
 const AdditionalQuestion = (props) => {
   const [answer, setAnswer] = useState({
     first: { question: "Tell us about what you do for fun", answer: "" },
@@ -47,7 +47,7 @@ const AdditionalQuestion = (props) => {
   };
 
   return (
-    <div>
+    <div className='extra-question'>
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
@@ -59,27 +59,30 @@ const AdditionalQuestion = (props) => {
               : props.handleReturnClick("SCHOOL_ACHIEVEMENT_PROMPT");
           }}></Button>
       </div>
-      <h1>Let's get to know you</h1>
-      <FormGroup>
-        {Object.keys(answer).map((key, i) => {
-          return (
-            <div key={i}>
-              <label>{answer[key].question}</label>
-              <TextField
-                variant='outlined'
-                multiline
-                rows={5}
-                placeholder='Type your answer here'
-                name={key}
-                value={answer[key].answer}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          );
-        })}
-      </FormGroup>
-      {/* <label>Tell us about what you do for fun</label>
+      <img id='more-info-img' src={moreInfoImg} alt='More information' />
+      <div className='prompt-instruction instruction'>
+        <h2>Let's get to know you</h2>
+        <FormGroup>
+          {Object.keys(answer).map((key, i) => {
+            return (
+              <div key={i}>
+                <label>{answer[key].question}</label>
+                <TextField
+                  variant='outlined'
+                  multiline
+                  rows={5}
+                  placeholder='Type your answer here'
+                  name={key}
+                  value={answer[key].answer}
+                  style={{ width: "100%", margin: "10px 0px 20px 0px" }}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            );
+          })}
+        </FormGroup>
+        {/* <label>Tell us about what you do for fun</label>
       <FormGroup>
         <TextField
           variant='outlined'
@@ -166,23 +169,25 @@ const AdditionalQuestion = (props) => {
         />
       </FormGroup> */}
 
-      {props.isUpdate ? (
-        <Button
-          color='primary'
-          variant='contained'
-          endIcon={<ArrowForwardIcon />}
-          onClick={() => props.updateQuestions(answer)}>
-          Update
-        </Button>
-      ) : (
-        <Button
-          color='primary'
-          variant='contained'
-          endIcon={<ArrowForwardIcon />}
-          onClick={() => props.additionalQuestionContinueClick(answer)}>
-          Continue
-        </Button>
-      )}
+        {props.isUpdate ? (
+          <Button
+            color='primary'
+            variant='contained'
+            endIcon={<ArrowForwardIcon />}
+            onClick={() => props.updateQuestions(answer)}>
+            Update
+          </Button>
+        ) : (
+          <Button
+            color='primary'
+            variant='contained'
+            endIcon={<ArrowForwardIcon />}
+            style={{ width: "100%", margin: "20px 0px" }}
+            onClick={() => props.additionalQuestionContinueClick(answer)}>
+            Continue
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

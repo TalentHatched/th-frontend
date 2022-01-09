@@ -73,7 +73,7 @@ const OtherSkillScreen = (props) => {
   });
 
   return (
-    <div>
+    <div className='other-skill-selection'>
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
@@ -84,14 +84,15 @@ const OtherSkillScreen = (props) => {
           }></Button>
       </div>
       {skillList.length ? (
-        <div>
+        <div class='other-skill-instruction instruction'>
           <h2>Your Skills</h2>
           <List>{listSkills}</List>
-          {warning ? <h4>{warning}</h4> : ""}
+          {warning ? <h4 className='warning-message'>{warning}</h4> : ""}
           {props.isUpdate ? (
             <Button
               color='primary'
               variant='contained'
+              style={{ width: "100%", margin: "20px 0px" }}
               onClick={() => onSubmitSkill("update")}>
               Update Other Skill
             </Button>
@@ -100,17 +101,18 @@ const OtherSkillScreen = (props) => {
               color='primary'
               variant='contained'
               endIcon={<ArrowForwardIcon />}
+              style={{ width: "100%", margin: "20px 0px" }}
               onClick={() => onSubmitSkill("onboard")}>
               Continue
             </Button>
           )}
 
-          <h2>Add another skill</h2>
+          <h2 className='add-other-skill'>Add another skill</h2>
         </div>
       ) : (
-        <div>
+        <div className='other-skill-instruction instruction'>
           <h2>What other skills do you have?</h2>
-          <h2>
+          <h2 className='check-all'>
             <strong>Add a skill</strong>
           </h2>
         </div>
@@ -122,6 +124,8 @@ const OtherSkillScreen = (props) => {
             type='text'
             className='other-skill-input'
             variant='outlined'
+            placeholder="Type skill"
+            style={{ width: "100%", margin: "10px 0px" }}
             onChange={onInputFieldChange}
             value={currentSkill}></TextField>
         </div>
@@ -129,9 +133,16 @@ const OtherSkillScreen = (props) => {
           color='primary'
           variant='contained'
           disabled={currentSkill.length ? false : true}
+          style={{ width: "100%", margin: "20px 0px" }}
           onClick={() => handleAddSkillClick()}>
           Add Skill
         </Button>
+      </div>
+      <div className='skip' onClick={() => props.skip("WORK_EXP_PROMPT")}>
+        <h6>Skip</h6>
+      </div>
+      <div className='save-later'>
+        <h6 onClick={() => props.saveNow()}>Save and complete later?</h6>
       </div>
     </div>
   );

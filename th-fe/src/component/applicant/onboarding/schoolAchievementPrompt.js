@@ -4,6 +4,8 @@ import { Button } from "@material-ui/core";
 
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
+import accomplishImg from "../../../img/accomplish-img.png";
+
 const SchooAchievementPrompt = (props) => {
   const handleReturnClick = () => {
     if (props.haveCertificate) {
@@ -14,29 +16,37 @@ const SchooAchievementPrompt = (props) => {
   };
 
   return (
-    <div>
+    <div className='accomplish-prompt-instruction'>
       <div>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => handleReturnClick()}></Button>
       </div>
-      <h2>
-        Do you have any<br></br>
-        school achievements/accomplishments you want to share?
-      </h2>
-      <div>
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => props.handleSchoolAchievementPromptClick(true)}>
-          Yes
-        </Button>
-        <Button
-          variant='outlined'
-          color='primary'
-          onClick={() => props.handleSchoolAchievementPromptClick(false)}>
-          No
-        </Button>
+      <img
+        id='accomplish-img'
+        alt='school accomplishment image'
+        src={accomplishImg}
+      />
+      <div className='prompt-instruction'>
+        <h2 className="accomplish-header">
+          Do you have any school achievements/accomplishments you want to share?
+        </h2>
+        <div>
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "35%", margin: "30px 10px" }}
+            onClick={() => props.handleSchoolAchievementPromptClick(true)}>
+            Yes
+          </Button>
+          <Button
+            variant='outlined'
+            color='primary'
+            style={{ width: "35%", margin: "30px 10px" }}
+            onClick={() => props.handleSchoolAchievementPromptClick(false)}>
+            No
+          </Button>
+        </div>
       </div>
     </div>
   );
