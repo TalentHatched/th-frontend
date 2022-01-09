@@ -7,28 +7,15 @@ import ApplicantList from "./applicantList";
 import ViewApplicantProfile from "./viewApplicantProfile";
 import axios from "axios";
 import "./adminDashboard.css";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
 
 const AdminDashboard = () => {
   //const [showAddApplicantButton, setShowAddApplicantButton] = useState(true);
+  const [adminFirstName, setAdminFirstName] = useState("");
+  const [institution, setInstitution] = useState("");
+
   const [applicantRegistrationWarning, setApplicantRegistrationWarning] =
     useState("");
-
-  // const [applicantData, setApplicantData] = useState([
-  //   {
-  //     adminId: "",
-  //     applicantId: "",
-  //     dateOfBirth: "",
-  //     gender: "",
-  //     grade: "",
-  //     isActive: "",
-  //     registrationDate: "",
-  //     specialization: "",
-  //     userEmail: "",
-  //     userFullName: "",
-  //     userName: "",
-  //     userTypeId: "",
-  //   },
-  // ]);
   const [applicantData, setApplicantData] = useState([]);
   const [selectedApplicantProfile, setSelectedApplicantProfile] = useState({});
   const [viewApplicantList, setViewApplicantList] = useState(false);
@@ -38,10 +25,11 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
+    setInstitution(localStorage.getItem("institution"));
+    setAdminFirstName(localStorage.getItem("userFirstName"));
     axios
       .get(`api/applicantAdmin/admin/${userId}`)
       .then((res) => {
-        console.log(typeof res.data.info);
         setApplicantData(res.data.info);
         setViewApplicantList(true);
       })
@@ -95,22 +83,41 @@ const AdminDashboard = () => {
 
   return (
     <div className='admin-dashboard'>
-      <h1>Admin Dashboard</h1>
-      <div></div>
+      <div className='admin-header-box'>
+        <div className='admin-info-box'>
+          {institution ? (
+            <div className='admin-detail'>
+              <h5 className='admin-data'>{institution}</h5>
+            </div>
+          ) : (
+            ""
+          )}
+          {adminFirstName ? (
+            <div className='admin-detail'>
+              <h5 className='admin-data'>{adminFirstName}</h5>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className='add-applicant-button-box'>
+          <Button
+            variant='contained'
+            color='primrary'
+            startIcon={<GroupAddIcon />}
+            onClick={() => handleAddApplicantClick()}>
+            Add Applicant
+          </Button>
+        </div>
+      </div>
       {viewApplicantList ? (
         <div>
-          <div className='add-applicant-button-box'>
-            <Button
-              variant='contained'
-              color='primrary'
-              onClick={() => handleAddApplicantClick()}>
-              Add Applicant
-            </Button>
+          <div className='appl'>
+            <ApplicantList
+              data={applicantData}
+              onViewProfileClick={onViewProfileClick}
+            />
           </div>
-          <ApplicantList
-            data={applicantData}
-            onViewProfileClick={onViewProfileClick}
-          />
         </div>
       ) : (
         ""
@@ -118,14 +125,6 @@ const AdminDashboard = () => {
 
       {viewApplicantProfile ? (
         <div>
-          <div>
-            <Button
-              variant='contained'
-              color='primrary'
-              onClick={() => handleAddApplicantClick()}>
-              Add Applicant
-            </Button>
-          </div>{" "}
           <ViewApplicantProfile
             handleReturnClick={handleReturnClick}
             profileData={selectedApplicantProfile}
@@ -137,17 +136,10 @@ const AdminDashboard = () => {
 
       {viewRegistrationForm ? (
         <div>
-          <div className='add-applicant-button-box'>
-            <Button
-              variant='contained'
-              color='primrary'
-              onClick={() => handleAddApplicantClick()}>
-              Add Applicant
-            </Button>
-          </div>
           <ApplicantRegistrationForm
             handleReturnClick={handleReturnClick}
             isAdmin={true}
+            institution={institution}
             handleAddStudentSubmission={handleAddStudentSubmission}
             applicantRegistrationWarning={applicantRegistrationWarning}
           />
