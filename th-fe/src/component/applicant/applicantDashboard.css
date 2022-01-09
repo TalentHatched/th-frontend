@@ -144,6 +144,11 @@
   margin: 10px 20px;
 }
 
+#course-cert-img {
+  width: 90%;
+  margin: 10px;
+}
+
 .Mui-error {
   border-color: rgba(0, 0, 0, 0.23) !important;
   color: #808080 !important;
@@ -177,6 +182,55 @@
   margin: 20px 10px;
 }
 
+.applicant-profile {
+  text-align: center;
+}
+
+.profile-box {
+  padding: 20px 0px;
+}
+
+.profile-box:not(:last-child) {
+  border-bottom: 5px solid #c4c4c4;
+}
+
+.soft-skill-header {
+  margin-bottom: 10px;
+}
+
+.soft-skill-item {
+  display: flex;
+  align-items: center;
+  margin: 0px 5px;
+}
+
+.skill-box-one {
+  border: 1px solid#3f67f8;
+  border-radius: 4.8px;
+  padding: 10px;
+  margin: 10px 10px;
+  width: 100%;
+}
+
+.skill-box-two {
+  border: 1px solid#3f67f8;
+  border-radius: 4.8px;
+  padding: 10px;
+  margin: 20px 10px;
+  text-align: center;
+}
+
+.MuiCard-root {
+  border: 1px solid #3f67f8 !important;
+  margin:20px 10px;
+  padding:0px 10px;
+  text-align:left;
+}
+
+.card-buttons {
+  text-align:right;
+}
+
 @media (min-width: 768px) {
   #welcome-img {
     max-height: 400px;
@@ -196,6 +250,11 @@
     text-align: left;
   }
 
+  #course-cert-img {
+    max-height: 400px;
+    max-width: 400px;
+  }
+
   #more-info-img {
     max-height: 400px;
     max-width: 400px;
@@ -205,5 +264,6 @@
   #final-img {
     max-height: 400px;
     max-width: 400px;
+    margin: 20px 26%;
   }
 }

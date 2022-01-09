@@ -1,7 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import "./applicantProfile.css";
-
 import { Button, Card, CardContent, Typography } from "@material-ui/core";
 
 const ApplicantProfile = (props) => {
@@ -23,15 +21,23 @@ const ApplicantProfile = (props) => {
 
   let userId = localStorage.getItem("userId");
   useEffect(() => {
-    axios.get(`api/applicantInfo/${userId}`).then((res) => {
-      setApplicantData(res.data.userData.data); // try {
-      if (
-        res.data.userData.data.industry &&
-        res.data.userData.data.industry.includes("technology")
-      ) {
-        setIsTech(true);
-      }
-    });
+    axios
+      .get(`api/applicantInfo/${userId}`)
+      .then((res) => {
+        console.log("what is res", res);
+        setApplicantData(res.data.userData.data); // try {
+        if (
+          res.data.userData.data.industry &&
+          res.data.userData.data.industry.includes("technology")
+        ) {
+          setIsTech(true);
+        }
+      })
+      .catch((error) => {
+        console.log("got here");
+        props.backToOnboard();
+      });
+    console.log("whati s props", props);
   }, [userId]);
 
   const convertDate = (date) => {
@@ -87,43 +93,74 @@ const ApplicantProfile = (props) => {
   };
 
   return (
-    <div>
-      <section className='applicant-info'>
-        <h2>{props.fullName}</h2>
+    <div className='applicant-profile'>
+      <section className='applicant-inf profile-box'>
+        <h2>
+          {props.firstName} {props.lastName}
+        </h2>
+        <h4>{props.institution}</h4>
       </section>
-      <section className='tagline'>
-        {applicantData.tagline ? <h3>{applicantData.tagline}</h3> : ""}
-        <Button
-          variant='outlined'
-          onClick={() => props.updateAdjectives(applicantData)}>
-          Update Adjectives
-        </Button>
+      <section className='tagline profile-box'>
+        {applicantData.tagline !== "" ? (
+          <div className='tagline-info'>
+            <h3>{applicantData.tagline}</h3>
+            <Button
+              color='primary'
+              style={{ marginTop: "20px" }}
+              onClick={() => props.updateAdjectives(applicantData)}>
+              Update Adjectives
+            </Button>
+          </div>
+        ) : (
+          <div className='tagline-info'>
+            <h4>No adjectives</h4>
+            <Button
+              color='primary'
+              style={{ marginTop: "20px" }}
+              onClick={() => props.updateAdjectives(applicantData)}>
+              Add Adjectives
+            </Button>
+          </div>
+        )}
       </section>
-      <section className='top-skills'>
-        <h2>Top 5 Soft Skills</h2>
+      <section className='top-skills profile-box'>
+        <h2 className='soft-skill-header'>Top 5 Soft Skills</h2>
         {applicantData.softSkill && applicantData.softSkill.length
           ? applicantData.softSkill.map((tech, index) => {
-              return <h4 key={index}>{tech}</h4>;
+              return (
+                <div className='soft-skill-item'>
+                  {index + 1}.
+                  <h4 key={index} className='skill-box-one'>
+                    {tech}
+                  </h4>
+                </div>
+              );
             })
           : ""}
         <Button
-          variant='outlined'
+          color='primary'
+          style={{ marginTop: "20px" }}
           onClick={() => props.updateSoftSkills(applicantData)}>
           Update Soft Skills
         </Button>
       </section>
 
       {isTech ? (
-        <section className='programming-skills'>
+        <section className='programming-skills profile-box'>
           <h2>Programming Languages</h2>
           {applicantData.programmingLanguage &&
           applicantData.programmingLanguage.length
             ? applicantData.programmingLanguage.map((language, index) => {
-                return <h4 key={index}>{language}</h4>;
+                return (
+                  <h4 key={index} className='skill-box-two'>
+                    {language}
+                  </h4>
+                );
               })
             : ""}
           <Button
-            variant='outlined'
+            color='primary'
+            style={{ marginTop: "20px" }}
             onClick={() => props.updateProgrammingSkills(applicantData)}>
             Update Programming Skills
           </Button>
@@ -131,33 +168,43 @@ const ApplicantProfile = (props) => {
       ) : (
         ""
       )}
-      <section className='design-skills'>
+      <section className='design-skills profile-box'>
         <h2>Design/Tech Skills</h2>
         {applicantData.generalTech && applicantData.generalTech.length
           ? applicantData.generalTech.map((tech, index) => {
-              return <h4 key={index}>{tech}</h4>;
+              return (
+                <h4 key={index} className='skill-box-two'>
+                  {tech}
+                </h4>
+              );
             })
           : ""}
         <Button
-          variant='outlined'
+          color='primary'
+          style={{ marginTop: "20px" }}
           onClick={() => props.updateGeneralTech(applicantData)}>
           Update Design/Tech Skills
         </Button>
       </section>
-      <section className='other-skills'>
+      <section className='other-skills profile-box'>
         <h2>Other Skills</h2>
         {applicantData.otherSkill && applicantData.otherSkill.length
           ? applicantData.otherSkill.map((skill, index) => {
-              return <h4 key={index}>{skill}</h4>;
+              return (
+                <h4 key={index} className='skill-box-two'>
+                  {skill}
+                </h4>
+              );
             })
           : ""}
         <Button
-          variant='outlined'
+          color='primary'
+          style={{ marginTop: "20px" }}
           onClick={() => props.updateOtherSkills(applicantData)}>
           Update Other Skills
         </Button>
       </section>
-      <section className='work-experience'>
+      <section className='work-experience profile-box'>
         <h2>Work Experience</h2>
         {applicantData.workExperience && applicantData.workExperience.length
           ? applicantData.workExperience.map((data, index) => {
@@ -167,22 +214,25 @@ const ApplicantProfile = (props) => {
                   className='work-experience-card'
                   key={index}>
                   <CardContent>
-                    <Button
-                      onClick={() =>
-                        props.updateItem(
-                          applicantData,
-                          index,
-                          "edit",
-                          "workExperience"
-                        )
-                      }>
-                      Edit
-                    </Button>
-                    <Button onClick={() => deleteItem(index, "workExperience")}>
-                      Delete
-                    </Button>
+                    <div className='card-buttons'>
+                      <Button
+                        onClick={() =>
+                          props.updateItem(
+                            applicantData,
+                            index,
+                            "edit",
+                            "workExperience"
+                          )
+                        }>
+                        Edit
+                      </Button>
+                      <Button
+                        onClick={() => deleteItem(index, "workExperience")}>
+                        Delete
+                      </Button>
+                    </div>
                     <div>
-                      <Typography>{data.jobTitle}</Typography>
+                      <Typography style={{ fontWeight: "700" }}>{data.jobTitle}</Typography>
                       <Typography>{data.employmentType}</Typography>
                       <Typography>
                         {convertDate(data.startDate)} -{" "}
@@ -197,14 +247,15 @@ const ApplicantProfile = (props) => {
             })
           : ""}
         <Button
-          variant='outlined'
+          color='primary'
+          style={{ marginTop: "20px" }}
           onClick={() => {
             props.addNewItem(applicantData, "workExperience");
           }}>
           Add Work Experience
         </Button>
       </section>
-      <section className='courses-certificates'>
+      <section className='courses-certificates profile-box'>
         <h2>Courses/Certificates</h2>
 
         {applicantData.courseCertificate &&
@@ -213,24 +264,29 @@ const ApplicantProfile = (props) => {
               return (
                 <Card
                   key={index}
+                  color='primary'
                   variant='outlined'
                   className='course-certificate-card'>
                   <CardContent>
-                    <Button
-                      onClick={() => {
-                        props.updateItem(
-                          applicantData,
-                          index,
-                          "edit",
-                          "course"
-                        );
-                      }}>
-                      Edit
-                    </Button>
-                    <Button onClick={() => deleteItem(index, "course")}>
-                      Delete
-                    </Button>
-                    <Typography>{data.title}</Typography>
+                    <div className='card-buttons'>
+                      <Button
+                        onClick={() => {
+                          props.updateItem(
+                            applicantData,
+                            index,
+                            "edit",
+                            "course"
+                          );
+                        }}>
+                        Edit
+                      </Button>
+                      <Button onClick={() => deleteItem(index, "course")}>
+                        Delete
+                      </Button>
+                    </div>
+                    <Typography style={{ fontWeight: "700" }}>
+                      {data.title}
+                    </Typography>
                     <Typography>{data.issuingOrganization}</Typography>
                     <Typography>{convertDate(data.issueDate)}</Typography>
                     <Typography>{data.description}</Typography>
@@ -240,14 +296,15 @@ const ApplicantProfile = (props) => {
             })
           : ""}
         <Button
-          variant='outlined'
+          color='primary'
+          style={{ marginTop: "20px" }}
           onClick={() => {
             props.addNewItem(applicantData, "course");
           }}>
           Add Course / Certificate
         </Button>
       </section>
-      <section className='school-achievements'>
+      <section className='school-achievements profile-box'>
         <h2>School Accomplishmnets</h2>
         {applicantData.schoolAchievement &&
         applicantData.schoolAchievement.length
@@ -258,21 +315,24 @@ const ApplicantProfile = (props) => {
                   variant='outlined'
                   className='work-experience-card'>
                   <CardContent>
-                    <Button
-                      onClick={() => {
-                        props.updateItem(
-                          applicantData,
-                          index,
-                          "edit",
-                          "accomplishment"
-                        );
-                      }}>
-                      Edit
-                    </Button>
-                    <Button onClick={() => deleteItem(index, "accomplishment")}>
-                      Delete
-                    </Button>
-                    <Typography>{data.title}</Typography>
+                    <div className='card-buttons'>
+                      <Button
+                        onClick={() => {
+                          props.updateItem(
+                            applicantData,
+                            index,
+                            "edit",
+                            "accomplishment"
+                          );
+                        }}>
+                        Edit
+                      </Button>
+                      <Button
+                        onClick={() => deleteItem(index, "accomplishment")}>
+                        Delete
+                      </Button>
+                    </div>
+                    <Typography style={{ fontWeight: "700" }} >{data.title}</Typography>
                     <Typography>{data.schoolName}</Typography>
                     <Typography>{data.location}</Typography>
 
@@ -284,7 +344,8 @@ const ApplicantProfile = (props) => {
             })
           : ""}
         <Button
-          variant='outlined'
+          color='primary'
+          style={{ marginTop: "20px" }}
           onClick={() => {
             props.addNewItem(applicantData, "accomplishment");
           }}>
@@ -292,9 +353,12 @@ const ApplicantProfile = (props) => {
         </Button>
       </section>
 
-      <section className='about-you'>
+      <section className='about-you profile-box'>
         <h2>About You</h2>
-        <Button onClick={() => props.updateAdditionalQuestion(applicantData)}>
+        <Button
+          color='primary'
+          style={{ marginTop: "20px" }}
+          onClick={() => props.updateAdditionalQuestion(applicantData)}>
           Update "Get to know you" questions
         </Button>
       </section>

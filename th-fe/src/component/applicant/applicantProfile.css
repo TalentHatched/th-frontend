@@ -1,8 +1,0 @@
-section {
-  margin: 10px 10px;
-}
-
-section:not(:last-child) {
-  border-bottom: 5px solid #c4c4c4;
-}
-

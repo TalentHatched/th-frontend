@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import courseCertImg from "../../../img/course-cert-img.png";
 
 const CourseCertificatePrompt = (props) => {
   const handleReturnClick = () => {
@@ -20,23 +21,32 @@ const CourseCertificatePrompt = (props) => {
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => handleReturnClick()}></Button>
       </div>
-      <h2>
-        Do you have<br></br>
-        courses or certificates you want to share?
-      </h2>
-      <div>
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => props.handleCourseCertificatePromptClick(true)}>
-          Yes
-        </Button>
-        <Button
-          variant='outlined'
-          color='primary'
-          onClick={() => props.handleCourseCertificatePromptClick(false)}>
-          No
-        </Button>
+      <img
+        id='course-cert-img'
+        alt='course certificate image'
+        src={courseCertImg}
+      />
+      <div className='prompt-instruction'>
+        <h2>
+          Do you have<br></br>
+          courses or certificates you want to share?
+        </h2>
+        <div>
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ width: "35%", margin: "30px 10px" }}
+            onClick={() => props.handleCourseCertificatePromptClick(true)}>
+            Yes
+          </Button>
+          <Button
+            variant='outlined'
+            color='primary'
+            style={{ width: "35%", margin: "30px 10px" }}
+            onClick={() => props.handleCourseCertificatePromptClick(false)}>
+            No
+          </Button>
+        </div>
       </div>
     </div>
   );

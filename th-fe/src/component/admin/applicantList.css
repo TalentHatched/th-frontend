@@ -19,12 +19,12 @@ h5 {
   font-weight: 300;
 }
 
-.MuiButton-label {
-  font-size: 14px !important;
+/* .MuiButton-label {
+  font-size: 14px;
   font-weight: 300 !important;
   text-align: left;
   min-width: 100px;
-}
+} */
 
 .filter {
   margin: 20px 0px;

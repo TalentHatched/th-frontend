@@ -182,6 +182,7 @@ const CourseCertificateForm = (props) => {
           <Button
             variant='contained'
             color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
             onClick={() => addCourseCertificateClick("update")}>
             {props.addNew
               ? "Add course or certificate"
@@ -204,6 +205,14 @@ const CourseCertificateForm = (props) => {
             Edit course or certificate
           </Button>
         )}
+      </div>
+      <div
+        className='skip'
+        onClick={() => props.skip("SCHOOL_ACHIEVEMENT_PROMPT")}>
+        <h6>Skip</h6>
+      </div>
+      <div className='save-later'>
+        <h6 onClick={() => props.saveNow()}>Save and complete later?</h6>
       </div>
     </div>
   );

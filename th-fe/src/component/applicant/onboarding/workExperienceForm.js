@@ -331,6 +331,7 @@ const WorkExperienceForm = (props) => {
           <Button
             variant='contained'
             color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
             onClick={() => addExperienceClick("update")}>
             {props.addNew ? "Add experience" : "Update experience"}
           </Button>
@@ -351,6 +352,11 @@ const WorkExperienceForm = (props) => {
             Update experience
           </Button>
         )}
+      </div>
+      <div
+        className='skip'
+        onClick={() => props.skip("COURSE_CERTIFICATE_PROMPT")}>
+        <h6>Skip</h6>
       </div>
     </div>
   );

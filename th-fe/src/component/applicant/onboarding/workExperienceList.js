@@ -77,6 +77,10 @@ const WorkExperienceList = (props) => {
           Continue
         </Button>{" "}
       </div>
+
+      <div className='save-later'>
+        <h6 onClick={() => props.saveNow()}>Save and complete later?</h6>
+      </div>
     </div>
   );
 };

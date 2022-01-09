@@ -193,6 +193,7 @@ const SchoolAchievementForm = (props) => {
           <Button
             variant='contained'
             color='primary'
+            style={{ width: "100%", margin: "20px 0px" }}
             onClick={() => addSchoolAchievementClick("update")}>
             {props.addNew
               ? "Add school accomplishment"
@@ -215,6 +216,12 @@ const SchoolAchievementForm = (props) => {
             Update school achievement
           </Button>
         )}
+      </div>
+      <div className='skip' onClick={() => props.skip("ADDITIONAL_QUESTION")}>
+        <h6>Skip</h6>
+      </div>
+      <div className='save-later'>
+        <h6 onClick={() => props.saveNow()}>Save and complete later?</h6>
       </div>
     </div>
   );
