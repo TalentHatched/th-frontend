@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "./navBar.css";
 
-import { Button } from "@material-ui/core";
+import { Popover, Button, Menu, MenuItem } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const NavBar = (props) => {
- 
+  const [isLogin, setIsLogin] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const logout = () => {
     const currentUserType = localStorage.getItem("userTypeId").toString();
     switch (currentUserType) {
@@ -26,6 +34,33 @@ const NavBar = (props) => {
     }
     localStorage.clear();
     props.setLoginStatus(false);
+    handleClose();
+  };
+
+  const onMenuClick = (event) => {
+    let userLogin = localStorage.getItem("userId") ? true : false;
+    if (userLogin) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+    setAnchorEl(event.target);
+  };
+
+  const onMenuItemClick = (type) => {
+    switch (type) {
+      case "AdminReg":
+        window.location.href = "/#/adminregister";
+        break;
+      case "AdminLogin":
+        window.location.href = "/#/adminlogin";
+        break;
+      case "ApplicantLogin":
+        window.location.href = "/#/applicantlogin";
+        break;
+    }
+
+    handleClose();
   };
 
   return (
@@ -38,12 +73,42 @@ const NavBar = (props) => {
             alt='Talent Hatched Logo'></img>
         </a>
       </nav>
-      {props.isLogin ? (
-        <Button variant='outlined' onClick={() => logout()}>
-          Logout
-        </Button>
+      <Button endIcon={<MenuIcon />} onClick={onMenuClick}></Button>
+
+      {isLogin ? (
+        <Popover
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}>
+          <MenuItem onClick={logout} style={{ padding: "10px 20px" }}>
+            Logout
+          </MenuItem>
+        </Popover>
       ) : (
-        ""
+        <Popover
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}>
+          <MenuItem onClick={() => onMenuItemClick("AdminReg")}>
+            Register
+          </MenuItem>
+          <MenuItem onClick={() => onMenuItemClick("AdminLogin")}>
+            Admin Login
+          </MenuItem>
+          <MenuItem onClick={() => onMenuItemClick("ApplicantLogin")}>
+            Applicant Login
+          </MenuItem>
+        </Popover>
       )}
     </div>
   );
