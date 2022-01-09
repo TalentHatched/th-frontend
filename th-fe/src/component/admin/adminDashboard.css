@@ -1,5 +1,44 @@
-.add-applicant-button-box {
+.admin-header-box {
+  display: flex;
+  justify-content: space-between;
   border-bottom: 4px solid black;
-  padding:20px 0px;
+  padding: 20px 0px;
+}
+
+.add-applicant-button-box {
+  padding: 20px 0px;
   margin: 10px 0px;
+}
+
+.admin-detail {
+  min-width: 300px;
+  margin: 20px 0px;
+}
+
+.admin-data {
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.applicant-list-admin-view {
+  margin: 40px 0px;
+}
+
+.search-bar-input {
+  height: 30px;
+  font-size: 20px;
+  padding: 0px 5px;
+}
+
+.search-tools {
+  display: flex;
+  width: 100%;
+  margin: 30px 0px 15px 0px;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.search-bar {
+  padding: 0px;
 }
