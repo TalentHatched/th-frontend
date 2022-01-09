@@ -30,8 +30,8 @@ const ApplicantDashboard = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [profileData, setProfileData] = useState({});
-  const [currentPage, setCurrentPage] = useState("PROFILE");
-
+  const [currentPage, setCurrentPage] = useState("LOADING");
+  const [institution, setInstitution] = useState("");
   const [techTrack, setTechTrack] = useState(false);
   const [industry, setIndustry] = useState({});
 
@@ -54,17 +54,22 @@ const ApplicantDashboard = () => {
   const [addNew, setAddNew] = useState(false);
 
   useEffect(() => {
-    axios.get(`api/applicantInfo/${userId}`).then((res) => {
-      setFullName(res.data.userData.userFullName);
-      setFirstName(res.data.userData.userFirstName);
-      setLastName(res.data.userData.userLastName);
+    axios
+      .get(`api/applicantInfo/${userId}`)
+      .then((res) => {
+        setFullName(res.data.userData.userFullName);
+        setFirstName(res.data.userData.userFirstName);
+        setLastName(res.data.userData.userLastName);
 
-      if (Object.keys(res.data.userData.data).length === 0) {
-        setCurrentPage("WELCOME");
-      } else {
+        if (Object.keys(res.data.userData.data).length === 0) {
+          setCurrentPage("WELCOME");
+        } else {
+          setCurrentPage("PROFILE");
+        }
+      })
+      .catch(() => {
         setCurrentPage("PROFILE");
-      }
-    });
+      });
   }, [userId]);
 
   const handleReturnClick = (page) => {
@@ -141,10 +146,12 @@ const ApplicantDashboard = () => {
     if (type === "onboard") {
       setCurrentPage("WORK_EXP_PROMPT");
     } else if (type === "update") {
+      console.log('here', data)
+      console.log('what is profileData now', profileData)
       let updatedData = profileData;
       updatedData.otherSkill = data;
       setProfileData(updatedData);
-      updateData();
+      updateData(updatedData);
     }
   };
 
@@ -603,11 +610,20 @@ const ApplicantDashboard = () => {
     setCurrentPage(type);
   };
 
+  const backToOnboard = () => {
+    setCurrentPage("WELCOME");
+  };
+
   return (
     <div className='applicant-dashboard'>
+      {currentPage === "LOADING" ? <div /> : ""}
+
       {currentPage === "PROFILE" ? (
         <div className='profile'>
           <ApplicantProfile
+            firstName={firstName}
+            lastName={lastName}
+            institution={institution}
             fullName={fullName}
             updateAdjectives={updateAdjectives}
             updateSoftSkills={updateSoftSkills}
@@ -617,6 +633,7 @@ const ApplicantDashboard = () => {
             updateItem={updateItemFromProfile}
             addNewItem={addNewItem}
             updateAdditionalQuestion={updateQuestionsFromProfile}
+            backToOnboard={backToOnboard}
           />
         </div>
       ) : (
@@ -758,6 +775,8 @@ const ApplicantDashboard = () => {
           workData={workExperience}
           isUpdate={isUpdate}
           addNew={addNew}
+          skip={skip}
+          saveNow={saveNow}
         />
       ) : (
         ""
@@ -771,6 +790,7 @@ const ApplicantDashboard = () => {
           handleNextPageClick={handleWorkExperiencePromptClick}
           editWorkExperience={editWorkExperience}
           deleteWorkExperience={deleteWorkExperience}
+          saveNow={saveNow}
         />
       ) : (
         ""
@@ -786,6 +806,8 @@ const ApplicantDashboard = () => {
           courseCertificateData={courseCertificate}
           isUpdate={isUpdate}
           addNew={addNew}
+          skip={skip}
+          saveNow={saveNow}
         />
       ) : (
         ""
@@ -799,6 +821,7 @@ const ApplicantDashboard = () => {
           handleNextPageClick={handleNextPageClick}
           editCourseCertificate={editCourseCertificate}
           deleteCourseCertificate={deleteCourseCertificate}
+          saveNow={saveNow}
         />
       ) : (
         ""
@@ -813,6 +836,8 @@ const ApplicantDashboard = () => {
           achievementData={schoolAchievement}
           isUpdate={isUpdate}
           addNew={addNew}
+          skip={skip}
+          saveNow={saveNow}
         />
       ) : (
         ""
@@ -826,6 +851,7 @@ const ApplicantDashboard = () => {
           handleSchoolAchievementContinueClick={handleNextPageClick}
           editAchievement={editAchievement}
           deleteAchievement={deleteAchievement}
+          saveNow={saveNow}
         />
       ) : (
         ""
@@ -839,6 +865,7 @@ const ApplicantDashboard = () => {
           handleReturnClick={handleReturnClick}
           isUpdate={isUpdate}
           updateQuestions={updateAdditionalQuestion}
+          skip={skip}
         />
       ) : (
         ""
