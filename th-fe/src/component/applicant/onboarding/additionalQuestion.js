@@ -174,24 +174,25 @@ const AdditionalQuestion = (props) => {
             color='primary'
             variant='contained'
             style={{ width: "100%", margin: "20px 0px" }}
-
             endIcon={<ArrowForwardIcon />}
             onClick={() => props.updateQuestions(answer)}>
             Update
           </Button>
         ) : (
-          <Button
-            color='primary'
-            variant='contained'
-            endIcon={<ArrowForwardIcon />}
-            style={{ width: "100%", margin: "20px 0px" }}
-            onClick={() => props.additionalQuestionContinueClick(answer)}>
-            Continue
-          </Button>
+          <div>
+            <Button
+              color='primary'
+              variant='contained'
+              endIcon={<ArrowForwardIcon />}
+              style={{ width: "100%", margin: "20px 0px" }}
+              onClick={() => props.additionalQuestionContinueClick(answer)}>
+              Continue
+            </Button>
+            <div className='skip' onClick={() => props.skip("LAST_QUESTION")}>
+              <h6>Skip</h6>
+            </div>
+          </div>
         )}
-      </div>
-      <div className='skip' onClick={() => props.skip("LAST_QUESTION")}>
-        <h6>Skip</h6>
       </div>
     </div>
   );

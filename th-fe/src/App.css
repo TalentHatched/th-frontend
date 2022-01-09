@@ -6,5 +6,10 @@
 
 .App {
   max-width: 919px;
-  margin:0px 20px;
+  margin: 0px 20px;
+  width: 100%;
+}
+
+.MuiInputBase-input {
+  width:100%;
 }

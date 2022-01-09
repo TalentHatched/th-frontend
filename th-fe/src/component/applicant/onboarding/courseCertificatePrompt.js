@@ -23,7 +23,7 @@ const CourseCertificatePrompt = (props) => {
       </div>
       <img
         id='course-cert-img'
-        alt='course certificate image'
+        alt='course certificate'
         src={courseCertImg}
       />
       <div className='prompt-instruction'>

@@ -96,6 +96,7 @@ const ParentContactScreen = (props) => {
           className='parent-contact-submit'
           variant='contained'
           color='primary'
+          style={{ width: "100%", margin: "20px 0px" }}
           onClick={() => onSubmitGuardianContact()}>
           Enter name and email
         </Button>

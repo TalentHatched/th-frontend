@@ -24,7 +24,6 @@ const ApplicantProfile = (props) => {
     axios
       .get(`api/applicantInfo/${userId}`)
       .then((res) => {
-        console.log("what is res", res);
         setApplicantData(res.data.userData.data); // try {
         if (
           res.data.userData.data.industry &&
@@ -33,11 +32,7 @@ const ApplicantProfile = (props) => {
           setIsTech(true);
         }
       })
-      .catch((error) => {
-        console.log("got here");
-        props.backToOnboard();
-      });
-    console.log("whati s props", props);
+      
   }, [userId]);
 
   const convertDate = (date) => {

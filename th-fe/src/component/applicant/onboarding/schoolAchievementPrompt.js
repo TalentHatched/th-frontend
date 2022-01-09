@@ -24,7 +24,7 @@ const SchooAchievementPrompt = (props) => {
       </div>
       <img
         id='accomplish-img'
-        alt='school accomplishment image'
+        alt='school accomplishment'
         src={accomplishImg}
       />
       <div className='prompt-instruction'>

@@ -28,6 +28,8 @@ const SchoolAchievementList = (props) => {
     props.deleteAchievement(idx);
   };
 
+  
+
   return (
     <div className='achievement-list instruction'>
       <h2>My school achievements</h2>
@@ -72,6 +74,9 @@ const SchoolAchievementList = (props) => {
           }>
           Continue
         </Button>
+        <div className='save-later'>
+              <h6 onClick={() => props.saveNow()}>Save and complete later?</h6>
+            </div>
       </div>
     </div>
   );

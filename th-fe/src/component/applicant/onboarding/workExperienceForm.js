@@ -336,27 +336,36 @@ const WorkExperienceForm = (props) => {
             {props.addNew ? "Add experience" : "Update experience"}
           </Button>
         ) : props.workExperienceIdx === "" ? (
-          <Button
-            variant='contained'
-            color='primary'
-            style={{ width: "100%", margin: "20px 0px" }}
-            onClick={() => addExperienceClick("add")}>
-            Add experience
-          </Button>
+          <div>
+            <Button
+              variant='contained'
+              color='primary'
+              style={{ width: "100%", margin: "20px 0px" }}
+              onClick={() => addExperienceClick("add")}>
+              Add experience
+            </Button>
+            <div
+              className='skip'
+              onClick={() => props.skip("COURSE_CERTIFICATE_PROMPT")}>
+              <h6>Skip</h6>
+            </div>
+          </div>
         ) : (
-          <Button
-            variant='contained'
-            color='primary'
-            style={{ width: "100%", margin: "20px 0px" }}
-            onClick={() => addExperienceClick("edit")}>
-            Update experience
-          </Button>
+          <div>
+            <Button
+              variant='contained'
+              color='primary'
+              style={{ width: "100%", margin: "20px 0px" }}
+              onClick={() => addExperienceClick("edit")}>
+              Update experience
+            </Button>
+            <div
+              className='skip'
+              onClick={() => props.skip("COURSE_CERTIFICATE_PROMPT")}>
+              <h6>Skip</h6>
+            </div>
+          </div>
         )}
-      </div>
-      <div
-        className='skip'
-        onClick={() => props.skip("COURSE_CERTIFICATE_PROMPT")}>
-        <h6>Skip</h6>
       </div>
     </div>
   );

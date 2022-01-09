@@ -200,28 +200,38 @@ const SchoolAchievementForm = (props) => {
               : "Update school accomplishment"}
           </Button>
         ) : props.schoolAchievementIdx === "" ? (
-          <Button
-            variant='contained'
-            color='primary'
-            style={{ width: "100%", margin: "20px 0px" }}
-            onClick={() => addSchoolAchievementClick("add")}>
-            Add school achievement
-          </Button>
+          <div>
+            <Button
+              variant='contained'
+              color='primary'
+              style={{ width: "100%", margin: "20px 0px" }}
+              onClick={() => addSchoolAchievementClick("add")}>
+              Add school achievement
+            </Button>
+            <div
+              className='skip'
+              onClick={() => props.skip("ADDITIONAL_QUESTION")}>
+              <h6>Skip</h6>
+            </div>
+           
+          </div>
         ) : (
-          <Button
-            variant='contained'
-            color='primary'
-            style={{ width: "100%", margin: "20px 0px" }}
-            onClick={() => addSchoolAchievementClick("edit")}>
-            Update school achievement
-          </Button>
+          <div>
+            <Button
+              variant='contained'
+              color='primary'
+              style={{ width: "100%", margin: "20px 0px" }}
+              onClick={() => addSchoolAchievementClick("edit")}>
+              Update school achievement
+            </Button>
+            <div
+              className='skip'
+              onClick={() => props.skip("ADDITIONAL_QUESTION")}>
+              <h6>Skip</h6>
+            </div>
+           å
+          </div>
         )}
-      </div>
-      <div className='skip' onClick={() => props.skip("ADDITIONAL_QUESTION")}>
-        <h6>Skip</h6>
-      </div>
-      <div className='save-later'>
-        <h6 onClick={() => props.saveNow()}>Save and complete later?</h6>
       </div>
     </div>
   );

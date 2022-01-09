@@ -60,7 +60,7 @@ const ApplicantDashboard = () => {
         setFullName(res.data.userData.userFullName);
         setFirstName(res.data.userData.userFirstName);
         setLastName(res.data.userData.userLastName);
-
+        setInstitution(res.data.userData.data.institution);
         if (Object.keys(res.data.userData.data).length === 0) {
           setCurrentPage("WELCOME");
         } else {
@@ -146,8 +146,8 @@ const ApplicantDashboard = () => {
     if (type === "onboard") {
       setCurrentPage("WORK_EXP_PROMPT");
     } else if (type === "update") {
-      console.log('here', data)
-      console.log('what is profileData now', profileData)
+      console.log("here", data);
+      console.log("what is profileData now", profileData);
       let updatedData = profileData;
       updatedData.otherSkill = data;
       setProfileData(updatedData);
@@ -610,9 +610,6 @@ const ApplicantDashboard = () => {
     setCurrentPage(type);
   };
 
-  const backToOnboard = () => {
-    setCurrentPage("WELCOME");
-  };
 
   return (
     <div className='applicant-dashboard'>
@@ -633,7 +630,6 @@ const ApplicantDashboard = () => {
             updateItem={updateItemFromProfile}
             addNewItem={addNewItem}
             updateAdditionalQuestion={updateQuestionsFromProfile}
-            backToOnboard={backToOnboard}
           />
         </div>
       ) : (

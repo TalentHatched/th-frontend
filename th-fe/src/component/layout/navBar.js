@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./navBar.css";
 
-import { Popover, Button, Menu, MenuItem } from "@material-ui/core";
+import { Popover, Button, MenuItem } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 
 const NavBar = (props) => {
@@ -57,6 +57,9 @@ const NavBar = (props) => {
         break;
       case "ApplicantLogin":
         window.location.href = "/#/applicantlogin";
+        break;
+      default:
+        window.location.href = "/#/adminlogin";
         break;
     }
 
