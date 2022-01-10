@@ -223,7 +223,7 @@ const ApplicantRegistrationForm = (props) => {
               label='specialization'
               name='specialization'
               value={specialization}
-              style={{ width: "75%", margin: "20px 15px" }}
+              style={{ width: "75%", margin: "20px 15px", textAlign:"left" }}
               onChange={handleSpecializationChange}>
               {specializations.map((item, index) => {
                 return (
