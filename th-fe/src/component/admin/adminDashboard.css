@@ -42,3 +42,12 @@
 .search-bar {
   padding: 0px;
 }
+
+.new-applicant-header {
+  margin:20px 0px
+}
+
+.new-applicant-reg-form {
+  width:100%;
+  text-align:center;
+}

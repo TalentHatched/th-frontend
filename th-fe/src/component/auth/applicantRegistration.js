@@ -74,6 +74,7 @@ const ApplicantRegistrationForm = (props) => {
         specialization: specialization,
         userFirstName: userFirstName,
         userLastName: userLastName,
+        instutition: props.institution,
         adminId: parseInt(localStorage.getItem("userId")),
         isActive: true,
         userTypeId: 1,
@@ -146,15 +147,16 @@ const ApplicantRegistrationForm = (props) => {
     <div className='applicant-registration-form'>
       <div className='return-button'>
         <Button
+         style={{ margin: "20px 10px"}}
           startIcon={<KeyboardBackspaceIcon />}
-          style={{ width: "100px" }}
-          onClick={() => props.handleReturnClick("registration")}>
+          onClick={() => props.handleReturnClick("registration")}
+         >
           Back to dashboard
         </Button>
       </div>
 
-      <div>
-        <h2>New Applicant Form</h2>
+      <div className='new-applicant-reg-form'>
+        <h2 className='new-applicant-header'>New Applicant Form</h2>
         <form>
           <div>
             <TextField
@@ -163,6 +165,7 @@ const ApplicantRegistrationForm = (props) => {
               label='Applicant First Name'
               title='name'
               value={userFirstName}
+              style={{ width: "75%", margin: "20px 15px" }}
               onChange={handleFirstNameChange}></TextField>
           </div>
           {firstNameWarning ? (
@@ -177,6 +180,7 @@ const ApplicantRegistrationForm = (props) => {
               label='Applicant Last Name'
               title='name'
               value={userLastName}
+              style={{ width: "75%", margin: "20px 15px" }}
               onChange={handleLastNameChange}></TextField>
           </div>
           {lastNameWarning ? (
@@ -191,6 +195,7 @@ const ApplicantRegistrationForm = (props) => {
               type='date'
               title='name'
               value={dateOfBirth}
+              style={{ width: "75%", margin: "20px 15px" }}
               onChange={handleDateOfBirthChange}></TextField>
           </div>
           {dateOfBirthWarning ? (
@@ -205,6 +210,7 @@ const ApplicantRegistrationForm = (props) => {
               label='Grade'
               type='number'
               title='grade'
+              style={{ width: "75%", margin: "20px 15px" }}
               value={grade}
               onChange={handleGradeChange}></TextField>
           </div>
@@ -217,6 +223,7 @@ const ApplicantRegistrationForm = (props) => {
               label='specialization'
               name='specialization'
               value={specialization}
+              style={{ width: "75%", margin: "20px 15px" }}
               onChange={handleSpecializationChange}>
               {specializations.map((item, index) => {
                 return (
@@ -235,6 +242,7 @@ const ApplicantRegistrationForm = (props) => {
               title='username'
               label='userEmail (will be used as username)'
               value={userName}
+              style={{ width: "75%", margin: "20px 15px" }}
               onChange={handleUserNameChange}></TextField>
           </div>
           {userNameWarning ? (
@@ -250,6 +258,7 @@ const ApplicantRegistrationForm = (props) => {
               type='text'
               title='email'
               value={userEmail}
+              style={{ width: "75%", margin: "20px 15px" }}
               onChange={handleUserEmailChange}></TextField>
           </div>
 
@@ -258,19 +267,6 @@ const ApplicantRegistrationForm = (props) => {
           ) : (
             ""
           )}
-          {/* <div>
-            <TextField
-              variant='outlined'
-              label='Password'
-              type='password'
-              value={userPassword}
-              onChange={handleUserPasswordChange}></TextField>
-          </div>
-          {userPasswordWarning ? (
-            <h4 className='warning'>{userPasswordWarning}</h4>
-          ) : (
-            ""
-          )} */}
 
           {userIdWarning ? <h4 className='warning'>{userIdWarning}</h4> : ""}
           {props.applicantRegistrationWarning ? (
@@ -282,6 +278,7 @@ const ApplicantRegistrationForm = (props) => {
             variant='contained'
             color='primary'
             size='large'
+            style={{ width: "75%", margin: "20px 0px" }}
             onClick={handleSubmissionClick}>
             Create Applicant Account
           </Button>
