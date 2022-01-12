@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./login.css";
 
 // import {Button} from "react-bootstrap"
-import { Button, CircularProgress, TextField, Paper } from "@material-ui/core";
+import { Button, CircularProgress, TextField } from "@material-ui/core";
 
 const LoginForm = (props) => {
   const [inProgress, setInProgress] = useState(false);
@@ -30,7 +30,7 @@ const LoginForm = (props) => {
             label='Username'
             placeholder='Username'
             variant='outlined'
-            style={{ marginTop: "20px", maxWidth: "850px" }}
+            style={{ marginTop: "20px", width: "100%", minWidth: "300px" }}
             onChange={props.onUserNameChange}></TextField>
         </div>
         <div>
@@ -42,7 +42,12 @@ const LoginForm = (props) => {
             label='Password'
             variant='outlined'
             onChange={props.onPasswordChange}
-            style={{ marginTop: "20px", maxWidth: "850px", textAlign: "left" }}
+            style={{
+              marginTop: "20px",
+              textAlign: "left",
+              width: "100%",
+              minWidth: "300px",
+            }}
             value={props.password}></TextField>
         </div>
         <div class='forget-password-container'>

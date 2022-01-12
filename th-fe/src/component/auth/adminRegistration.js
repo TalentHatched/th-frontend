@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import RegistrationForm from "./reusable/registration";
 import "./adminRegistration.css";
 import adminRegisterImage from "../../img/admin-register-img.png";
-import { Button } from "@material-ui/core";
 
 const AdminRegistration = ({ history, ...props }) => {
   // This name is company name

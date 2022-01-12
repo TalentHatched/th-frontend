@@ -18,7 +18,6 @@ const ApplicantLogin = ({ history, ...props }) => {
     setPassword(event.target.value);
   };
   const handleSubmit = () => {
-    console.log("Company Login Form Submit Clicked");
     if (!userName || !password) {
       setWarningMessage("Username and Password are required.");
       setHideWarning(false);
@@ -66,19 +65,22 @@ const ApplicantLogin = ({ history, ...props }) => {
   return (
     <div className='applicant-login-form'>
       <div className='login-form'>
-        <h2>Applicant Login</h2>
-        <LoginForm
-          onClick={handleSubmit}
-          userName={userName}
-          password={password}
-          onUserNameChange={handleUserNameChange}
-          onPasswordChange={handlePasswordChange}
-          warning={hideWarning}
-          warningMessage={warningMessage}
-          userType='applicant'
-        />
+        <h2 className='login-header'>Applicant Login</h2>
+        <div className='applicant-login-form'>
+          <LoginForm
+            onClick={handleSubmit}
+            userName={userName}
+            password={password}
+            onUserNameChange={handleUserNameChange}
+            onPasswordChange={handlePasswordChange}
+            warning={hideWarning}
+            warningMessage={warningMessage}
+            userType='applicant'
+          />
+        </div>
         <div className='no-account-message'>
           <p>Don't have an account?</p>
+          <br></br>
           <p>Contact your school or organization for log in information</p>
         </div>
       </div>

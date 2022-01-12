@@ -1,12 +1,31 @@
-* {
+/* {
   width: 100%;
   text-align: center;
-}
+} */
 
 .admin-login-form {
+  width:100%;
   display: flex;
   flex-direction: space-between;
   margin-top: 30px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0px;
+  width: 100%;
+  min-width: 400px;
+}
+
+.MuiFormControl-root .MuiTextField-root {
+  min-width: 300px !important;
+}
+
+.admin-no-account-message {
+  margin: 20px 0px;
+  text-align: left;
 }
 
 .login-header {
@@ -28,22 +47,20 @@ img {
 }
 
 span {
-  font-size:16px;
+  font-size: 16px;
 }
 
 .sign-up-link:hover {
   text-decoration: underline;
-  cursor:pointer;
+  cursor: pointer;
 }
- 
-@media (max-width: 800px) {
-  
 
+@media (max-width: 800px) {
   .login-image-holder {
     display: none;
   }
 
   .MuiOutlinedInput-notchedOutline {
-    max-width:98%;
+    max-width: 98%;
   }
 }

@@ -74,7 +74,7 @@ const ApplicantRegistrationForm = (props) => {
         specialization: specialization,
         userFirstName: userFirstName,
         userLastName: userLastName,
-        instutition: props.institution,
+        institution: props.institution,
         adminId: parseInt(localStorage.getItem("userId")),
         isActive: true,
         userTypeId: 1,

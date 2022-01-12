@@ -101,7 +101,7 @@ const AdminLogin = ({ history, ...props }) => {
               userType='admin'
               resetPasswordClick={resetPasswordClick}
             />
-            <div class='no-account-message'>
+            <div class='admin-no-account-message'>
               <span>Don't have an account? </span>
               <span
                 onClick={() => history.push("/adminregister")}
@@ -117,13 +117,13 @@ const AdminLogin = ({ history, ...props }) => {
           </div>
         </div>
       ) : (
-        " "
+        <div />
       )}
 
       {currentPage === "FORGET_PASSWORD" ? (
         <ForgetPassword returnToLogin={returnToLogin} />
       ) : (
-        ""
+        <div />
       )}
     </div>
   );

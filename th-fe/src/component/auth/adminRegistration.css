@@ -1,5 +1,5 @@
 .admin-registration {
-  display:flex;
+  display: flex;
   align-items: center;
 }
 
@@ -7,21 +7,64 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin:10px 0px;
+  margin: 10px 0px;
 }
 
 .register-image-holder {
-  padding-left:70px;
+  padding-left: 70px;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.have-account-message {
+  margin: 20px 0px;
+  text-align: left;
+}
+
+.applicant-info-view {
+  text-align: center;
+}
+
+.return-button {
+  margin:20px 0px
+}
+
+.info-row {
+  display: flex;
+  justify-content: flex-start;
+  margin: 40px 0px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
+}
+
+.last-item {
+  margin-bottom:40px;
+}
+
+.label-tag {
+  margin-right: 20px;
+}
+
+.profile-status {
+  text-align: left;
+  margin: 20px 0px;
+  padding: 20px 0px;
+  border-top: 4px solid black;
 }
 
 @media (max-width: 800px) {
-  
-
   .register-image-holder {
     display: none;
   }
 
   .MuiOutlinedInput-notchedOutline {
-    max-width:98%;
+    max-width: 98%;
   }
 }

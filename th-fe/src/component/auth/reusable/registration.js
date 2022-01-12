@@ -17,8 +17,7 @@ const RegistrationForm = (props) => {
             type='text'
             variant='outlined'
             label='Name of school or organization'
-            style={{ marginTop: "20px", maxWidth: "850px" }}
-
+            style={{ marginTop: "20px", minWidth: "400px", maxWidth: "850px" }}
             onChange={props.onNameChange}
           />
           {props.nameWarning && (
@@ -32,8 +31,7 @@ const RegistrationForm = (props) => {
             type='text'
             variant='outlined'
             label='Contact Person First Name'
-            style={{ marginTop: "20px", maxWidth: "850px" }}
-
+            style={{ marginTop: "20px", minWidth: "400px", maxWidth: "850px" }}
             onChange={props.onFirstNameChange}
           />
         </div>
@@ -42,8 +40,7 @@ const RegistrationForm = (props) => {
             type='text'
             variant='outlined'
             label='Contact Person Last Name'
-            style={{ marginTop: "20px", maxWidth: "850px" }}
-
+            style={{ marginTop: "20px", minWidth: "400px", maxWidth: "850px" }}
             onChange={props.onLastNameChange}
           />
         </div>
@@ -63,8 +60,7 @@ const RegistrationForm = (props) => {
             type='text'
             variant='outlined'
             label='Email'
-            style={{ marginTop: "20px", maxWidth: "850px" }}
-
+            style={{ marginTop: "20px", minWidth: "400px", maxWidth: "850px" }}
             onChange={props.onEmailChange}
           />
           {/* <label>Email</label>
@@ -81,8 +77,7 @@ const RegistrationForm = (props) => {
             type='password'
             variant='outlined'
             label='Password'
-            style={{ marginTop: "20px", maxWidth: "850px" }}
-
+            style={{ marginTop: "20px", minWidth: "400px", maxWidth: "850px" }}
             onChange={props.onPasswordChange}
           />
           {/* <label>Password</label>
@@ -99,8 +94,7 @@ const RegistrationForm = (props) => {
             type='password'
             variant='outlined'
             label='Confirm Password'
-            style={{ marginTop: "20px", maxWidth: "850px" }}
-
+            style={{ marginTop: "20px", minWidth: "400px", maxWidth: "850px" }}
             onChange={props.onConfirmPasswordChange}
           />
           {/* <label>Confirm Password</label>
@@ -116,8 +110,7 @@ const RegistrationForm = (props) => {
           variant='contained'
           color='primary'
           size='large'
-          style={{ marginTop: "20px", maxWidth: "850px" }}
-
+          style={{ marginTop: "20px", minWidth: "400px", maxWidth: "850px" }}
           onClick={() => props.onClick()}>
           Create Account
         </Button>
