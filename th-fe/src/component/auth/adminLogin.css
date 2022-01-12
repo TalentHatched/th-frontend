@@ -4,7 +4,7 @@
 } */
 
 .admin-login-form {
-  width:100%;
+  width: 100%;
   display: flex;
   flex-direction: space-between;
   margin-top: 30px;
@@ -53,6 +53,35 @@ span {
 .sign-up-link:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.forget-password {
+  text-align: center;
+}
+
+.recovery-prompt {
+  text-align: center;
+  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.after-message {
+  margin: 20px;
+}
+
+.here-button {
+  color: #3F68F8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.email-recovery-field {
+  width: 50%;
+  margin: 30px;
+  height: 25px;
 }
 
 @media (max-width: 800px) {

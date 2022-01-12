@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import axios from "axios";
+import "./resetPassword.css"
 
 const ResetPassword = (props) => {
   const [password, setPassword] = useState("");
@@ -37,14 +38,14 @@ const ResetPassword = (props) => {
   const onResetPasswordClick = () => {
     if (validate()) {
       let data = { id: userId, password: password };
-      console.log('What is the data being sent', data)
+      console.log("What is the data being sent", data);
       axios
         .put("/api/user/updatePassword", data)
         .then((response) => {
-          props.history.push("/adminlogin")
+          props.history.push("/adminlogin");
         })
         .catch((error) => {
-          setWarning("Unable to update password. Please try again later")
+          setWarning("Unable to update password. Please try again later");
         });
     }
   };
@@ -72,7 +73,7 @@ const ResetPassword = (props) => {
   return (
     <div>
       {validToken ? (
-        <div>
+        <div className="reset-password-page">
           <h2>Reset Password</h2>
           <form>
             <h4>Enter your email below</h4>
@@ -88,7 +89,7 @@ const ResetPassword = (props) => {
               name='confirmPassword'
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}></input>
-            {warning ? <h4>{warning}</h4> : ""}
+            {warning ? <h4 className='warning-message'>{warning}</h4> : ""}
             <Button
               onClick={() => {
                 onResetPasswordClick();
