@@ -32,7 +32,6 @@ const ApplicantProfile = (props) => {
           setIsTech(true);
         }
       })
-      
   }, [userId]);
 
   const convertDate = (date) => {
@@ -89,11 +88,11 @@ const ApplicantProfile = (props) => {
 
   return (
     <div className='applicant-profile'>
-      <section className='applicant-inf profile-box'>
+      <section className='applicant-info profile-box'>
         <h2>
           {props.firstName} {props.lastName}
         </h2>
-        <h4>{props.institution}</h4>
+        <h5 className="profile-box-text">{props.institution}</h5>
       </section>
       <section className='tagline profile-box'>
         {applicantData.tagline !== "" ? (
@@ -123,9 +122,9 @@ const ApplicantProfile = (props) => {
         {applicantData.softSkill && applicantData.softSkill.length
           ? applicantData.softSkill.map((tech, index) => {
               return (
-                <div className='soft-skill-item'>
+                <div className='soft-skill-item' key={index}>
                   {index + 1}.
-                  <h4 key={index} className='skill-box-one'>
+                  <h4  className='skill-box-one'>
                     {tech}
                   </h4>
                 </div>

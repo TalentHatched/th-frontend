@@ -41,7 +41,6 @@ const SoftSkillScreen = (props) => {
     softSkill;
 
   const handleChange = (event) => {
-    console.log("event.target", event.target);
     setSoftSkill({ ...softSkill, [event.target.name]: event.target.value });
   };
 

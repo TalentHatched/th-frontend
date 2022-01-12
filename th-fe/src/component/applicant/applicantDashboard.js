@@ -26,7 +26,6 @@ import "./applicantDashboard.css";
 
 const ApplicantDashboard = () => {
   let userId = localStorage.getItem("userId");
-  const [fullName, setFullName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [profileData, setProfileData] = useState({});
@@ -57,10 +56,9 @@ const ApplicantDashboard = () => {
     axios
       .get(`api/applicantInfo/${userId}`)
       .then((res) => {
-        setFullName(res.data.userData.userFullName);
         setFirstName(res.data.userData.userFirstName);
         setLastName(res.data.userData.userLastName);
-        setInstitution(res.data.userData.data.institution);
+        setInstitution(res.data.userData.institution);
         if (Object.keys(res.data.userData.data).length === 0) {
           setCurrentPage("WELCOME");
         } else {
@@ -610,7 +608,6 @@ const ApplicantDashboard = () => {
     setCurrentPage(type);
   };
 
-
   return (
     <div className='applicant-dashboard'>
       {currentPage === "LOADING" ? <div /> : ""}
@@ -621,7 +618,6 @@ const ApplicantDashboard = () => {
             firstName={firstName}
             lastName={lastName}
             institution={institution}
-            fullName={fullName}
             updateAdjectives={updateAdjectives}
             updateSoftSkills={updateSoftSkills}
             updateOtherSkills={updateOtherSkills}

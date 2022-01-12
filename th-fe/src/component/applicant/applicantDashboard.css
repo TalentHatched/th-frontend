@@ -188,10 +188,16 @@
 
 .profile-box {
   padding: 20px 0px;
+  text-align: center;
 }
 
 .profile-box:not(:last-child) {
   border-bottom: 5px solid #c4c4c4;
+}
+
+.profile-box-text {
+  text-align:center;
+  margin:20px 0px
 }
 
 .soft-skill-header {
@@ -222,13 +228,13 @@
 
 .MuiCard-root {
   border: 1px solid #3f67f8 !important;
-  margin:20px 10px;
-  padding:0px 10px;
-  text-align:left;
+  margin: 20px 10px;
+  padding: 0px 10px;
+  text-align: left;
 }
 
 .card-buttons {
-  text-align:right;
+  text-align: right;
 }
 
 @media (min-width: 768px) {

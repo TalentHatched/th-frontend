@@ -231,7 +231,7 @@ const WorkExperienceForm = (props) => {
             label='Employment Type'
             variant='outlined'
             name='employmentType'
-            style={{ margin: "10px 5px" }}
+            style={{ margin: "10px 5px", textAlign:"left" }}
             value={employmentType}
             onChange={handleChange}
             required>
