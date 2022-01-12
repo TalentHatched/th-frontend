@@ -15,6 +15,8 @@ const ViewApplicantProfile = (props) => {
   const [data, setData] = useState({});
   const [profile, setProfile] = useState({});
   const [incompleteProfile, setIncompleteProfile] = useState(false);
+  const [viewPassword, setViewPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(null);
   useEffect(() => {
     //let studentProfile = JSON.parse(props.profileData.data);
     // console.log('What is studentProfile', studentProfile)
@@ -26,6 +28,8 @@ const ViewApplicantProfile = (props) => {
     }
     // console.log("profile?", JSON.parse(studentProfile.data));
     setData(props.profileData);
+    console.log("what is props profile", props.profileData);
+    setShowPassword(false);
   }, [props.profileData]);
 
   const convertDate = (date) => {
@@ -34,111 +38,183 @@ const ViewApplicantProfile = (props) => {
   };
 
   const viewPasswordClick = () => {
-    console.log('This is clicked', data)
-  }
+    setViewPassword(true);
+    //let code = profile.dateOfBirth.split(" ")
+    //console.log('cide', code)
+    console.log("date", profile.dateOfBirth);
+  };
+
+  const onHide = () => {
+    setViewPassword(false);
+  };
 
   return (
     <div>
-      <div>
+      <div className='return-button'>
         <Button
           startIcon={<KeyboardBackspaceIcon />}
           onClick={() => props.handleReturnClick("profile")}>
           Return to dashboard
         </Button>
       </div>
-      <div>
-        <div className='applicantName'>
-          {data.userFirstName && data.userLastName? <h2>{data.userFirstName} {data.userLastName}</h2> : <h2>Fail</h2>}
+      <div className='applicant-info-view'>
+        <div className='applicantName '>
+          {data.userFirstName && data.userLastName ? (
+            <h2>
+              {data.userFirstName} {data.userLastName}
+            </h2>
+          ) : (
+            <h2>Fail</h2>
+          )}
         </div>
         <div className='applicantInfo'>
-          <div>
-            <label>DOB:</label>{" "}
-            {data.dateOfBirth ? <h4>{data.dateOfBirth}</h4> : ""}
+          <div className='info-row'>
+            <div className='info-item'>
+              <label className='label-tag'>DOB:</label>{" "}
+              {data.dateOfBirth ? <h5>{data.dateOfBirth}</h5> : ""}
+            </div>
+            <div className='info-item'>
+              <label className='label-tag'>Specialization:</label>
+              {data.specialization ? <h5>{data.specialization}</h5> : ""}
+            </div>
           </div>
-          <div>
-            <label>Specialization:</label>
-            {data.specialization ? <h4>{data.specialization}</h4> : ""}
+          <div className='info-row'>
+            <div className='info-item'>
+              <label className='label-tag'>Username:</label>
+              {data.userName ? <h5>{data.userName}</h5> : ""}
+            </div>
+            <div className='info-item'>
+              <label className='label-tag'>Grade:</label>
+              {data.grade ? <h5>{data.grade}</h5> : ""}
+            </div>
           </div>
-          <div>
-            <label>Grade:</label>
-            {data.grade ? <h4>{data.grade}</h4> : ""}
-          </div>
-          <div>
-            <label>Username:</label>
-            {data.userName ? <h4>{data.userName}</h4> : ""}
-          </div>
-          <div>
-            <label>Password:</label>
-            <h4 onClick={() => viewPasswordClick()}>Click to view Password</h4>
-          </div>
+          {showPassword ? (
+            <div className='info-item last-item'>
+              <label className='label-tag'>Password:</label>
+              {viewPassword ? (
+                <div className='info-item'>
+                  <h5>View Password here</h5>
+                  <h5 onClick={() => onHide()}>Hide</h5>
+                </div>
+              ) : (
+                <h5 onClick={() => viewPasswordClick()}>
+                  Click to view Password
+                </h5>
+              )}
+            </div>
+          ) : (
+            <div className='last-item' />
+          )}
         </div>
         {incompleteProfile ? (
-          <div>
+          <div className='profile-status'>
             <Typography variant='h6'>Profile: Incomplete</Typography>
           </div>
         ) : (
           <div className='info'>
-            <div className='tagline'>
-              <Card variant='outlined'>
-                <CardContent>
-                  <Typography>Tagline</Typography>
-                  <Typography>
-                    {profile.tagline ? profile.tagline : ""}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </div>
-            <div className='soft-skill'>
-              <Card variant='outlined'>
-                <CardContent>
-                  <Typography>Top 5 soft skills</Typography>
-                  <ol>
-                    {profile.softSkill && profile.softSkill.length
-                      ? profile.softSkill.map((skill) => {
-                          return <li key={skill.id}>{skill}</li>;
-                        })
-                      : ""}
-                  </ol>
-                </CardContent>
-              </Card>
-            </div>
-            {profile.industry && profile.industry.includes("technology") ? (
-              <div className='tech-skill'>
-                <Card variant='outlined'>
+            <div className='row'>
+              <div className='tagline skill-box'>
+                <Card variant='outlined' style={{ height: "150px" }}>
                   <CardContent>
-                    <Typography>Programming Languages</Typography>
-                    <ul>
-                      {profile.programmingLanguage &&
-                      profile.programmingLanguage.length
-                        ? profile.programmingLanguage.map((skill) => {
-                            return <li key={skill.id}>{skill}</li>;
-                          })
-                        : ""}
-                    </ul>
+                    <Typography style={{ fontWeight: "700" }}>
+                      Tagline
+                    </Typography>
+                    <Typography>
+                      {profile.tagline ? profile.tagline : ""}
+                    </Typography>
                   </CardContent>
                 </Card>
               </div>
-            ) : (
-              ""
-            )}
-            {profile.otherSkill && profile.otherSkill.length ? (
-              <div className='tech-skill'>
-                <Card variant='outlined'>
+              <div className='soft-skill skill-box'>
+                <Card variant='outlined' style={{ height: "150px" }}>
                   <CardContent>
-                    <Typography>Other Skills</Typography>
-                    <ul>
-                      {profile.otherSkill && profile.otherSkill.length
-                        ? profile.otherSkill.map((skill) => {
-                            return <li key={skill.id}>{skill}</li>;
+                    <Typography style={{ fontWeight: "700" }}>
+                      Top 5 soft skills
+                    </Typography>
+                    <ol>
+                      {profile.softSkill && profile.softSkill.length
+                        ? profile.softSkill.map((skill, key) => {
+                            return (
+                              <div key={key} className='info-item '>
+                                {key + 1}.
+                                <li className='soft-skill-list' key={skill.id}>
+                                  {skill}
+                                </li>
+                              </div>
+                            );
                           })
                         : ""}
-                    </ul>
+                    </ol>
                   </CardContent>
                 </Card>
               </div>
-            ) : (
-              ""
-            )}
+            </div>
+            <div className='row'>
+              {profile.programmingLanguage &&
+              profile.programmingLanguage.length ? (
+                <div className='tech-skill skill-box'>
+                  <Card variant='outlined' style={{ height: "150px" }}>
+                    <CardContent>
+                      <Typography style={{ fontWeight: "700" }}>
+                        Programming Languages
+                      </Typography>
+                      <ul>
+                        {profile.programmingLanguage &&
+                        profile.programmingLanguage.length
+                          ? profile.programmingLanguage.map((skill) => {
+                              return <li className="skill-list" key={skill.id}>{skill}</li>;
+                            })
+                          : ""}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </div>
+              ) : (
+                ""
+              )}
+              {profile.generalTech && profile.generalTech.length ? (
+                <div className='tech-skill skill-box'>
+                  <Card variant='outlined' style={{ height: "150px" }}>
+                    <CardContent>
+                      <Typography style={{ fontWeight: "700" }}>
+                        Additional Technical Skills
+                      </Typography>
+                      <ul>
+                        {profile.generalTech &&
+                        profile.programmingLanguage.length
+                          ? profile.generalTech.map((skill) => {
+                              return <li className="skill-list" key={skill.id}>{skill}</li>;
+                            })
+                          : ""}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </div>
+              ) : (
+                ""
+              )}
+
+              {profile.otherSkill && profile.otherSkill.length ? (
+                <div className='tech-skill skill-box'>
+                  <Card variant='outlined' style={{ height: "150px" }}>
+                    <CardContent>
+                      <Typography style={{ fontWeight: "700" }}>
+                        Other Skills
+                      </Typography>
+                      <ul>
+                        {profile.otherSkill && profile.otherSkill.length
+                          ? profile.otherSkill.map((skill) => {
+                              return <li className="skill-list" key={skill.id}>{skill}</li>;
+                            })
+                          : ""}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
             <Accordion className='work-experience'>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -153,6 +229,7 @@ const ViewApplicantProfile = (props) => {
                       return (
                         <Card
                           variant='outlined'
+                          style={{ width: "100%", display: "inline-block" }}
                           className='work-experience-card'
                           key={index}>
                           <CardContent>
@@ -258,7 +335,7 @@ const ViewApplicantProfile = (props) => {
                 )}
               </AccordionDetails>
             </Accordion>
-            <Accordion className='extra-question'>
+            <Accordion className='extra-question-box'>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls='panel1a-content'
@@ -271,7 +348,6 @@ const ViewApplicantProfile = (props) => {
                   <div>
                     {Object.entries(profile.additionalQuestion).map(
                       (data, index) => {
-                        console.log("What is data", data);
                         return (
                           <Card
                             variant='outlined'

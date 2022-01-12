@@ -94,7 +94,7 @@ const AdminDashboard = () => {
           )}
           {adminFirstName ? (
             <div className='admin-detail'>
-              <h5 className='admin-data'>{adminFirstName}</h5>
+              <h5 className='admin-data'>Hello, {adminFirstName}!</h5>
             </div>
           ) : (
             ""

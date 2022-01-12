@@ -36,7 +36,6 @@
   margin: 30px 0px 15px 0px;
   justify-content: space-between;
   align-items: center;
-  
 }
 
 .search-bar {
@@ -44,10 +43,33 @@
 }
 
 .new-applicant-header {
-  margin:20px 0px
+  margin: 20px 0px;
 }
 
 .new-applicant-reg-form {
-  width:100%;
-  text-align:center;
+  width: 100%;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.skill-box {
+  width: 100%;
+}
+
+.box-title {
+  font-weight: 700;
+}
+
+.soft-skill-list {
+  margin-left: 10px;
+  line-height: 1.2;
+}
+
+.skill-list {
+  line-height:1.2
 }
