@@ -32,6 +32,7 @@ const AdminDashboard = () => {
       .then((res) => {
         setApplicantData(res.data.info);
         setViewApplicantList(true);
+        setNeedUpdate(false)
       })
       .catch((err) => {
         console.log("What is error for fetching student", err.response);
@@ -58,10 +59,10 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleAddStudentSubmission = (info) => {
+  const handleAddStudentSubmission = async (info) => {
     setApplicantRegistrationWarning("");
     console.log("What is info", info);
-    axios
+    await axios
       .post("api/user/studentRegister", info)
       .then((res) => {
         // setShowAddApplicantButton(true);
