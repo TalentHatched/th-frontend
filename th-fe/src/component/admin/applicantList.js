@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchFilter from "./searchFilter";
 import FilterListIcon from "@material-ui/icons/FilterList";
-import "./applicantList.css";
 import colors from "../../keyColor";
 
 import {
@@ -18,23 +17,6 @@ import {
 } from "@material-ui/core";
 
 const ApplicantList = (props) => {
-  // const [applicantData, setApplicantData] = useState([
-  //   {
-  //     // adminId: [],
-  //     // applicantId: [],
-  //     // dateOfBirth: [],
-  //     // gender: [],
-  //     // grade: [],
-  //     // isActive: [],
-  //     // registrationDate: [],
-  //     // specialization: [],
-  //     // userEmail: [],
-  //     // userFullName: [],
-  //     // userName: [],
-  //     // userTypeId: [],
-  //   },
-  // ]);
-
   const [searchText, setSearchText] = useState("");
   const [originalData, setOriginalData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
@@ -52,7 +34,7 @@ const ApplicantList = (props) => {
     completeProfile: false,
     incompleteProfile: false,
   });
-  
+  const [showReset, setShowReset] = useState(false);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -78,15 +60,21 @@ const ApplicantList = (props) => {
       console.log("This is called");
       if (e.target.value.length > 2) {
         let updatedDataSet = originalData.filter((data) => {
-          if (data.userFullName.toLowerCase().includes(e.target.value.toLowerCase())) {
+          if (
+            data.userLastName
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase())
+          ) {
             return data;
           } else {
             return "";
           }
         });
         setDisplayData(updatedDataSet);
+        setShowReset(true)
       } else {
         setDisplayData(originalData);
+        setShowReset(false)
       }
     }, 1000);
   };
@@ -163,29 +151,19 @@ const ApplicantList = (props) => {
         console.log("target", target);
       }
       setDisplayData(currentList);
+      setShowReset(true);
     } else {
       setDisplayData(originalData);
+      setShowReset(false);
     }
     setShowFilter(false);
     console.log("What is final list", currentList);
-
-    // if (Object.entries(target).length) {
-    //   console.log(target);
-    //   let updatedDataSet = originalData.filter((data) => {
-    //     if (data.grade in target && data.specialization in target) {
-    //       if ("incompleteProfile" in target) {
-    //         console.log("What is data here?", data);
-    //       }
-    //     }
-    //   });
-    // } else {
-    //   console.log("No change");
-    // }
   };
 
   const onResetClick = () => {
     setDisplayData(originalData);
     setShowFilter(false);
+    setShowReset(false)
   };
 
   const handleClose = () => {
@@ -200,7 +178,7 @@ const ApplicantList = (props) => {
             className='search-bar-input'
             type='text'
             value={searchText}
-            placeholder='Search (Name)'
+            placeholder=' Search (Name)'
             onChange={onSearchBarChange}></input>
         </div>
         <div className='filter'>
@@ -211,14 +189,18 @@ const ApplicantList = (props) => {
             endIcon={<FilterListIcon />}>
             <h5>Filter</h5>
           </Button>
-          <Button
-            className='reset-filter'
-            onClick={() => {
-              onResetClick();
-            }}
-            style={{ color: colors.primary }}>
-            <h5>Reset Filter</h5>
-          </Button>
+          {showReset ? (
+            <Button
+              className='reset-filter'
+              onClick={() => {
+                onResetClick();
+              }}
+              style={{ color: colors.primary }}>
+              <h5>Reset Filter</h5>
+            </Button>
+          ) : (
+            ""
+          )}
 
           <Modal open={showFilter} onClose={handleClose}>
             <Box
