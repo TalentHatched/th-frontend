@@ -1,15 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducer from "./store/index";
+import axios from "axios";
 
-
+const store = createStore(reducer);
+//axios.defaults.baseURL = "https://testing-th.herokuapp.com/"
+axios.defaults.baseURL = "https://dev-th.herokuapp.com/";//
+// axios.defaults.baseURL = "https://testing-th.herokuapp.com/";
+//axios.defaults.baseURL = "http://localhost:8081/";
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

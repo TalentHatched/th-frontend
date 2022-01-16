@@ -1,0 +1,11 @@
+.company-table {
+  margin: 20px;
+}
+
+.hide-table {
+  display: none;
+}
+
+Button { 
+  margin-right:5px !important;
+}

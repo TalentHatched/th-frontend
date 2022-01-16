@@ -1,0 +1,26 @@
+.login-form {
+  text-align: left;
+}
+
+input {
+  text-align: left !important;
+}
+
+.forget-password-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.MuiButton-label {
+  background-color: transparent;
+  white-space: no-wrap;
+  width: 100%;
+}
+
+@media (max-width: 500px) {
+  .forget-password-container {
+    margin: 10px 0px;
+    width: 100%;
+    float: left;
+  }
+}

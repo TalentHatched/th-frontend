@@ -1,0 +1,32 @@
+.search-tools {
+  display: flex;
+  width: 100%;
+  margin: 0px;
+  justify-content: space-between;
+}
+
+.search-bar {
+  padding: 0px;
+}
+
+
+h5 {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+/* .MuiButton-label {
+  font-size: 14px;
+  font-weight: 300 !important;
+  text-align: left;
+  min-width: 100px;
+} */
+
+.filter {
+  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+}
+.view-profile {
+  text-decoration: underline;
+}
