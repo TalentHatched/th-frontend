@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import axiosWithAuth from "../../util/axiosWithAuth";
 import "./user.css";
 import SearchFilter from "./searchFilter";
+import ApplicantProfile from "./viewApplicantProfile";
+import AdminProfile from "./viewAdminProfile";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+
 import { Button } from "@material-ui/core";
-import colors from "../../keyColor";
 
 import {
   Table,
@@ -19,7 +22,10 @@ const User = () => {
   const [originalData, setOriginalData] = useState([]);
   const [currentUserList, setCurrentUserList] = useState([]);
   const [searchText, setSearchText] = useState("");
-
+  const [currentView, setCurrentView] = useState("");
+  const [targetApplicantId, setTargetApplicantId] = useState("");
+  const [targetAdminId, setTargetAdminId] = useState("");
+  const [adminInfo, setAdminInfo] = useState([]);
   useEffect(() => {
     axiosWithAuth()
       .get("api/user")
@@ -31,6 +37,7 @@ const User = () => {
       .catch((err) => {
         console.log("what is the err", err.response);
       });
+    setCurrentView("ALL_USER");
   }, []);
 
   const onSearchFilterSelection = (criteria) => {
@@ -92,51 +99,108 @@ const User = () => {
     });
   };
 
+  const onViewAccountClick = (user) => {
+    if (user.userTypeId === 1) {
+      console.log("Applicant");
+      setTargetApplicantId(user.id);
+      setCurrentView("APPLICANT");
+    } else if (user.userTypeId === 3) {
+      setCurrentView("ADMIN");
+      setTargetAdminId(user.id);
+      setAdminInfo(user);
+      console.log("Admin");
+    }
+  };
+
+  const handleReturnClick = () => {
+    setCurrentView("ALL_USER");
+  };
+
   return (
     <div className='user-table'>
-      <div className='search-helper-tool'>
-        <input
-          className='search-bar-input-field'
-          type='text'
-          value={searchText}
-          placeholder='Search by name'
-          onChange={onSearchBarChange}
-        />
-        <SearchFilter onSearchUpdateClick={onSearchFilterSelection} />
-      </div>
-      <TableContainer>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell>First Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>UserName (Email)</TableCell>
-              <TableCell>Registration Date</TableCell>
-              <TableCell>User Type</TableCell>
-              <TableCell>Account Detail</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {currentUserList.map((user) => (
-              <TableRow key={user.userName}>
-                <TableCell component='th' scope='row'>
-                  {user.userFirstName ? user.userFirstName : "N/A"}
-                </TableCell>
-                <TableCell align='left'>
-                  {user.userLastName ? user.userLastName : "N/A"}
-                </TableCell>
+      {currentView === "ALL_USER" ? (
+        <div>
+          <div className='search-helper-tool'>
+            <input
+              className='search-bar-input-field'
+              type='text'
+              value={searchText}
+              placeholder='Search by name'
+              onChange={onSearchBarChange}
+            />
+            <SearchFilter onSearchUpdateClick={onSearchFilterSelection} />
+          </div>
+          <TableContainer>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell>First Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  <TableCell>UserName (Email)</TableCell>
+                  <TableCell>Registration Date</TableCell>
+                  <TableCell>User Type</TableCell>
+                  <TableCell>Account Detail</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {currentUserList.map((user) => (
+                  <TableRow key={user.userName}>
+                    <TableCell component='th' scope='row'>
+                      {user.userFirstName ? user.userFirstName : "N/A"}
+                    </TableCell>
+                    <TableCell align='left'>
+                      {user.userLastName ? user.userLastName : "N/A"}
+                    </TableCell>
 
-                <TableCell align='left'>{user.userEmail}</TableCell>
-                <TableCell align='left'>
-                  {convertDate(user.registrationDate)}
-                </TableCell>
-                <TableCell align='left'>{user.userTypeId}</TableCell>
-                <TableCell align='left'>View Account</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                    <TableCell align='left'>{user.userEmail}</TableCell>
+                    <TableCell align='left'>
+                      {convertDate(user.registrationDate)}
+                    </TableCell>
+                    <TableCell align='left'>{user.userTypeId}</TableCell>
+
+                    {user.userTypeId === 1 || user.userTypeId === 3 ? (
+                      <TableCell
+                        align='left'
+                        style={{cursor:"pointer"}}
+                        onClick={() => onViewAccountClick(user)}>
+                        View Account
+                      </TableCell>
+                    ) : (
+                      <TableCell
+                        align='left'
+                        onClick={() => onViewAccountClick(user)}>
+                        N/A
+                      </TableCell>
+                    )}
+                    
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      ) : (
+        <div />
+      )}
+
+      {currentView === "APPLICANT" ? (
+        <ApplicantProfile
+          userId={targetApplicantId}
+          handleReturnClick={handleReturnClick}
+        />
+      ) : (
+        <div />
+      )}
+
+      {currentView === "ADMIN" ? (
+        <AdminProfile
+          adminInfo={adminInfo}
+          userId={targetAdminId}
+          handleReturnClick={handleReturnClick}
+        />
+      ) : (
+        <div />
+      )}
     </div>
   );
 };
