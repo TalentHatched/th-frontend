@@ -94,18 +94,16 @@ const User = () => {
 
   return (
     <div className='user-table'>
-      <h2>User Info</h2>
-      <h3>Current User Count: {users.length}</h3>
-      <div>
+      <div className='search-helper-tool'>
         <input
-          className='search-bar-input'
+          className='search-bar-input-field'
           type='text'
           value={searchText}
           placeholder='Search by name'
           onChange={onSearchBarChange}
         />
+        <SearchFilter onSearchUpdateClick={onSearchFilterSelection} />
       </div>
-      <SearchFilter onSearchUpdateClick={onSearchFilterSelection} />
       <TableContainer>
         <Table stickyHeader>
           <TableHead>

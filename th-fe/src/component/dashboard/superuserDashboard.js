@@ -9,7 +9,7 @@ import Company from "../superuser/company";
 import Skill from "../superuser/skill";
 import Job from "../superuser/job";
 import ParentContact from "../superuser/parentContact";
-
+import "./superuserDashboard.css"
 
 const SuperUserDashboard = () => {
   const [value, setValue] = useState(0);
@@ -18,7 +18,7 @@ const SuperUserDashboard = () => {
     setValue(newValue);
   };
   return (
-    <div className='company-dashboard'>
+    <div className='superuser-dashboard'>
       <Tabs
         aria-label='simple tab example'
         value={value}

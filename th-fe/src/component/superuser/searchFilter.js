@@ -32,7 +32,7 @@ const SearchFilter = (props) => {
   };
 
   return (
-    <div className='search-filter'>
+    <div className='su-search-filter'>
       <div className='profile-complete-labels'>
         <FormControlLabel
           control={
@@ -54,12 +54,9 @@ const SearchFilter = (props) => {
         />
       </div>
       <Button
-        className='update-button'
         color='primary'
-        variant='contained'
         endIcon={<ArrowForwardIcon />}
-        onClick={() => props.onSearchUpdateClick(criteria)}
-        style={{ fontSize: "16px", width: "80%", margin: "10px" }}>
+        onClick={() => props.onSearchUpdateClick(criteria)}>
         <h5>Update</h5>
       </Button>
     </div>
