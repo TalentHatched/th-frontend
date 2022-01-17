@@ -1,6 +1,9 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import './adminOrg.css';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import "./adminOrg.css";
+
+import OrgDetail from "./orgDetail";
+import ApplicantList from "./applicantList";
 
 import {
   Table,
@@ -10,159 +13,119 @@ import {
   TableHead,
   TableRow,
   Button,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import MergeTypeIcon from '@material-ui/icons/MergeType';
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import MergeTypeIcon from "@material-ui/icons/MergeType";
 
 const AdminOrg = () => {
   const [adminOrgs, setAdminOrgs] = useState([]);
-  const [newAdminOrgs, setNewAdminOrgs] = useState([]);
+  const [currentView, setCurrentView] = useState("");
+  const [targetId, setTargetId] = useState("");
+  const [orgDetail, setOrgDetail] = useState([]);
+  const [targetAdminId, setTargetAdminId] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   useEffect(() => {
     axios
-      .get('api/adminOrg')
+      .get("api/adminOrg")
       .then((res) => {
         setAdminOrgs(res.data.data);
-        setNewAdminOrgs(getNewAdminOrgs(res.data.data));
       })
 
       .catch((err) => {
-        console.log('what is the err fetching AdminOrgs', err.response);
+        console.log("what is the err fetching AdminOrgs", err.response);
       });
+
+    setCurrentView("ORG_LIST");
   }, []);
 
-  function getNewAdminOrgs(data) {
-    return data.filter((data) => !data.reviewed);
-  }
+  const viewOrgDetail = (org) => {
+    console.log("what is the id", org);
+    setOrgDetail(org);
+    setTargetId(org.id);
+    setFirstName(org);
 
-  function handleApproveClick(adminOrg) {
-    let targetId = adminOrg.id;
-    let data = { reviewed: true };
-    axios
-      .put(`api/adminOrg/${targetId}`, data)
-      .then((res) => {
-        console.log('success', res.data);
-        let updatedNewAdminOrg = adminOrgs.filter(
-          (adminOrg) => adminOrg.id !== targetId && !adminOrg.reviewed
-        );
-        console.log('What is updatedNewadminOrg', updatedNewAdminOrg);
-        setNewAdminOrgs(updatedNewAdminOrg);
-      })
-      .catch((error) => {
-        console.log('error changing status');
-      });
-  }
+    setCurrentView("ORG_DETAIL");
+  };
+
+  const handleReturnClick = (type) => {
+    if (type === "inOrg") {
+      setCurrentView("ORG_DETAIL");
+    } else {
+      setCurrentView("ORG_LIST");
+    }
+  };
+
+  const viewApplicantClick = (info) => {
+    setTargetAdminId(info.id);
+    setFirstName(info.userFirstName);
+    setLastName(info.userLastName);
+    setCurrentView("APPLICANT_LIST");
+  };
 
   return (
-    <div className='company-table'>
-      <h2>Admin Organization</h2>
-      <h3>Current Admin Organization Count: {adminOrgs.length}</h3>
-
-      <div
-        className={newAdminOrgs.length ? 'new-company table display-table' : 'new-company-table hide-table'}>
-        <h4>New AdminOrgs</h4>
-
-        <TableContainer>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell>Company Name</TableCell>
-                <TableCell>City</TableCell>
-                <TableCell>State</TableCell>
-                <TableCell>Zipcode</TableCell>
-                <TableCell>ID</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {newAdminOrgs.map((adminOrg) => (
-                <TableRow key={adminOrg.id}>
-                  <TableCell component='th' scope='row'>
-                    {adminOrg.orgName}
-                  </TableCell>
-                  <TableCell align="left">{adminOrg.city}</TableCell>
-                  <TableCell align="left">{adminOrg.state}</TableCell>
-                  <TableCell align="left">{adminOrg.zipcode}</TableCell>
-                  <TableCell align="left">{adminOrg.id}</TableCell>
-                  <TableCell align="left">
-                    <Button
-                      variant='outlined'
-                      color='primary'
-                      startIcon={<ThumbUpIcon />}
-                      onClick={() => handleApproveClick(adminOrg)}>
-                      Approve
-                    </Button>
-                    <Button
-                      variant='outlined'
-                      color='secondary'
-                      startIcon={<MergeTypeIcon />}>
-                      Merge
-                    </Button>
-                  </TableCell>
+    <div className='su-admin-tab'>
+      {currentView === "ORG_LIST" ? (
+        <div className='all-adminOrg-table'>
+          <TableContainer>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Organization Name</TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell>More Info</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+              </TableHead>
+              <TableBody>
+                {adminOrgs.map((adminOrg) => (
+                  <TableRow key={adminOrg.id}>
+                    <TableCell component='th' scope='row'>
+                      {adminOrg.orgName}
+                    </TableCell>
+                    <TableCell align='left'>{adminOrg.id}</TableCell>
 
-      <div className='all-adminOrg-table'>
-        <h4>All AdminOrgs</h4>
-        <TableContainer>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell>Organization Name</TableCell>
-                <TableCell>City</TableCell>
-                <TableCell>State</TableCell>
-                <TableCell>Zipcode</TableCell>
-                <TableCell>Industry</TableCell>
-                <TableCell>Website</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>ID</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {adminOrgs.map((adminOrg) => (
-                <TableRow key={adminOrg.id}>
-                  <TableCell component='th' scope='row'>
-                    {adminOrg.orgName}
-                  </TableCell>
-                  <TableCell align="left">{adminOrg.city}</TableCell>
-                  <TableCell align="left">{adminOrg.state}</TableCell>
-                  <TableCell align="left">{adminOrg.zipcode}</TableCell>
-                  <TableCell align='left>'>TBA</TableCell>
-                  <TableCell align="left">TBA</TableCell>
-                  <TableCell align="left">See Description</TableCell>
-
-                  <TableCell align="left">{adminOrg.id}</TableCell>
-                  <TableCell align="left">
-                    <Button
-                      variant='outlined'
-                      color='primary'
-                      startIcon={<EditIcon />}
-                      >
-                      Edit
-                    </Button>
-
-                    <Button
-                      variant='outlined'
-                      color='secondary'
-                      startIcon={<DeleteIcon />}
-                      >
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+                    <TableCell
+                      align='left'
+                      style={{ cursor: "pointer" }}
+                      onClick={() => viewOrgDetail(adminOrg)}>
+                      See Details
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      ) : (
+        <div />
+      )}
+      {currentView === "ORG_DETAIL" ? (
+        <OrgDetail
+          orgId={targetId}
+          handleReturnClick={handleReturnClick}
+          orgData={orgDetail}
+          viewApplicantClick={viewApplicantClick}
+        />
+      ) : (
+        <div />
+      )}
+      {currentView === "APPLICANT_LIST" ? (
+        <div>
+          <ApplicantList
+            adminId={targetAdminId}
+            adminFirstName={firstName}
+            adminLastName={lastName}
+            handleReturnClick={handleReturnClick}
+          />
+        </div>
+      ) : (
+        <div />
+      )}
     </div>
   );
 };
