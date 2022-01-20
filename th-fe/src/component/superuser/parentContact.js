@@ -9,6 +9,8 @@ import {
   TableHead,
   TableRow,
   Button,
+  Select,
+  MenuItem,
   Modal,
 } from "@material-ui/core";
 
@@ -21,24 +23,28 @@ import ManageFieldForm from "./reusable/manageFieldForm";
 //import { Delete as DeleteIcon } from '@material-ui-icons';
 
 const ParentContact = () => {
-  const [industries, setIndustries] = useState([]);
+  const [contactInfo, setContactInfo] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [changingIndustry, setChangingIndustry] = useState("");
   const [changingIndustryId, setChangingIndustryId] = useState();
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [targetIndex, setTargetIndex] = useState("");
+  const [currentStatus, setCurrentStatus] = useState("");
 
   useEffect(() => {
     axios
-      .get("api/industry")
+      .get("api/guardian/")
       .then((res) => {
-        setIndustries(res.data.data);
+        console.log("what is res", res);
+        setContactInfo(res.data.data);
       })
 
       .catch((err) => {
         console.log("what is the err, ", err.response);
       });
-  }, [industries]);
+  }, []);
 
   function handleAddModalOpen() {
     setOpenAdd(true);
@@ -112,61 +118,150 @@ const ParentContact = () => {
     }
   }
 
-  function handleDeleteModalSubmit() {
-    if (changingIndustryId) {
-      axios
-        .delete(`api/industry/${changingIndustryId}`)
-        .then((res) => {
-          if (res.data) {
-            setOpenDelete(false);
-            setChangingIndustry("");
-            setChangingIndustryId();
-          }
-        })
-        .catch((error) => {
-          console.log("Error deleting industry");
-        });
-    }
+  // function handleDeleteModalSubmit() {
+  //   if (changingIndustryId) {
+  //     axios
+  //       .delete(`api/guardian/`)
+  //       .then((res) => {
+  //         if (res.data) {
+  //           setOpenDelete(false);
+  //           setChangingIndustry("");
+  //           setChangingIndustryId();
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log("Error deleting industry");
+  //       });
+  //   }
+  // }
+
+  const handleUpdateClick = (id) => {
+    console.log("what is update", id);
+    setIsUpdating(true);
+    setTargetIndex(id);
+  };
+
+  const handleStatusChange = (event) => {
+    setCurrentStatus(event.target.value);
+  };
+
+  const updateContactStatus = () => {
+    // update status here
+    console.log('what is currentStatus', currentStatus)
+    console.log('what is applicant id', targetIndex)
   }
 
   return (
     <div className='industry-table'>
       <h2>Parent Contact</h2>
-      <h3>Current Industry Count: {industries.length}</h3>
-      <Button
-        variant='outlined'
-        color='primary'
-        startIcon={<AddIcon />}
-        onClick={() => {
-          handleAddModalOpen();
-        }}>
-        Add Industry
-      </Button>
 
       <TableContainer>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>Industry</TableCell>
-              <TableCell>Industry ID</TableCell>
+              <TableCell>Applicant Name</TableCell>
+              <TableCell>Guardian Name</TableCell>
+              <TableCell>Guardian Contact</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {industries.map((industry) => (
-              <TableRow key={industry.industryName}>
+            {contactInfo.map((info) => (
+              <TableRow key={info.id}>
                 <TableCell component='th' scope='row'>
-                  {industry.industryName}
+                  {info.userFirstName} {info.userLastName}
                 </TableCell>
                 <TableCell align='left' scope='row'>
-                  {industry.id}
+                  {info.guardianName}
+                </TableCell>{" "}
+                <TableCell align='left' scope='row'>
+                  {info.guardianEmail}
                 </TableCell>
-                <TableCell align='left'>
+                <TableCell align='left' scope='row'>
+                  {info.status}
+                </TableCell>
+                <TableCell>
+                  {!isUpdating || targetIndex !== info.applicantId ? (
+                    <Button
+                      variant='outlined'
+                      color='primary'
+                      onClick={() => handleUpdateClick(info.applicantId)}>
+                      Update Status
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+
+                  {isUpdating &&
+                  targetIndex === info.applicantId &&
+                  info.status === "CONSENT_SENT" ? (
+                    <Select
+                      name='currentStatus'
+                      value={currentStatus === "" ? info.status : currentStatus}
+                      onChange={handleStatusChange}>
+                      <MenuItem value={info.status} default>
+                        {info.status}
+                      </MenuItem>
+                      <MenuItem value='CONSENT_RECEIVED'>
+                        CONSENT_RECEIVED
+                      </MenuItem>
+                    </Select>
+                  ) : (
+                    ""
+                  )}
+
+                  {isUpdating &&
+                  targetIndex === info.applicantId &&
+                  info.status === "CONSENT_FORM_NOT_SENT" ? (
+                    <Select
+                      name='currentStatus'
+                      value={currentStatus === "" ? info.status : currentStatus}
+                      onChange={handleStatusChange}>
+                      <MenuItem value={info.status} default>
+                        {info.status}
+                      </MenuItem>
+                      <MenuItem value='CONSENT_SENT'>CONSENT_SENT</MenuItem>
+                      <MenuItem value='CONSENT_RECEIVED'>
+                        CONSENT_RECEIVED
+                      </MenuItem>
+                    </Select>
+                  ) : (
+                    ""
+                  )}
+
+                  {isUpdating &&
+                  targetIndex === info.applicantId &&
+                  info.status === "CONSENT_RECEIVED" ? (
+                    <Select
+                      name='currentStatus'
+                      value={currentStatus === "" ? info.status : currentStatus}
+                      onChange={handleStatusChange}>
+                      <MenuItem value={info.status} default>
+                        {info.status}
+                      </MenuItem>
+                      <MenuItem value='CONSENT_SENT'>CONSENT_SENT</MenuItem>
+                      <MenuItem value='CONSENT_NOT_SENT'>
+                        CONSENT_NOT_SENT
+                      </MenuItem>
+                    </Select>
+                  ) : (
+                    ""
+                  )}
+
+                  {isUpdating && targetIndex === info.applicantId ? (
+                    <Button onClick={() => updateContactStatus()}>Save</Button>
+                  ) : (
+                    ""
+                  )}
+                </TableCell>
+                {/* <TableCell align='left'>
+
                   <Button
                     variant='outlined'
                     color='primary'
                     startIcon={<EditIcon />}
-                    onClick={() => handleEditModalOpen(industry)}>
+                    onClick={() => handleEditModalOpen(info)}>
                     Edit
                   </Button>
 
@@ -175,18 +270,18 @@ const ParentContact = () => {
                     color='secondary'
                     startIcon={<DeleteIcon />}
                     onClick={() => {
-                      handleDeleteModalOpen(industry);
+                      handleDeleteModalOpen(info);
                     }}>
                     Delete
                   </Button>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
 
-      <Modal open={openAdd} onClose={handleAddModalClose}>
+      {/* <Modal open={openAdd} onClose={handleAddModalClose}>
         <ManageFieldForm
           type='Add'
           placeholder='New Industry'
@@ -223,7 +318,7 @@ const ParentContact = () => {
           onItemChange={handleIndustryChange}
           onClick={handleDeleteModalSubmit}
         />
-      </Modal>
+      </Modal> */}
     </div>
   );
 };
