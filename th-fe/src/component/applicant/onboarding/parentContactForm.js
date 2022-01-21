@@ -27,7 +27,7 @@ const ParentContactScreen = (props) => {
       applicantId: localStorage.getItem("userId"),
       guardianName: guardianName,
       guardianEmail: guardianContact,
-      status: "CONSENT_FORM_NOT_SENT",
+      status: "CONSENT_NOT_SENT",
       consentReceived: false,
     };
 
