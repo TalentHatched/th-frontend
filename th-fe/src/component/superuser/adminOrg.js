@@ -45,7 +45,6 @@ const AdminOrg = () => {
   }, []);
 
   const viewOrgDetail = (org) => {
-    console.log("what is the id", org);
     setOrgDetail(org);
     setTargetId(org.id);
     setFirstName(org);

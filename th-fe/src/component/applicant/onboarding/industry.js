@@ -19,9 +19,6 @@ const IndustryScreen = (props) => {
   const [warning, setWarning] = useState("");
 
   useEffect(() => {
-    // if (props.industryData.length) {
-    console.log("industryData", props.industryData);
-
     if (Object.values(props.industryData).length) {
       setIndustryState(props.industryData);
     }
@@ -34,7 +31,6 @@ const IndustryScreen = (props) => {
       ...industryState,
       [event.target.name]: event.target.checked,
     });
-    console.log("What is industryState", industryState);
   };
 
   const handleChooseIndustryClick = () => {
@@ -42,20 +38,13 @@ const IndustryScreen = (props) => {
     if (!technology && !business && !medical && !retail && !other) {
       setWarning("Please select at least one industry");
     } else {
-      // let applicantIndustry = [];
-      // for (const industry in industryState) {
-      //   if (industryState[industry]) {
-      //     applicantIndustry.push(industry);
-      //   }
-      // }
-      // console.log("what is industry state on click", industryState);
       props.handleIndustryClick(industryState);
     }
   };
 
   const saveNow = async () => {
-    await props.handleIndustryClick(industryState)
-    
+    await props.handleIndustryClick(industryState);
+
     if (warning === "") {
       props.saveNow();
     }
@@ -141,7 +130,7 @@ const IndustryScreen = (props) => {
           Choose Industry
         </Button>
       </div>
-      <div className="save-later">
+      <div className='save-later'>
         <h6 onClick={() => saveNow()}>Save and complete later?</h6>
       </div>
     </div>

@@ -41,7 +41,6 @@ const User = () => {
   }, []);
 
   const onSearchFilterSelection = (criteria) => {
-    console.log("what is criteria", criteria.applicant);
     if (
       (criteria.applicant && criteria.admin) ||
       (!criteria.applicant && !criteria.admin)
@@ -80,7 +79,6 @@ const User = () => {
       if (e.target.value.length > 2) {
         let targetText = e.target.value.toLowerCase();
         let updatedDataSet = originalData.filter((user) => {
-          console.log(user);
           if (
             (user.userFirstName &&
               user.userFirstName.toLowerCase().includes(targetText)) ||
@@ -101,14 +99,12 @@ const User = () => {
 
   const onViewAccountClick = (user) => {
     if (user.userTypeId === 1) {
-      console.log("Applicant");
       setTargetApplicantId(user.id);
       setCurrentView("APPLICANT");
     } else if (user.userTypeId === 3) {
       setCurrentView("ADMIN");
       setTargetAdminId(user.id);
       setAdminInfo(user);
-      console.log("Admin");
     }
   };
 

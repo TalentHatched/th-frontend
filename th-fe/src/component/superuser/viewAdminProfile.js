@@ -31,7 +31,6 @@ const ViewAdminProfile = (props) => {
   const [needUpdate, setNeedUpdate] = useState(false);
 
   useEffect(() => {
-    console.log("what is props", props);
     axios
       .get(`api/applicantAdmin/admin/${props.userId}`)
       .then((res) => {
@@ -45,8 +44,6 @@ const ViewAdminProfile = (props) => {
   }, []);
 
   const handleAddApplicantClick = (event) => {
-    console.log("clicked");
-    //setShowAddApplicantButton(false);
     setViewApplicantList(false);
     setViewApplicantProfile(false);
     setViewRegistrationForm(true);

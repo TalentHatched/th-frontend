@@ -44,11 +44,9 @@ const Company = () => {
     axios
       .put(`api/company/${targetId}`, data)
       .then((res) => {
-        console.log('success', res.data);
         let updatedNewCompany = companies.filter(
           (company) => company.id !== targetId && !company.reviewed
         );
-        console.log('What is updatedNewCompany', updatedNewCompany);
         setNewCompanies(updatedNewCompany);
       })
       .catch((error) => {

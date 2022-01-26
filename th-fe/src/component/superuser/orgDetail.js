@@ -14,7 +14,6 @@ const OrgDetail = (props) => {
   const [orgDetail, setOrgDetail] = useState([]);
 
   useEffect(() => {
-    console.log("what is in props", props);
     axios.get(`api/userAdminOrg/${props.orgId}`).then((detail) => {
       setOrgDetail(detail.data);
     });

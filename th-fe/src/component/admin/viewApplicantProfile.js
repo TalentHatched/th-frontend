@@ -18,17 +18,13 @@ const ViewApplicantProfile = (props) => {
   const [viewPassword, setViewPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(null);
   useEffect(() => {
-    //let studentProfile = JSON.parse(props.profileData.data);
-    // console.log('What is studentProfile', studentProfile)
     if (props.profileData.data === "{}") {
       setIncompleteProfile(true);
     } else {
       let studentProfile = JSON.parse(props.profileData.data);
       setProfile(JSON.parse(studentProfile.data));
     }
-    // console.log("profile?", JSON.parse(studentProfile.data));
     setData(props.profileData);
-    console.log("what is props profile", props.profileData);
     setShowPassword(false);
   }, [props.profileData]);
 
@@ -39,9 +35,6 @@ const ViewApplicantProfile = (props) => {
 
   const viewPasswordClick = () => {
     setViewPassword(true);
-    //let code = profile.dateOfBirth.split(" ")
-    //console.log('cide', code)
-    console.log("date", profile.dateOfBirth);
   };
 
   const onHide = () => {
@@ -162,7 +155,11 @@ const ViewApplicantProfile = (props) => {
                         {profile.programmingLanguage &&
                         profile.programmingLanguage.length
                           ? profile.programmingLanguage.map((skill) => {
-                              return <li className="skill-list" key={skill.id}>{skill}</li>;
+                              return (
+                                <li className='skill-list' key={skill.id}>
+                                  {skill}
+                                </li>
+                              );
                             })
                           : ""}
                       </ul>
@@ -183,7 +180,11 @@ const ViewApplicantProfile = (props) => {
                         {profile.generalTech &&
                         profile.programmingLanguage.length
                           ? profile.generalTech.map((skill) => {
-                              return <li className="skill-list" key={skill.id}>{skill}</li>;
+                              return (
+                                <li className='skill-list' key={skill.id}>
+                                  {skill}
+                                </li>
+                              );
                             })
                           : ""}
                       </ul>
@@ -204,7 +205,11 @@ const ViewApplicantProfile = (props) => {
                       <ul>
                         {profile.otherSkill && profile.otherSkill.length
                           ? profile.otherSkill.map((skill) => {
-                              return <li className="skill-list" key={skill.id}>{skill}</li>;
+                              return (
+                                <li className='skill-list' key={skill.id}>
+                                  {skill}
+                                </li>
+                              );
                             })
                           : ""}
                       </ul>

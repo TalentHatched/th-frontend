@@ -41,7 +41,6 @@ const ApplicantList = (props) => {
     axios
       .get(`api/applicantAdmin/admin/${userId}`)
       .then((res) => {
-        console.log(typeof res.data.info);
         setOriginalData(props.data);
         setDisplayData(props.data);
       })
@@ -57,7 +56,6 @@ const ApplicantList = (props) => {
   const onSearchBarChange = (e) => {
     setSearchText(e.target.value);
     setTimeout(() => {
-      console.log("This is called");
       if (e.target.value.length > 2) {
         let updatedDataSet = originalData.filter((data) => {
           if (
@@ -104,7 +102,6 @@ const ApplicantList = (props) => {
               eleventh: "11",
               twelveth: "12",
             };
-            console.log(typeof data.grade);
             if (data.grade === reference[target[currentIndex]]) {
               return data;
             } else {
@@ -148,7 +145,6 @@ const ApplicantList = (props) => {
         }
 
         target.shift(target[currentIndex]);
-        console.log("target", target);
       }
       setDisplayData(currentList);
       setShowReset(true);
@@ -157,7 +153,6 @@ const ApplicantList = (props) => {
       setShowReset(false);
     }
     setShowFilter(false);
-    console.log("What is final list", currentList);
   };
 
   const onResetClick = () => {

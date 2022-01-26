@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import RegistrationForm from './reusable/registration';
-import './companyRegistration.css';
+import React, { useState } from "react";
+import axios from "axios";
+import RegistrationForm from "./reusable/registration";
+import "./companyRegistration.css";
 
 const CompanyRegistration = ({ history, ...props }) => {
-  const [name, setName] = useState('');
-  const [contactPerson, setContactPerson] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [contactPerson, setContactPerson] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [nameWarning, setNameWarning] = useState('');
-  const [contactPersonWarning, setContactPersonWarning] = useState('');
-  const [emailWarning, setEmailWarning] = useState('');
-  const [passwordWarning, setPasswordWarning] = useState('');
-  const [confirmPasswordWarning, setConfirmPasswordWarning] = useState('');
-  const [submitWarning, setSubmitWarning] = useState('');
+  const [nameWarning, setNameWarning] = useState("");
+  const [contactPersonWarning, setContactPersonWarning] = useState("");
+  const [emailWarning, setEmailWarning] = useState("");
+  const [passwordWarning, setPasswordWarning] = useState("");
+  const [confirmPasswordWarning, setConfirmPasswordWarning] = useState("");
+  const [submitWarning, setSubmitWarning] = useState("");
 
   //const [snackBarOpen, setSnackBarOpen]=useState(false)
-  const nameLabel = 'Company Name';
+  const nameLabel = "Company Name";
   const userTypeId = 2;
 
   const handleNameChange = (event) => {
@@ -43,7 +43,6 @@ const CompanyRegistration = ({ history, ...props }) => {
 
   const handleSubmit = (event) => {
     if (validate()) {
-      console.log('CREATE ACCOUNT');
       const credentials = {
         userName: email,
         userEmail: email,
@@ -53,80 +52,65 @@ const CompanyRegistration = ({ history, ...props }) => {
         companyName: name,
         isActive: true,
       };
-      console.log('CREDS', credentials);
       axios
-        .post('api/user/register', credentials)
+        .post("api/user/register", credentials)
         .then((res) => {
-          console.log('What is res.data', res.data);
           // setSnackBarOpen(true)
-          history.push('/companylogin');
+          history.push("/companylogin");
         })
         .catch((err) => {
-          console.log('There is an error', err);
           if (err.response) {
-            console.log('What is the error', err.response);
             if (err.response.status === 400) {
               setSubmitWarning(err.response.data.message);
             } else {
-              setSubmitWarning('Registration unsuccessful. Please try again.');
+              setSubmitWarning("Registration unsuccessful. Please try again.");
             }
           }
         });
-    } else {
-      console.log('NOT READY');
     }
   };
 
   const validate = () => {
     let readyToSubmit = true;
-    setNameWarning('');
-    setContactPersonWarning('');
-    setEmailWarning('');
-    setPasswordWarning('');
-    setConfirmPasswordWarning('');
+    setNameWarning("");
+    setContactPersonWarning("");
+    setEmailWarning("");
+    setPasswordWarning("");
+    setConfirmPasswordWarning("");
 
-    console.log(
-      'Show me the creds',
-      name,
-      contactPerson,
-      email,
-      password,
-      confirmPassword
-    );
     if (!name || !contactPerson || !email || !password || !confirmPassword) {
       readyToSubmit = false;
       if (!name) {
-        setNameWarning('Company Name required');
+        setNameWarning("Company Name required");
       }
 
       if (!contactPerson) {
-        setContactPersonWarning('Contact Person required');
+        setContactPersonWarning("Contact Person required");
       }
 
       if (!email) {
-        setEmailWarning('Email required');
+        setEmailWarning("Email required");
       }
 
       if (!password) {
-        setPasswordWarning('Password required');
+        setPasswordWarning("Password required");
       }
 
       if (!confirmPassword) {
-        setConfirmPasswordWarning('Confirm Password required');
+        setConfirmPasswordWarning("Confirm Password required");
       }
     } else {
-      console.log('password.length', password.length);
-      if (!email.includes('@')) {
-        setEmailWarning('Please provide a valid email');
+      if (!email.includes("@")) {
+        setEmailWarning("Please provide a valid email");
         readyToSubmit = false;
       }
 
       if (password.length < 6) {
-        setPasswordWarning('Password must have at least 6 characters');
+        setPasswordWarning("Password must have at least 6 characters");
         readyToSubmit = false;
       }
       if (password !== confirmPassword) {
-        setConfirmPasswordWarning('Password does not match');
+        setConfirmPasswordWarning("Password does not match");
         readyToSubmit = false;
       }
       let letterNumOnly = /^[A-Za-z0-9]+$/.test(password);
@@ -135,11 +119,11 @@ const CompanyRegistration = ({ history, ...props }) => {
 
       if (numOnly || letterOnly) {
         setPasswordWarning(
-          'Password must contain at least 1 number and 1 character'
+          "Password must contain at least 1 number and 1 character"
         );
         readyToSubmit = false;
       } else if (!letterNumOnly) {
-        setPasswordWarning('Password can contain letters and numbers only');
+        setPasswordWarning("Password can contain letters and numbers only");
         readyToSubmit = false;
       }
     }

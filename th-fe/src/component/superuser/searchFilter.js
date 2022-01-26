@@ -21,13 +21,11 @@ const SearchFilter = (props) => {
     if (props.filterValue) {
       setCriteria(props.filterValue);
     }
-    console.log("What is props", props);
   }, [props.filterValue]);
 
   const { applicant, admin } = criteria;
 
   const handleChange = (event) => {
-    console.log("handle change fired", event.target.checked);
     setCriteria({ ...criteria, [event.target.name]: event.target.checked });
   };
 

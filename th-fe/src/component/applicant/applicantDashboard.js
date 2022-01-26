@@ -144,8 +144,6 @@ const ApplicantDashboard = () => {
     if (type === "onboard") {
       setCurrentPage("WORK_EXP_PROMPT");
     } else if (type === "update") {
-      console.log("here", data);
-      console.log("what is profileData now", profileData);
       let updatedData = profileData;
       updatedData.otherSkill = data;
       setProfileData(updatedData);
@@ -324,10 +322,8 @@ const ApplicantDashboard = () => {
     if (type === "onboard") {
       saveData(data);
     } else if (type === "update") {
-      console.log("What data???", data);
       let updatedData = profileData;
       updatedData.tagline = data;
-      console.log("UPDATED DATA WJAT?", updatedData);
       setProfileData(updatedData);
       updateData(updatedData);
     }
@@ -581,7 +577,6 @@ const ApplicantDashboard = () => {
   };
 
   const updateData = (data) => {
-    console.log("what is data on update data", data);
     let applicantData = {
       applicantId: localStorage.getItem("userId"),
       data: JSON.stringify(data),
@@ -600,7 +595,6 @@ const ApplicantDashboard = () => {
   };
 
   const saveNow = () => {
-    console.log("fired here", programmingLanguage);
     saveData("");
   };
 

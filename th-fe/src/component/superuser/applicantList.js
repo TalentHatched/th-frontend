@@ -17,7 +17,6 @@ const ApplicantList = (props) => {
   const [applicantData, setApplicantData] = useState([]);
   useEffect(() => {
     axios.get(`api/applicantAdmin/admin/${props.adminId}`).then((data) => {
-      console.log(data);
       setApplicantData(data.data.info);
     });
   }, []);

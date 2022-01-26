@@ -32,7 +32,7 @@ const AdminDashboard = () => {
       .then((res) => {
         setApplicantData(res.data.info);
         setViewApplicantList(true);
-        setNeedUpdate(false)
+        setNeedUpdate(false);
       })
       .catch((err) => {
         console.log("What is error for fetching student", err.response);
@@ -40,8 +40,6 @@ const AdminDashboard = () => {
   }, [needUpdate]);
 
   const handleAddApplicantClick = (event) => {
-    console.log("clicked");
-    //setShowAddApplicantButton(false);
     setViewApplicantList(false);
     setViewApplicantProfile(false);
     setViewRegistrationForm(true);
@@ -61,17 +59,14 @@ const AdminDashboard = () => {
 
   const handleAddStudentSubmission = async (info) => {
     setApplicantRegistrationWarning("");
-    console.log("What is info", info);
     await axios
       .post("api/user/studentRegister", info)
       .then((res) => {
-        // setShowAddApplicantButton(true);
         setViewApplicantList(true);
         setViewRegistrationForm(false);
         setNeedUpdate(true);
       })
       .catch((error) => {
-        console.log("what is error", error.response);
         setApplicantRegistrationWarning(error.response.data.clientMessage);
       });
   };

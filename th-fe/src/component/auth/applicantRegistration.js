@@ -47,7 +47,6 @@ const ApplicantRegistrationForm = (props) => {
   };
 
   const handleSpecializationChange = (event) => {
-    console.log(event);
     setSpecialization(event.target.value);
   };
 
@@ -59,9 +58,7 @@ const ApplicantRegistrationForm = (props) => {
     setUserEmail(event.target.value);
   };
 
-  // const handleUserPasswordChange = (event) => {
-  //   setUserPassword(event.target.value);
-  // };
+  
 
   const handleSubmissionClick = (event) => {
     if (validate()) {
@@ -79,12 +76,8 @@ const ApplicantRegistrationForm = (props) => {
         isActive: true,
         userTypeId: 1,
       };
-      console.log("What is newApplicantInfo", newApplicantInfo);
       props.handleAddStudentSubmission(newApplicantInfo);
-    } else {
-      //
-      console.log("NOT READY");
-    }
+    } 
   };
 
   const validate = () => {
@@ -135,7 +128,6 @@ const ApplicantRegistrationForm = (props) => {
     }
 
     let userType = localStorage.getItem("userTypeId");
-    console.log("What is userType", typeof userType);
     if (userType !== "3") {
       readyToSubmit = false;
     }
