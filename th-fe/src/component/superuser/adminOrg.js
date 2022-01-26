@@ -12,14 +12,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Button,
 } from "@material-ui/core";
 
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import MergeTypeIcon from "@material-ui/icons/MergeType";
 
 const AdminOrg = () => {
   const [adminOrgs, setAdminOrgs] = useState([]);

@@ -19,7 +19,7 @@ const ApplicantList = (props) => {
     axios.get(`api/applicantAdmin/admin/${props.adminId}`).then((data) => {
       setApplicantData(data.data.info);
     });
-  }, []);
+  }, [props.adminId]);
 
   return (
     <div>

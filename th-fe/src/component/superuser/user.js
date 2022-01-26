@@ -4,9 +4,7 @@ import "./user.css";
 import SearchFilter from "./searchFilter";
 import ApplicantProfile from "./viewApplicantProfile";
 import AdminProfile from "./viewAdminProfile";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
-import { Button } from "@material-ui/core";
 
 import {
   Table,
@@ -18,7 +16,6 @@ import {
 } from "@material-ui/core";
 
 const User = () => {
-  const [users, setUsers] = useState([]);
   const [originalData, setOriginalData] = useState([]);
   const [currentUserList, setCurrentUserList] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -30,7 +27,6 @@ const User = () => {
     axiosWithAuth()
       .get("api/user")
       .then((res) => {
-        setUsers(res.data.user);
         setOriginalData(res.data.user);
         setCurrentUserList(res.data.user);
       })

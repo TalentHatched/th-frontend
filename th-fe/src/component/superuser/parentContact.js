@@ -21,11 +21,7 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 const ParentContact = () => {
   const [originalData, setOriginalData] = useState([]);
   const [currentList, setCurrentList] = useState([]);
-  // const [openAdd, setOpenAdd] = useState(false);
-  // const [openEdit, setOpenEdit] = useState(false);
-  // const [openDelete, setOpenDelete] = useState(false);
-  // const [changingIndustry, setChangingIndustry] = useState("");
-  // const [changingIndustryId, setChangingIndustryId] = useState();
+
   const [isUpdating, setIsUpdating] = useState(false);
   const [targetIndex, setTargetIndex] = useState("");
   const [currentStatus, setCurrentStatus] = useState("");
@@ -108,6 +104,8 @@ const ParentContact = () => {
       let updatedList = originalData.filter((data) => {
         if (data.status === filterItem[0] || data.status === filterItem[1]) {
           return data;
+        } else {
+          return "";
         }
       });
       setCurrentList(updatedList);

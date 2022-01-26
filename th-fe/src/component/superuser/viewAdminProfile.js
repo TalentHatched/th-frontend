@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  Card,
-  CardContent,
-  FormGroup,
-  TextField,
   Table,
   TableBody,
   TableCell,
@@ -15,57 +11,20 @@ import {
 } from "@material-ui/core";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import axios from "axios";
-import ApplicantList from "./applicantList";
 
 const ViewAdminProfile = (props) => {
-  const [adminFirstName, setAdminFirstName] = useState("");
-  const [institution, setInstitution] = useState("");
-
-  const [applicantRegistrationWarning, setApplicantRegistrationWarning] =
-    useState("");
   const [applicantData, setApplicantData] = useState([]);
-  const [selectedApplicantProfile, setSelectedApplicantProfile] = useState({});
-  const [viewApplicantList, setViewApplicantList] = useState(false);
-  const [viewApplicantProfile, setViewApplicantProfile] = useState(false);
-  const [viewRegistrationForm, setViewRegistrationForm] = useState(false);
-  const [needUpdate, setNeedUpdate] = useState(false);
 
   useEffect(() => {
     axios
       .get(`api/applicantAdmin/admin/${props.userId}`)
       .then((res) => {
         setApplicantData(res.data.info);
-        setViewApplicantList(true);
-        setNeedUpdate(false);
       })
       .catch((err) => {
         console.log("What is error for fetching student", err.response);
       });
-  }, []);
-
-  const handleAddApplicantClick = (event) => {
-    setViewApplicantList(false);
-    setViewApplicantProfile(false);
-    setViewRegistrationForm(true);
-  };
-
-  const handleReturnClick = (type) => {
-    // setShowAddApplicantButton(true);
-
-    if (type === "profile") {
-      setViewApplicantList(true);
-      setViewApplicantProfile(false);
-    } else if (type === "registration") {
-      setViewRegistrationForm(false);
-      setViewApplicantList(true);
-    }
-  };
-
-  const onViewProfileClick = (index) => {
-    setSelectedApplicantProfile(applicantData[index]);
-    setViewApplicantList(false);
-    setViewApplicantProfile(true);
-  };
+  }, [props.userId]);
 
   return (
     <div>

@@ -4,10 +4,7 @@ import { Tabs, Tab } from "@material-ui/core";
 
 import User from "../superuser/user";
 import AdminOrg from "../superuser/adminOrg";
-import Industry from "../superuser/industry";
-import Company from "../superuser/company";
-import Skill from "../superuser/skill";
-import Job from "../superuser/job";
+
 import ParentContact from "../superuser/parentContact";
 import "./superuserDashboard.css"
 
@@ -17,6 +14,7 @@ const SuperUserDashboard = () => {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+  
   return (
     <div className='superuser-dashboard'>
       <Tabs
@@ -28,7 +26,6 @@ const SuperUserDashboard = () => {
         <Tab label='Admin Org'></Tab>
         <Tab label='Parent Contact'></Tab>
       </Tabs>
-      {/* {currentTab === 'user' && <h1>Show this</h1>} */}
       {value === 0 && <User />}
       {value === 1 && <AdminOrg />}
       {value === 2 && <ParentContact />}

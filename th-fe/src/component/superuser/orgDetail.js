@@ -17,7 +17,7 @@ const OrgDetail = (props) => {
     axios.get(`api/userAdminOrg/${props.orgId}`).then((detail) => {
       setOrgDetail(detail.data);
     });
-  }, []);
+  }, [props.orgId]);
 
   const convertDate = (date) => {
     let splitDate = date.split(" ");
