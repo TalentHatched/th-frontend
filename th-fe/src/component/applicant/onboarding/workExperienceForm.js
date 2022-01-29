@@ -126,7 +126,6 @@ const WorkExperienceForm = (props) => {
       if (type === "add") {
         props.addWorkExperience(workExperience);
       } else if (type === "edit") {
-        console.log("HERE");
         props.updateWorkExperience(
           workExperience,
           props.workExperienceIdx,
