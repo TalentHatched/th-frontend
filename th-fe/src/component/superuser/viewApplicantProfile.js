@@ -31,19 +31,23 @@ const ApplicantProfile = (props) => {
   const [institution, setInstitution] = useState("");
 
   useEffect(() => {
-    axios.get(`api/applicantInfo/${props.userId}`).then((res) => {
-      setApplicantData(res.data.userData.data); // try {
-      setFirstName(res.data.userData.userFirstName);
-      setLastName(res.data.userData.userLastName);
-      setInstitution(res.data.userData.institution);
-      if (
-        res.data.userData.data.industry &&
-        res.data.userData.data.industry.includes("technology")
-      ) {
-        setIsTech(true);
-      }
-      console.log("what is res", res);
-    });
+    axios
+      .get(`api/applicantInfo/${props.userId}`, {
+        headers: { authorization: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        setApplicantData(res.data.userData.data); // try {
+        setFirstName(res.data.userData.userFirstName);
+        setLastName(res.data.userData.userLastName);
+        setInstitution(res.data.userData.institution);
+        if (
+          res.data.userData.data.industry &&
+          res.data.userData.data.industry.includes("technology")
+        ) {
+          setIsTech(true);
+        }
+        console.log("what is res", res);
+      });
   }, [props.userId]);
 
   const convertDate = (date) => {

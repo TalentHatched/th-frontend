@@ -54,7 +54,9 @@ const ApplicantDashboard = () => {
 
   useEffect(() => {
     axios
-      .get(`api/applicantInfo/${userId}`)
+      .get(`api/applicantInfo/${userId}`, {
+        headers: { authorization: localStorage.getItem("token") },
+      })
       .then((res) => {
         setFirstName(res.data.userData.userFirstName);
         setLastName(res.data.userData.userLastName);

@@ -44,7 +44,9 @@ const ParentContact = () => {
 
   useEffect(() => {
     axios
-      .get("api/guardian/")
+      .get("api/guardian/", {
+        headers: { authorization: localStorage.getItem("token") },
+      })
       .then((res) => {
         setOriginalData(res.data.data);
         setCurrentList(res.data.data);

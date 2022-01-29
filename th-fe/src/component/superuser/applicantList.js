@@ -16,9 +16,13 @@ import {
 const ApplicantList = (props) => {
   const [applicantData, setApplicantData] = useState([]);
   useEffect(() => {
-    axios.get(`api/applicantAdmin/admin/${props.adminId}`).then((data) => {
-      setApplicantData(data.data.info);
-    });
+    axios
+      .get(`api/applicantAdmin/admin/${props.adminId}`, {
+        headers: { authorization: localStorage.getItem("token") },
+      })
+      .then((data) => {
+        setApplicantData(data.data.info);
+      });
   }, [props.adminId]);
 
   return (
@@ -68,7 +72,9 @@ const ApplicantList = (props) => {
         </TableContainer>
       ) : (
         <div>
-          <Typography variant="h6" style={{textAlign:"center"}}>No applicant added yet</Typography>
+          <Typography variant='h6' style={{ textAlign: "center" }}>
+            No applicant added yet
+          </Typography>
         </div>
       )}
     </div>

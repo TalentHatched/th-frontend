@@ -39,7 +39,9 @@ const ApplicantList = (props) => {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     axios
-      .get(`api/applicantAdmin/admin/${userId}`)
+      .get(`api/applicantAdmin/admin/${userId}`, {
+        headers: { authorization: localStorage.getItem("token") },
+      })
       .then((res) => {
         setOriginalData(props.data);
         setDisplayData(props.data);
@@ -69,10 +71,10 @@ const ApplicantList = (props) => {
           }
         });
         setDisplayData(updatedDataSet);
-        setShowReset(true)
+        setShowReset(true);
       } else {
         setDisplayData(originalData);
-        setShowReset(false)
+        setShowReset(false);
       }
     }, 1000);
   };
@@ -158,7 +160,7 @@ const ApplicantList = (props) => {
   const onResetClick = () => {
     setDisplayData(originalData);
     setShowFilter(false);
-    setShowReset(false)
+    setShowReset(false);
   };
 
   const handleClose = () => {

@@ -14,9 +14,13 @@ const OrgDetail = (props) => {
   const [orgDetail, setOrgDetail] = useState([]);
 
   useEffect(() => {
-    axios.get(`api/userAdminOrg/${props.orgId}`).then((detail) => {
-      setOrgDetail(detail.data);
-    });
+    axios
+      .get(`api/userAdminOrg/${props.orgId}`, {
+        headers: { authorization: localStorage.getItem("token") },
+      })
+      .then((detail) => {
+        setOrgDetail(detail.data);
+      });
   }, [props.orgId]);
 
   const convertDate = (date) => {
@@ -55,9 +59,7 @@ const OrgDetail = (props) => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    size='small'
-                    onClick={() => onAdminCardClick(user)}>
+                  <Button size='small' onClick={() => onAdminCardClick(user)}>
                     View Linked Applicants
                   </Button>
                 </CardActions>

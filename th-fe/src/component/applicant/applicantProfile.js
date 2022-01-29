@@ -22,7 +22,7 @@ const ApplicantProfile = (props) => {
   let userId = localStorage.getItem("userId");
   useEffect(() => {
     axios
-      .get(`api/applicantInfo/${userId}`)
+      .get(`api/applicantInfo/${userId}`, {headers:{authorization:localStorage.getItem("token")}})
       .then((res) => {
         setApplicantData(res.data.userData.data); // try {
         if (

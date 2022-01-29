@@ -28,7 +28,9 @@ const AdminDashboard = () => {
     setInstitution(localStorage.getItem("institution"));
     setAdminFirstName(localStorage.getItem("userFirstName"));
     axios
-      .get(`api/applicantAdmin/admin/${userId}`)
+      .get(`api/applicantAdmin/admin/${userId}`, {
+        headers: { authorization: localStorage.getItem("token") },
+      })
       .then((res) => {
         setApplicantData(res.data.info);
         setViewApplicantList(true);
