@@ -17,7 +17,9 @@ const ViewAdminProfile = (props) => {
 
   useEffect(() => {
     axios
-      .get(`api/applicantAdmin/admin/${props.userId}`)
+      .get(`api/applicantAdmin/admin/${props.userId}`, {
+        headers: { authorization: localStorage.getItem("token") },
+      })
       .then((res) => {
         setApplicantData(res.data.info);
       })

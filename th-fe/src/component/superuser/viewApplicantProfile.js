@@ -75,7 +75,7 @@ const ApplicantProfile = (props) => {
           <h2 style={{ fontWeight: "700" }}>3-Adjective Summary</h2>
           {applicantData.tagline ? (
             <Typography variant='h5' style={{ marginTop: "20px" }}>
-              applicantData.tagline
+              {applicantData.tagline}
             </Typography>
           ) : (
             <h5 className='no-data-filler-text'>No data yet</h5>
