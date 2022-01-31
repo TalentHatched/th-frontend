@@ -36,7 +36,6 @@ const ApplicantLogin = ({ history, ...props }) => {
         .post("api/user/login", credential)
         .then((res) => {
           if (res.data) {
-            console.log("Success", res.data);
             localStorage.setItem("token", res.data.userToken);
             localStorage.setItem("userId", res.data.userInfo.id);
             localStorage.setItem("userTypeId", res.data.userInfo.userTypeId);

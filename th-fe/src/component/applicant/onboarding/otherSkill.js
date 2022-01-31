@@ -29,7 +29,6 @@ const OtherSkillScreen = (props) => {
   const handleAddSkillClick = () => {
     setSkillList([...skillList, currentSkill]);
     setCurrentSkill("");
-    console.log("skillLsit", skillList);
   };
 
   const removeSkill = (index) => {

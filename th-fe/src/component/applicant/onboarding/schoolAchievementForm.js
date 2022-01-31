@@ -20,8 +20,6 @@ const SchoolAchievementForm = (props) => {
 
   useEffect(() => {
     if (props.schoolAchievementIdx !== "") {
-      console.log("What is data", props.achievementData);
-      console.log(props.schoolAchievementIdx);
       setSchoolAchievement(props.achievementData[props.schoolAchievementIdx]);
       setAchievementDate(
         props.achievementData[props.schoolAchievementIdx].date
@@ -48,7 +46,6 @@ const SchoolAchievementForm = (props) => {
 
   const addSchoolAchievementClick = (type) => {
     if (validateForm()) {
-      console.log("form now", schoolAchievement);
       if (type === "add") {
         props.addSchoolAchievement(schoolAchievement);
       } else if (type === "edit") {
@@ -213,7 +210,6 @@ const SchoolAchievementForm = (props) => {
               onClick={() => props.skip("ADDITIONAL_QUESTION")}>
               <h6>Skip</h6>
             </div>
-           
           </div>
         ) : (
           <div>
@@ -229,7 +225,7 @@ const SchoolAchievementForm = (props) => {
               onClick={() => props.skip("ADDITIONAL_QUESTION")}>
               <h6>Skip</h6>
             </div>
-           å
+            å
           </div>
         )}
       </div>

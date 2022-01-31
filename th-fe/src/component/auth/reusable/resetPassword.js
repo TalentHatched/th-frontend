@@ -12,11 +12,9 @@ const ResetPassword = (props) => {
 
   useEffect(() => {
     let token = props.location.pathname.split("/");
-    console.log("what is token", token[2]);
     axios
       .get("/api/user/findUser", { params: { resetPasswordToken: token[2] } })
       .then((response) => {
-        console.log("What is response", response);
         if (response.data.validToken) {
           setValidToken(true);
           setUserId(response.data.data.id);
@@ -38,7 +36,6 @@ const ResetPassword = (props) => {
   const onResetPasswordClick = () => {
     if (validate()) {
       let data = { id: userId, password: password };
-      console.log("What is the data being sent", data);
       axios
         .put("/api/user/updatePassword", data)
         .then((response) => {

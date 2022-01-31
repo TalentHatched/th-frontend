@@ -25,12 +25,10 @@ const AdminLogin = ({ history, ...props }) => {
     setPassword(event.target.value);
   };
   const handleSubmit = () => {
-    console.log("Company Login Form Submit Clicked");
     if (!userName || !password) {
       setWarningMessage("Username and Password are required.");
       setHideWarning(false);
     } else if (password.length < 6) {
-      // May adjust this based on password requirement
       setWarningMessage("Invalid password.");
       setHideWarning(false);
     } else {
@@ -44,8 +42,6 @@ const AdminLogin = ({ history, ...props }) => {
         .post("api/user/login", credential)
         .then((res) => {
           if (res.data) {
-            console.log("Success");
-            console.log("data?", res.data);
             localStorage.setItem("token", res.data.userToken);
             localStorage.setItem("userId", res.data.userInfo.id);
             localStorage.setItem("userTypeId", res.data.userInfo.userTypeId);
@@ -59,7 +55,6 @@ const AdminLogin = ({ history, ...props }) => {
           }
         })
         .catch((err) => {
-          console.log("err", err);
           if (!err.response) {
             setWarningMessage("Server error. Please try again.");
             setHideWarning(false);

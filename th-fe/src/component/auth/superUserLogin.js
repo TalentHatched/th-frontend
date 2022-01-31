@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import LoginForm from './reusable/login';
-
-
+import React, { useState } from "react";
+import axios from "axios";
+import LoginForm from "./reusable/login";
 
 const SuperUserLogin = ({ history, ...props }) => {
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [hideWarning, setHideWarning] = useState(true);
-  const [warningMessage, setWarningMessage] = useState('');
+  const [warningMessage, setWarningMessage] = useState("");
   const userTypeId = 4;
 
   const handleUserNameChange = (event) => {
@@ -19,13 +17,12 @@ const SuperUserLogin = ({ history, ...props }) => {
     setPassword(event.target.value);
   };
   const handleSubmit = () => {
- 
     if (!userName || !password) {
-      setWarningMessage('Username and Password are required.');
+      setWarningMessage("Username and Password are required.");
       setHideWarning(false);
     } else if (password.length < 6) {
       // May adjust this based on password requirement
-      setWarningMessage('Invalid password.');
+      setWarningMessage("Invalid password.");
 
       setHideWarning(false);
     } else {
@@ -39,28 +36,23 @@ const SuperUserLogin = ({ history, ...props }) => {
         .post("api/user/login", credential)
         .then((res) => {
           if (res.data) {
-            console.log('Success');
-            localStorage.setItem('token', res.data.userToken);
-            localStorage.setItem('userId', res.data.userInfo.id);
-            localStorage.setItem('userTypeId', res.data.userInfo.userTypeId);
-            history.push('/dashboard4');
-            props.setLoginStatus(true)
-
+            localStorage.setItem("token", res.data.userToken);
+            localStorage.setItem("userId", res.data.userInfo.id);
+            localStorage.setItem("userTypeId", res.data.userInfo.userTypeId);
+            history.push("/dashboard4");
+            props.setLoginStatus(true);
           }
         })
         .catch((err) => {
-          console.log('err', err);
-          console.log(typeof err);
-          console.log(err.response);
           if (!err.response) {
-            setWarningMessage('Server error. Please try again.');
+            setWarningMessage("Server error. Please try again.");
             setHideWarning(false);
           } else {
             if (err.response.status === 400 || err.response.status === 404) {
-              setWarningMessage('Invalid credentials.');
+              setWarningMessage("Invalid credentials.");
               setHideWarning(false);
             } else {
-              setWarningMessage('Login Unsuccessful. Please try again.');
+              setWarningMessage("Login Unsuccessful. Please try again.");
               setHideWarning(false);
             }
           }

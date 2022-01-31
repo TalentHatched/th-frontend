@@ -56,7 +56,6 @@ const ProgrammingLanguage = (props) => {
   };
 
   const saveNow = async () => {
-    console.log(programmingLanguageState);
     await props.handleProgrammingLanguageClick(
       programmingLanguageState,
       "onboard"

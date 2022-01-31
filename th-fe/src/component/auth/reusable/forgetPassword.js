@@ -20,12 +20,10 @@ const ForgetPassword = (props) => {
       setLoading(false);
       setWarning("Email required");
     }
-    console.log("Check");
     let userInfo = { userEmail: email };
     axios
       .post(`api/user/check`, userInfo)
       .then((res) => {
-        console.log("email sent");
         // Take to show email screen
         setShowMessage(true);
         setRecoveryPrompt(false);

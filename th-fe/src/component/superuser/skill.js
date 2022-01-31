@@ -40,7 +40,6 @@ const Skill = () => {
   }, [skills]);
 
   function handleAddModalOpen() {
-    console.log('Clicked');
     setOpenAdd(true);
   }
 

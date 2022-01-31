@@ -55,7 +55,6 @@ const AdminRegistration = ({ history, ...props }) => {
 
   const handleSubmit = (event) => {
     if (validate()) {
-      console.log("CREATE ACCOUNT");
       const credentials = {
         userFirstName: firstName,
         userLastName: lastName,
@@ -68,18 +67,14 @@ const AdminRegistration = ({ history, ...props }) => {
         registrationDate: Date.now(),
         isActive: true,
       };
-      console.log("CREDS", credentials);
       axios
         .post("api/user/register", credentials)
         .then((res) => {
-          console.log("What is res.data", res.data);
           // setSnackBarOpen(true)
           history.push("/adminlogin");
         })
         .catch((err) => {
-          console.log("There is an error", err);
           if (err.response) {
-            console.log("What is the error", err.response);
             if (err.response.status === 400) {
               setSubmitWarning(err.response.data.message);
             } else {
@@ -87,8 +82,6 @@ const AdminRegistration = ({ history, ...props }) => {
             }
           }
         });
-    } else {
-      console.log("NOT READY");
     }
   };
 
@@ -100,15 +93,6 @@ const AdminRegistration = ({ history, ...props }) => {
     setPasswordWarning("");
     setConfirmPasswordWarning("");
 
-    console.log(
-      "Show me the creds",
-      name,
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword
-    );
     if (
       !name ||
       !firstName ||
@@ -134,7 +118,6 @@ const AdminRegistration = ({ history, ...props }) => {
         setConfirmPasswordWarning("Confirm Password required");
       }
     } else {
-      console.log("password.length", password.length);
       if (!email.includes("@")) {
         setEmailWarning("Please provide a valid email");
         readyToSubmit = false;
@@ -194,9 +177,13 @@ const AdminRegistration = ({ history, ...props }) => {
           submitWarning={submitWarning}
           // snackBarOpen={snackBarOpen}
         />
-        <div className="have-account-message">
+        <div className='have-account-message'>
           <span>Already have an account? </span>
-          <span className="login-link" onClick={() => history.push("/adminlogin")}>Log In</span>
+          <span
+            className='login-link'
+            onClick={() => history.push("/adminlogin")}>
+            Log In
+          </span>
         </div>
       </div>
       <div className='register-image-holder'>

@@ -15,7 +15,6 @@ const ParentContactScreen = (props) => {
   const { guardianName, guardianContact } = guardianInfo;
 
   const handleChange = (event) => {
-    console.log("What is event", event);
     setGuardianInfo({
       ...guardianInfo,
       [event.target.name]: event.target.value,
@@ -27,13 +26,11 @@ const ParentContactScreen = (props) => {
       applicantId: localStorage.getItem("userId"),
       guardianName: guardianName,
       guardianEmail: guardianContact,
-      status: "CONSENT_FORM_NOT_SENT",
+      status: "CONSENT_NOT_SENT",
       consentReceived: false,
     };
 
     if (validateContact()) {
-      console.log("What is guardianContactInfo", guardianContactInfo);
-      // POST call here
 
       axios
         .post("api/guardian/", guardianContactInfo)
@@ -47,7 +44,6 @@ const ParentContactScreen = (props) => {
   };
 
   const validateContact = () => {
-    console.log("What is guardianName", guardianName);
     if (guardianName === "" || guardianContact === "") {
       setWarning("Parent/Guardian name and email required");
       return false;
